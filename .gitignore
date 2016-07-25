@@ -1,0 +1,17 @@
+#Eclipse
+.settings/
+.classpath
+.project
+
+#Idea
+.idea/
+*.iml
+
+#Netbeans
+nbproject/
+
+#Subversion
+.svn/
+
+#Maven
+target/

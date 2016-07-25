@@ -1,0 +1,34 @@
+{
+  "name": "webclient",
+  "homepage": "https://github.com/lhn1028/ffmp",
+  "authors": [
+    "Shawn Lee <lhn1028@hotmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "AdminLTE": "adminlte#^2.3.3",
+    "jquery": ">=1.11.0",
+    "bootstrap-table": "^1.10.1",
+    "tableExport.jquery.plugin": "https://github.com/hhurz/tableExport.jquery.plugin.git#^1.5.1",
+    "x-editable": "^1.5.1",
+    "jquery.base64.js": "https://github.com/yckart/jquery.base64.js.git#^0.0.2",
+    "bootstrap-fileinput": "^4.3.2",
+    "font-awesome": "^4.6.3",
+    "Ionicons": "ionicons#^2.0.1",
+    "html5shiv": "^3.7.3",
+    "respond": "^1.4.2",
+    "jquery-validation": "^1.15.0",
+    "bootstrap-treeview": "^1.2.0",
+    "flowchart": "^1.6.3",
+    "raphael": "2.2.1"
+  }
+}
