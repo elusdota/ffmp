@@ -119,7 +119,7 @@ public class TaskController {
             throw new ServiceException(LOAD_ERROR, ex);
         }
     }
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/repairFormCode",method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public MaintenanceTask getByRepairFormCode(@RequestParam("repairFormCode") String repairFormCode) {
         try {

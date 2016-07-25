@@ -69,7 +69,7 @@ $("#createRepair").click(function () {
 });
 $("#queryProject").click(function () {
     var data1 = $('#repairTable').bootstrapTable('getSelections');
-    $.ajax('rest/task?repairFormCode='+data1[0].code, {
+    $.ajax('rest/task/repairFormCode?repairFormCode='+data1[0].code, {
         type: 'GET',
         contentType: 'application/json',
         dataType: 'json',
