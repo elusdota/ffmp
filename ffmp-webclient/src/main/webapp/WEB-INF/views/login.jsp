@@ -10,6 +10,11 @@
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
   <%@ include file="/WEB-INF/views/common/include.jsp" %>
+  <style>
+    .login-page, .register-page {
+      background: #818181 none repeat scroll 0 0;
+    }
+  </style>
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
@@ -56,7 +61,11 @@
         <!-- /.col -->
       </div>
       <c:if test="${not empty error}">
-        <font color="red"><c:out value="${error}"/></font>
+        <div class="alert alert-warning alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <h4><i class="icon fa fa-warning"></i> 警告!</h4>
+          <c:out value="${error}"/>
+        </div>
       </c:if>
     </form> 
 

@@ -1,12 +1,5 @@
 <%--
   Created by IntelliJ IDEA.
-  User: jiangliang
-  Date: 2016/6/21
-  Time: 19:49
-  To change this template use File | Settings | File Templates.
---%>
-<%--
-  Created by IntelliJ IDEA.
   User: suelmer
   Date: 2016/5/30
   Time: 15:24
@@ -15,13 +8,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <header class="main-header">
     <!-- Logo -->
     <a href="index" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini"><b>消</b>v</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>建筑消防设施维护保养管理系统</b>version</span>
+        <span class="logo-lg"><b>建筑消防设施维护保养管理系统</b>version-1.0</span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -289,11 +283,16 @@
                         </li>
                     </ul>
                 </li>
+                <!-- Control Sidebar Toggle Button -->
+                <li>
+                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                </li>
             </ul>
         </div>
 
     </nav>
 </header>
+<%--左侧导航菜单 ，包含logo和侧边栏--%>
 <aside class="main-sidebar">
     <section class="sidebar">
         <ul class="sidebar-menu" id="navigantion">

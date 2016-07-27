@@ -21,7 +21,7 @@ public class PageController {
             @RequestParam(value = "error", required = false) String error) {
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "username or password is error!");
+            model.addObject("error", "用户名或密码错误!");
         }
         model.setViewName("login");
         return model;
@@ -149,4 +149,71 @@ public class PageController {
     public String repairForm(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/repairForm";
     }
+
+    /**
+     * 基础信息管理->城市区域管理
+     * @param request
+     * @param response
+     * @return String
+     * @throws Exception
+     */
+    @RequestMapping("/basicInfo/areaMgmt")
+    @ResponseStatus(HttpStatus.OK)
+    public String areaMgmt(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/basicInformation/areaMgmt";
+    }
+
+    /**
+     * 基础信息管理->重点部位标准
+     * @param request
+     * @param response
+     * @return String
+     * @throws Exception
+     */
+    @RequestMapping("/basicInfo/keyPartStandard")
+    @ResponseStatus(HttpStatus.OK)
+    public String keyPartStandard(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/basicInformation/keyPartStandard";
+    }
+
+    /**
+     * 基础信息管理->设施维管标准
+     * @param request
+     * @param response
+     * @return String
+     * @throws Exception
+     */
+    @RequestMapping("/basicInfo/MRRStandard")
+    @ResponseStatus(HttpStatus.OK)
+    public String MRRStandard(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/basicInformation/MRRStandard";
+    }
+
+
+    /**
+     * 基础信息管理->生产厂家管理
+     * @param request
+     * @param response
+     * @return String
+     * @throws Exception
+     */
+    @RequestMapping("/basicInfo/manufacturer")
+    @ResponseStatus(HttpStatus.OK)
+    public String manufacturer(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/basicInformation/manufacturer";
+    }
+
+    /**
+     * 基础信息管理->合同管理
+     * @param request
+     * @param response
+     * @return String
+     * @throws Exception
+     */
+    @RequestMapping("/contract/contract")
+    @ResponseStatus(HttpStatus.OK)
+    public String contract(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/contract/contract";
+    }
+
 }

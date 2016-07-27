@@ -17,7 +17,7 @@
   <section class="content-header">
     <h1>
       组织机构管理
-      <small>Version 2.0</small>
+      <small>Version 1.0</small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-cogs"></i> 基础信息管理</a></li>

@@ -4,11 +4,12 @@
 $(document).ready(function () {
     $("ul > li > a").not($("li.treeview > a")).not($("li.dropdown > a")).click(function (evt) {
         $("#main-content").fadeOut(function () {
+            $(evt.currentTarget).closest("li").siblings().removeClass("active");
             var targetUrl = $(evt.currentTarget).data("url");
-            $(evt.currentTarget).addClass("active")
-            var obj = $("#main-content").load(targetUrl, function () {
-                //$('[data-toggle="tooltip"]').tooltip();
-                $("#main-content").fadeIn();
+            $("#main-content").load(targetUrl, function () {
+                $("#main-content").fadeIn(function(){
+                    $(evt.currentTarget).closest("li").addClass("active");
+                });
             });
         });
     });

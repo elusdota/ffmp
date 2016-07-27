@@ -15,8 +15,6 @@
 <link rel="stylesheet" href="<c:url value='/bower_components/font-awesome/css/font-awesome.min.css'/>">
 <!-- Ionicons -->
 <link rel="stylesheet" href="<c:url value='/bower_components/Ionicons/css/ionicons.min.css'/>">
-<!-- jvectormap -->
-<link rel="stylesheet" href="<c:url value='/bower_components/AdminLTE/plugins/jvectormap/jquery-jvectormap-1.2.2.css'/>">
 <!-- Theme style -->
 <link rel="stylesheet" href="<c:url value='/bower_components/AdminLTE/dist/css/AdminLTE.min.css'/>">
 <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -28,11 +26,11 @@ folder instead of downloading all of them to reduce the load. -->
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
-<!--<script src="<c:url value='/bower_components/html5shiv/dist/html5shiv.min.js'/>"></script>-->
-<!--<script src="<c:url value='/bower_components/respond/dest/respond.min.js'/>"></script>-->
+<script src="<c:url value='/bower_components/html5shiv/dist/html5shiv.min.js'/>"></script>
+<script src="<c:url value='/bower_components/respond/dest/respond.min.js'/>"></script>
 <![endif]-->
 
 <!-- jQuery 2.2.0 -->
 <script src="<c:url value='/bower_components/jquery/dist/jquery.min.js'/>"></script>
 <!-- Bootstrap 3.3.6 -->
-<script src="<c:url value='/bower_components/bootstrap/dist/js/bootstrap.min.js'/>"></script>
+<script src="<c:url value='/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js'/>"></script>

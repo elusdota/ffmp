@@ -4,9 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
- * Created by jiangliang on 2016/7/23.
+ * Created by jiangliang on 2016/7/13.
  */
 @Entity
 @Table(name = "Customer")
@@ -31,6 +32,9 @@ public class Customer extends AbstractDomainObject{
     private String taxId;
     @OneToOne
     private Account account;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Contract> contractList;
 
     public Date getCreateTime() {
         return createTime;
@@ -102,5 +106,13 @@ public class Customer extends AbstractDomainObject{
 
     public void setAccount(Account account) {
         this.account = account;
+    }
+
+    public List<Contract> getContractList() {
+        return contractList;
+    }
+
+    public void setContractList(List<Contract> contractList) {
+        this.contractList = contractList;
     }
 }
