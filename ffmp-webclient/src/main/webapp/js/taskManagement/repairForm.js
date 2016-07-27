@@ -49,8 +49,7 @@ $(document).ready(function () {
                 dataType: 'json',
                 success: function (data, XMLHttpRequest, jqXHR) {
                     $('#repairTable').bootstrapTable('refresh');
-                    console.log(data);
-                    $("tips").html(data);
+                    $("#repairModel").modal("hide");
                 }, error: function (XMLHttpRequest) {
                     $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
                     $("#message").modal("show");
@@ -80,7 +79,7 @@ $("#giveupData").click(function () {
     document.getElementById("repairForm").reset();
     $("#repairModel").modal("hide");
 });
-$("#queryProject").click(function () {
+$("#queryTask").click(function () {
     var data1 = $('#repairTable').bootstrapTable('getSelections');
     $.ajax('rest/task/repairFormCode?repairFormCode=' + data1[0].code, {
         type: 'GET',

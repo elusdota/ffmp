@@ -13,7 +13,7 @@ $(document).ready(function () {
                 //height: 350,
                 columns: [
                     {title: "序号", formatter: runningFormatter}
-                    , {title: "材料名称", field: "name", align: 'center', sortable: true}
+                    , {title: "设备名称", field: "name", align: 'center', sortable: true}
                     , {title: "类型", field: "type", align: 'center', sortable: true}
                     , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
                     , {title: "型号", field: "model", align: 'center', sortable: true}
