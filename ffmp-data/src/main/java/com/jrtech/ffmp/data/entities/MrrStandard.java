@@ -5,13 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 消防设置维管标准
+ * 消防设施维管标准
  * Created by suelmer on 2016/7/7.
  */
 @Entity
 @Table(name = "mrrstandard")
 public class MrrStandard extends AbstractDomainObject{
 
+    //设施名称
+    private String name;
     //编码
     private String code;
     //父级编码
@@ -28,6 +30,14 @@ public class MrrStandard extends AbstractDomainObject{
     //技术要求列表
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "mrrStandard", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TechniqueRequirements> techniqueRequirementsList = new ArrayList<>();
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getCode() {
         return code;
