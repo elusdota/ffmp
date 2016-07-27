@@ -34,7 +34,8 @@ function getRoleTree() {
             });
         },
         error: function (XMLHttpRequest) {
-            $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     });
 }
@@ -60,8 +61,9 @@ function getGrantedAuthorities(data) {
                 var org = $('#roles').treeview('getSelected');
                 allocationAnth(getallocationAuthData(org, data, false));
             });
-        }, error: function (XMLHttpRequest) {
-            $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+        },  error: function (XMLHttpRequest) {
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     })
     ;
@@ -109,8 +111,9 @@ $("#submitData").click(function () {
                 success: function (data, XMLHttpRequest, jqXHR) {
                     getRoleTree();
                     resetForm();
-                }, error: function (XMLHttpRequest) {
-                    $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+                },  error: function (XMLHttpRequest) {
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
                 }
             });
         } else {
@@ -122,8 +125,9 @@ $("#submitData").click(function () {
                 success: function (data, XMLHttpRequest, jqXHR) {
                     getRoleTree();
                     resetForm();
-                }, error: function (XMLHttpRequest) {
-                    $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+                },  error: function (XMLHttpRequest) {
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
                 }
             });
         }
@@ -181,7 +185,8 @@ function allocationAnth(auth) {
         success: function (data, XMLHttpRequest, jqXHR) {
             //什么也不做
         }, error: function (XMLHttpRequest) {
-            $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     });
 }

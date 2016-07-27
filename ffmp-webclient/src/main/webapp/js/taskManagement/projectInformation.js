@@ -32,8 +32,9 @@ $(document).ready(function () {
                 ],
                 striped: true
             });
-        }, error: function (XMLHttpRequest) {
-            $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+        },  error: function (XMLHttpRequest) {
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     });
     //序号加载

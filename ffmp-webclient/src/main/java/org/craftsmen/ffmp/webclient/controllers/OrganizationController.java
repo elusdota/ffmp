@@ -25,10 +25,6 @@ import java.util.List;
 public class OrganizationController {
     @Autowired
     private OrganizationService service;
-    private final String LOAD_ERROR = "加载组织机构错误";
-    private final String CREATE_ERROR = "创建组织机构错误";
-    private final String UPDATE_ERROR = "修改组织机构错误";
-    private final String DELETE_ERROR = "删除组织机构错误";
 
     /**
      * 加载组织机构列表
@@ -36,16 +32,11 @@ public class OrganizationController {
      * @return 组织机构
      */
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
     public List<Nodes> findAllOrganization() {
-        try {
-            List<Nodes> roleNodes = new ArrayList<Nodes>();
-            OrganizationNode organizationNode = new OrganizationNode(service.findRoot());
-            roleNodes.add(organizationNode.getNodes());
-            return roleNodes;
-        } catch (ServiceException ex) {
-            throw new ServiceException(ex.getMessage() + LOAD_ERROR);
-        }
+        List<Nodes> roleNodes = new ArrayList<Nodes>();
+        OrganizationNode organizationNode = new OrganizationNode(service.findRoot());
+        roleNodes.add(organizationNode.getNodes());
+        return roleNodes;
     }
 
     /**
@@ -55,18 +46,13 @@ public class OrganizationController {
      * @return 组织机构
      */
     @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public Organization create(@RequestBody OrganizationPost organization) {
-        try {
-            Organization organization1 = organization.getOrganization();
-            organization1.setParent(service.findOne(organization.getParentId()));
-            if (!service.isDuplicateNameOnSameLevel(organization1)) {
-                return service.save(organization1);
-            } else {
-                throw new ServiceException(CREATE_ERROR + "该组织机构已经存在");
-            }
-        } catch (DataAccessException ex) {
-            throw new ServiceException(CREATE_ERROR, ex);
+        Organization organization1 = organization.getOrganization();
+        organization1.setParent(service.findOne(organization.getParentId()));
+        if (!service.isDuplicateNameOnSameLevel(organization1)) {
+            return service.save(organization1);
+        } else {
+            throw new ServiceException("该组织机构已经存在");
         }
     }
 
@@ -76,15 +62,8 @@ public class OrganizationController {
      * @param id id
      */
     @RequestMapping(method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
     public void deleteOrganization(@RequestParam("id") String id) {
-        try {
-            service.delete(id);
-        } catch (ObjectRetrievalFailureException ex) {
-            throw new ServiceException(DELETE_ERROR, ex);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(DELETE_ERROR, ex);
-        }
+        service.delete(id);
     }
 
     /**
@@ -94,12 +73,7 @@ public class OrganizationController {
      * @return 组织机构
      */
     @RequestMapping(method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.OK)
     public Organization updateOrganization(@RequestBody OrganizationPost organization) {
-        try {
-            return service.save(organization.getOrganization());
-        } catch (DataAccessException ex) {
-            throw new ServiceException(UPDATE_ERROR, ex);
-        }
+        return service.save(organization.getOrganization());
     }
 }

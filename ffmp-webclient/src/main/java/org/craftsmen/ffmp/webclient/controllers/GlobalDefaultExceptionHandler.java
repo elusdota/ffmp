@@ -19,7 +19,6 @@ public class GlobalDefaultExceptionHandler {
         model.addObject("serviceException",new ServiceException(e.getMessage()));
         model.addObject("url", req.getRequestURL());
         model.setViewName("common/tips");
-        System.out.println(e.getMessage()+"------------------massage");
         return model;
     }
 

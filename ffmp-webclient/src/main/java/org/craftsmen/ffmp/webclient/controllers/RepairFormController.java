@@ -35,7 +35,6 @@ public class RepairFormController {
     private final String CREATE_ERROR = "创建报修单错误";
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public JSONListData findHistoryTask(@RequestBody TableGetDataParameters parameters) {
             RepairFormSpecs<RepairForm> repairFormSpecs = new RepairFormSpecs<RepairForm>();
             repairFormSpecs.setCustomer(customerService.findOneByAccount(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername())));

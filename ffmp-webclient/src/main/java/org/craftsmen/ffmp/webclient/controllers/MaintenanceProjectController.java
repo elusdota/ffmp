@@ -31,65 +31,42 @@ public class MaintenanceProjectController {
     private CodeService codeService;
     @Autowired
     private UserDetailsUtils userDetailsUtils;
-    private final String LOAD_ERROR = "加载数据错误";
-    private final String CREATE_ERROR = "创建项目错误";
-    private final String UPDATE_ERROR = "修改项目错误";
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public JSONListData findAll(@RequestBody TableGetDataParameters parameters) {
-        try {
-            PageableImpl pageable = new PageableImpl(parameters);
-            MaintenanceProjectSpecs<MaintenanceProject> maintenanceProjectSpecs = new MaintenanceProjectSpecs<MaintenanceProject>();
-            maintenanceProjectSpecs.setCustomer(customerService.findOneByAccount(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername())));
-            Page<MaintenanceProject> maintenanceProjects = service.findAll(maintenanceProjectSpecs.spec(parameters), pageable);
-            JSONListData jld = new JSONListData();
-            jld.setTotal(maintenanceProjects.getTotalElements());
-            jld.setRows(maintenanceProjects.getContent());
-            return jld;
-        } catch (ServiceException ex) {
-            throw new ServiceException(ex.getMessage() + LOAD_ERROR);
-        }
+        PageableImpl pageable = new PageableImpl(parameters);
+        MaintenanceProjectSpecs<MaintenanceProject> maintenanceProjectSpecs = new MaintenanceProjectSpecs<MaintenanceProject>();
+        maintenanceProjectSpecs.setCustomer(customerService.findOneByAccount(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername())));
+        Page<MaintenanceProject> maintenanceProjects = service.findAll(maintenanceProjectSpecs.spec(parameters), pageable);
+        JSONListData jld = new JSONListData();
+        jld.setTotal(maintenanceProjects.getTotalElements());
+        jld.setRows(maintenanceProjects.getContent());
+        return jld;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public MaintenanceProject create(@RequestBody MaintenanceProject maintenanceProject) {
-        try {
-            maintenanceProject.setCode(codeService.getMaintenanceProjectNum());
-            Organization organization = organizationService.findOneByName(maintenanceProject.getDelegate().getName());
-            maintenanceProject.setDelegate(organization);
-            Customer customer = customerService.findOneByName(maintenanceProject.getCustomer().getName());
-            maintenanceProject.setCustomer(customer);
-            return service.save(maintenanceProject);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(CREATE_ERROR, ex);
-        }
+        maintenanceProject.setCode(codeService.getMaintenanceProjectNum());
+        Organization organization = organizationService.findOneByName(maintenanceProject.getDelegate().getName());
+        maintenanceProject.setDelegate(organization);
+        Customer customer = customerService.findOneByName(maintenanceProject.getCustomer().getName());
+        maintenanceProject.setCustomer(customer);
+        return service.save(maintenanceProject);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.OK)
     public MaintenanceProject update(@RequestBody MaintenanceProject maintenanceProject) {
-        try {
-            MaintenanceProject maintenanceProject1 = service.findOne(maintenanceProject.getId());
-            maintenanceProject1.getEquipments().addAll(maintenanceProject.getEquipments());
-            maintenanceProject1.getEquipments().forEach(equipment -> {
-                equipment.setOwner(maintenanceProject1);
-                equipment.setCustomer(maintenanceProject1.getCustomer());
-            });
-            return service.save(maintenanceProject1);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(UPDATE_ERROR, ex);
-        }
+        MaintenanceProject maintenanceProject1 = service.findOne(maintenanceProject.getId());
+        maintenanceProject1.getEquipments().addAll(maintenanceProject.getEquipments());
+        maintenanceProject1.getEquipments().forEach(equipment -> {
+            equipment.setOwner(maintenanceProject1);
+            equipment.setCustomer(maintenanceProject1.getCustomer());
+        });
+        return service.save(maintenanceProject1);
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
     public MaintenanceProject get(@RequestParam("id") String id) {
-        try {
-            return service.findOne(id);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(LOAD_ERROR, ex);
-        }
+        return service.findOne(id);
     }
 }

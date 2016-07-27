@@ -8,7 +8,7 @@ $(function () {
         contentType: "application/json;charset=utf-8",
         dataType: "json",
         mimeType: 'application/json',
-        success: function (data, textStatus, jqXHR) {
+        success: function (data, XMLHttpRequest, jqXHR) {
             if (data != null) {
                 var menu = "<li class=" + '"header"' + ">" + "navigantion" + "</li><li><a href=" + '"javascript:"' + " data-url=" + '"index"' + "> <i class=" + '"fa fa-dashboard"' + "></i> <span>" + "home" + "</span></a></li>";
                 $.each(data, function (i, item) {
@@ -29,10 +29,9 @@ $(function () {
                 document.getElementById('navigantion').innerHTML = menu;
             }
         }
-        , error: function (jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status !== 200) {
-                alert("失败", jqXHR.responseJSON.message);
-            }
+        , error: function (XMLHttpRequest) {
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     });
 });

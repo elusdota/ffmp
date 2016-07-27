@@ -30,41 +30,27 @@ public class InboundsController {
     private CodeService codeService;
     @Autowired
     private UserDetailsUtils userDetailsUtils;
-    private final String LOAD_ERROR = "加载数据错误";
-    private final String CREATE_ERROR = "创建采购单错误";
-    private final String UPDATE_ERROR = "修改采购单错误";
-    private final String DELETE_ERROR = "删除采购单错误";
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public JSONListData findAll(@RequestBody InventorySearch parameters) {
-        try {
-            PageableImpl pageable = new PageableImpl(parameters);
-            Page<Inbounds> inboundses = service.findAll(new WarehouseSpecs<Inbounds>().spec(parameters), pageable);
-            JSONListData jld = new JSONListData();
-            jld.setTotal(inboundses.getTotalElements());
-            jld.setRows(inboundses.getContent());
-            return jld;
-        } catch (ServiceException ex) {
-            throw new ServiceException(ex.getMessage() + LOAD_ERROR);
-        }
+        PageableImpl pageable = new PageableImpl(parameters);
+        Page<Inbounds> inboundses = service.findAll(new WarehouseSpecs<Inbounds>().spec(parameters), pageable);
+        JSONListData jld = new JSONListData();
+        jld.setTotal(inboundses.getTotalElements());
+        jld.setRows(inboundses.getContent());
+        return jld;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public Inbounds create(@RequestBody Inbounds inbounds) {
-        try {
-            inbounds.getInboundsdetails().forEach(inboundsDetail -> {
-                inboundsDetail.setInbounds(inbounds);
-            });
-            inbounds.setNumber(codeService.getInboundsNum());
-            inbounds.setAudit(userDetailsUtils.getCurrent().getUsername());
-            inbounds.setExecutor(userDetailsUtils.getCurrent().getUsername());
-            inbounds.setDate(new Date());
-            inbounds.setStateTime(new Date());
-            return service.save(inbounds);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(CREATE_ERROR, ex);
-        }
+        inbounds.getInboundsdetails().forEach(inboundsDetail -> {
+            inboundsDetail.setInbounds(inbounds);
+        });
+        inbounds.setNumber(codeService.getInboundsNum());
+        inbounds.setAudit(userDetailsUtils.getCurrent().getUsername());
+        inbounds.setExecutor(userDetailsUtils.getCurrent().getUsername());
+        inbounds.setDate(new Date());
+        inbounds.setStateTime(new Date());
+        return service.save(inbounds);
     }
 }

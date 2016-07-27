@@ -2,8 +2,8 @@
  * Created by jiangliang on 2016/7/17.
  */
 $(document).ready(function () {
-    var id=$("#id").val().trim();
-    $.ajax('rest/taskNode?id='+id, {
+    var id = $("#id").val().trim();
+    $.ajax('rest/taskNode?id=' + id, {
         type: 'GET',
         contentType: 'application/json',
         dataType: 'json',
@@ -13,7 +13,7 @@ $(document).ready(function () {
             $("#dueDate").val(data.dueDate);
             $('#equipmentTable').bootstrapTable({
                 //height: 350,
-                data:data.equipments,
+                data: data.equipments,
                 columns: [
                     {title: "序号", formatter: runningFormatter}
                     , {title: "材料名称", field: "name", align: 'center', sortable: true}
@@ -25,7 +25,8 @@ $(document).ready(function () {
                 striped: true
             });
         }, error: function (XMLHttpRequest) {
-            $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     });
     //序号加载

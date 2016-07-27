@@ -32,39 +32,27 @@ public class DispatchController {
     private CodeService codeService;
     @Autowired
     private UserDetailsUtils userDetailsUtils;
-    private final String LOAD_ERROR = "加载数据错误";
-    private final String CREATE_ERROR = "创建出库单错误";
-    private final String UPDATE_ERROR = "修改出库单错误";
-    private final String DELETE_ERROR = "删除出库单错误";
+
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public JSONListData findAll(@RequestBody InventorySearch parameters) {
-        try {
-            PageableImpl pageable = new PageableImpl(parameters);
-            Page<Dispatch> dispatches=service.findAll(new WarehouseSpecs<Dispatch>().spec(parameters),pageable);
-            JSONListData jld = new JSONListData();
-            jld.setTotal(dispatches.getTotalElements());
-            jld.setRows(dispatches.getContent());
-            return jld;
-        } catch (ServiceException ex) {
-            throw new ServiceException(ex.getMessage() + LOAD_ERROR);
-        }
+        PageableImpl pageable = new PageableImpl(parameters);
+        Page<Dispatch> dispatches = service.findAll(new WarehouseSpecs<Dispatch>().spec(parameters), pageable);
+        JSONListData jld = new JSONListData();
+        jld.setTotal(dispatches.getTotalElements());
+        jld.setRows(dispatches.getContent());
+        return jld;
     }
+
     @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public Dispatch create(@RequestBody Dispatch dispatch) {
-        try {
-            dispatch.getDispatchdetails().forEach(dispatchDetail -> {
-                dispatchDetail.setDispatch(dispatch);
-            });
-            dispatch.setNumber(codeService.getDispatchNum());
-            dispatch.setAudit(userDetailsUtils.getCurrent().getUsername());
-            dispatch.setExecutor(userDetailsUtils.getCurrent().getUsername());
-            dispatch.setDate(new Date());
-            dispatch.setStateTime(new Date());
-            return service.save(dispatch);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(CREATE_ERROR, ex);
-        }
+        dispatch.getDispatchdetails().forEach(dispatchDetail -> {
+            dispatchDetail.setDispatch(dispatch);
+        });
+        dispatch.setNumber(codeService.getDispatchNum());
+        dispatch.setAudit(userDetailsUtils.getCurrent().getUsername());
+        dispatch.setExecutor(userDetailsUtils.getCurrent().getUsername());
+        dispatch.setDate(new Date());
+        dispatch.setStateTime(new Date());
+        return service.save(dispatch);
     }
 }

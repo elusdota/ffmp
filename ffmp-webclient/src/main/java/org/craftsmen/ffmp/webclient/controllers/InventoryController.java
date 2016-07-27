@@ -28,38 +28,27 @@ import java.util.List;
 public class InventoryController {
     @Autowired
     private InventoryService service;
-    private final String LOAD_ERROR = "加载数据错误";
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public JSONListData findAll(@RequestBody InventorySearch parameters) {
-        try {
-            PageableImpl pageable = new PageableImpl(parameters);
-            Page<Inventory> inventoryPage = service.findAll(new InventorySpecs().spec(parameters), pageable);
-            JSONListData jld = new JSONListData();
-            jld.setTotal(inventoryPage.getTotalElements());
-            jld.setRows(inventoryPage.getContent());
-            return jld;
-        } catch (ServiceException ex) {
-            throw new ServiceException(ex.getMessage() + LOAD_ERROR);
-        }
+        PageableImpl pageable = new PageableImpl(parameters);
+        Page<Inventory> inventoryPage = service.findAll(new InventorySpecs().spec(parameters), pageable);
+        JSONListData jld = new JSONListData();
+        jld.setTotal(inventoryPage.getTotalElements());
+        jld.setRows(inventoryPage.getContent());
+        return jld;
     }
 
     @RequestMapping(value = "/searchByName", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public JSONListData searchByName(@RequestBody TableGetDataParameters parameters) {
-        try {
-            if (parameters.getSearch() == null) {
-                parameters.setSearch("");
-            }
-            PageableImpl pageable = new PageableImpl(parameters);
-            Page<Inventory> inventoryPage = service.findByNameLike(parameters.getSearch(), pageable);
-            JSONListData jld = new JSONListData();
-            jld.setTotal(inventoryPage.getTotalElements());
-            jld.setRows(inventoryPage.getContent());
-            return jld;
-        } catch (ServiceException ex) {
-            throw new ServiceException(ex.getMessage() + LOAD_ERROR);
+        if (parameters.getSearch() == null) {
+            parameters.setSearch("");
         }
+        PageableImpl pageable = new PageableImpl(parameters);
+        Page<Inventory> inventoryPage = service.findByNameLike(parameters.getSearch(), pageable);
+        JSONListData jld = new JSONListData();
+        jld.setTotal(inventoryPage.getTotalElements());
+        jld.setRows(inventoryPage.getContent());
+        return jld;
     }
 }
