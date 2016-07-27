@@ -39,18 +39,24 @@ $(document).ready(function () {
     function runningFormatter(value, row, index) {
         return index + 1;
     }
+
     $("#submitData").click(function () {
-        $.ajax('rest/repairForm', {
-            type: 'POST',
-            data: JSON.stringify(getSaveData()),
-            contentType: 'application/json',
-            dataType: 'json',
-            success: function (data, XMLHttpRequest, jqXHR) {
-                $('#repairTable').bootstrapTable('refresh');
-            }, error: function (XMLHttpRequest) {
-                $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
-            }
-        });
+        if ($("#repairForm").valid()) {
+            $.ajax('rest/repairForm', {
+                type: 'POST',
+                data: JSON.stringify(getSaveData()),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (data, XMLHttpRequest, jqXHR) {
+                    $('#repairTable').bootstrapTable('refresh');
+                    console.log(data);
+                    $("tips").html(data);
+                }, error: function (XMLHttpRequest) {
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
+                }
+            });
+        }
     });
     function getSaveData() {
         var data = {
@@ -63,18 +69,25 @@ $(document).ready(function () {
     }
 })
 $("#createRepair").click(function () {
-    $("#main-content").load("taskManagement/createProject", function () {
-        $("#main-content").fadeIn();
+    document.getElementById("repairForm").reset();
+    $('#repairModel').modal({
+        backdrop: 'static',
+        keyboard: false
     });
+    $("#repairModel").modal("show");
+});
+$("#giveupData").click(function () {
+    document.getElementById("repairForm").reset();
+    $("#repairModel").modal("hide");
 });
 $("#queryProject").click(function () {
     var data1 = $('#repairTable').bootstrapTable('getSelections');
-    $.ajax('rest/task/repairFormCode?repairFormCode='+data1[0].code, {
+    $.ajax('rest/task/repairFormCode?repairFormCode=' + data1[0].code, {
         type: 'GET',
         contentType: 'application/json',
         dataType: 'json',
         success: function (data, XMLHttpRequest, jqXHR) {
-            if(data!=null){
+            if (data != null) {
                 $("#main-content").load("taskManagement/projectInformation?id=" + data.id, function () {
                     $("#main-content").fadeIn();
                 });

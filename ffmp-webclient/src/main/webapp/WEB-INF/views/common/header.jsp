@@ -300,3 +300,5 @@
         </ul>
     </section>
 </aside>
+<div class="row" id="tips">
+</div>

@@ -420,15 +420,16 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
 		second.getChildren().add(third);
 
 		root = new GrantedAuthorityImpl("报修单");
+		root.setSrc("taskManagement/repairForm");
 		root.setIcons(" fa-bell");
 		second = new GrantedAuthorityImpl("创建报修单");
 		second.setIcons("fa-plus ");
 		second.setParent(root);
 		root.getChildren().add(second);
-		third = new GrantedAuthorityImpl("查看维修任务");
-		third.setIcons("fa-hourglass");
-		third.setParent(second);
-		second.getChildren().add(third);
+		second = new GrantedAuthorityImpl("查看维修任务");
+		second.setIcons("fa-hourglass");
+		second.setParent(root);
+		root.getChildren().add(second);
 		gaRepository.save(root);
 	}
 

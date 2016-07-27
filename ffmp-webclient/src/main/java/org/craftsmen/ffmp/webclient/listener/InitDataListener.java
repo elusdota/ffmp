@@ -17,7 +17,7 @@ public class InitDataListener  implements ApplicationListener<ContextRefreshedEv
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        initService.clearData();
-        initService.createData();
+//        initService.clearData();
+//        initService.createData();
     }
 }
