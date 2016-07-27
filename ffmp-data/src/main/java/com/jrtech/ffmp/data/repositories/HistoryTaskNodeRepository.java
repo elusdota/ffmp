@@ -18,5 +18,5 @@ import java.util.List;
 public interface HistoryTaskNodeRepository extends PagingAndSortingRepository<HistoryTaskNode, String>, JpaSpecificationExecutor {
     HistoryTaskNode findOneByName(String name);
 
-    List<HistoryTaskNode> findByMaintenanceTask(MaintenanceTask maintenanceTask);
+    List<HistoryTaskNode> findByMaintenanceTaskOrderByDueDateAsc(MaintenanceTask maintenanceTask);
 }

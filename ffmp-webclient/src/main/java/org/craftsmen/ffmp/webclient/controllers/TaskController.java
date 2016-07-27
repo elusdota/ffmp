@@ -102,7 +102,7 @@ public class TaskController {
     @RequestMapping(value = "/flowchart", method = RequestMethod.GET)
     public List<HistoryTaskNode> getFlowchart(@RequestParam("id") String id) {
         MaintenanceTask maintenanceTask = service.findOne(id);
-        List<HistoryTaskNode> historyTaskNodes = taskHistoryService.findByMaintenanceTask(maintenanceTask);
+        List<HistoryTaskNode> historyTaskNodes = taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask);
         return historyTaskNodes;
     }
 }

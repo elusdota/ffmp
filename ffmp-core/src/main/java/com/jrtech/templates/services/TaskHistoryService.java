@@ -18,5 +18,5 @@ public interface TaskHistoryService {
     //id查询
     HistoryTaskNode findOne(String id);
 
-    List<HistoryTaskNode> findByMaintenanceTask(MaintenanceTask maintenanceTask);
+    List<HistoryTaskNode> findByMaintenanceTaskOrderByDueDateAsc(MaintenanceTask maintenanceTask);
 }

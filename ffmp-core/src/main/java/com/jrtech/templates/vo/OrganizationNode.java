@@ -15,6 +15,7 @@ public class OrganizationNode extends Organization {
         State state = new State();
         state.setChecked(false);
         state.setDisabled(false);
+        state.setExpanded(true);
         this.nodes.setSelectable(true);
         this.nodes.setState(state);
         if (organization.getChildren().size() > 0) {

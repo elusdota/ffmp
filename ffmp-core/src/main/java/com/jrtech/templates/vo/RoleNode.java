@@ -22,11 +22,13 @@ public class RoleNode {
             State state = new State();
             state.setChecked(false);
             state.setDisabled(true);
+            state.setExpanded(true);
             this.nodes.setState(state);
         } else {
             State state = new State();
             state.setChecked(false);
             state.setDisabled(false);
+            state.setExpanded(true);
             this.nodes.setSelectable(true);
             this.nodes.setState(state);
         }
