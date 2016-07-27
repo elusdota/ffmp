@@ -1,5 +1,7 @@
 package com.jrtech.ffmp.data.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.Collection;
  */
 @Entity
 @Table(name = "MaintenanceProject")
+@JsonIgnoreProperties(value = {"equipments",})
 public class MaintenanceProject extends AbstractNamedObject {
     //项目签约人
     @ManyToOne

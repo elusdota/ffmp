@@ -12,11 +12,15 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ControllerAdvice
 public class GlobalDefaultExceptionHandler {
-    @ExceptionHandler(value = RuntimeException.class)
+    @ExceptionHandler(value = {RuntimeException.class})
     public ModelAndView
     defaultErrorHandler(HttpServletRequest req, RuntimeException e) throws Exception {
         ModelAndView model = new ModelAndView();
-        model.addObject("serviceException",new ServiceException(e.getMessage()));
+        if(e.getMessage().isEmpty()){
+            model.addObject("serviceException", new ServiceException());
+        }else {
+            model.addObject("serviceException", new ServiceException(e.getMessage()));
+        }
         model.addObject("url", req.getRequestURL());
         model.setViewName("common/tips");
         return model;
