@@ -14,8 +14,9 @@ $(document).ready(function () {
             $("#customer").val(data.customer.name);
             $("#description").val(data.description);
             $("#repairnumber").val(data.repairnumber);
-        }, error: function (XMLHttpRequest) {
-            $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+        },  error: function (XMLHttpRequest) {
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     });
     $.ajax('rest/task/flowchart?id=' + id, {
@@ -87,7 +88,8 @@ $(document).ready(function () {
                 });
             }
         }, error: function (XMLHttpRequest) {
-            $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     });
 });

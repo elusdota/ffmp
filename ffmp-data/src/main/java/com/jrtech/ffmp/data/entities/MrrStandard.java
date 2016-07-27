@@ -26,8 +26,8 @@ public class MrrStandard extends AbstractDomainObject{
     private String remark;
 
     //技术要求列表
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "mrrstandard", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TechniqueRequirements> list = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "mrrStandard", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TechniqueRequirements> techniqueRequirementsList = new ArrayList<>();
 
     public String getCode() {
         return code;
@@ -45,12 +45,12 @@ public class MrrStandard extends AbstractDomainObject{
         this.jobContent = jobContent;
     }
 
-    public List<TechniqueRequirements> getList() {
-        return list;
+    public List<TechniqueRequirements> getTechniqueRequirementsList() {
+        return techniqueRequirementsList;
     }
 
-    public void setList(List<TechniqueRequirements> list) {
-        this.list = list;
+    public void setTechniqueRequirementsList(List<TechniqueRequirements> techniqueRequirementsList) {
+        this.techniqueRequirementsList = techniqueRequirementsList;
     }
 
     public String getMrrMethod() {

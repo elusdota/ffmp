@@ -42,10 +42,6 @@ public class RoleController {
     private UserDetailsUtils userDetailsUtils;
     @Autowired
     private GrantedAuthorityService gaService;
-    private final String LOAD_ERROR = "加载数据错误";
-    private final String CREATE_ERROR = "创建角色错误";
-    private final String UPDATE_ERROR = "修改角色错误";
-    private final String DELETE_ERROR = "删除角色错误";
 
     /**
      * 加载组织机构下的角色
@@ -53,17 +49,12 @@ public class RoleController {
      * @return Nodes对象
      */
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
     public List<Nodes> findAllRoles(@RequestBody @RequestParam("id") String id) {
-        try {
-            Account account = accountService.findOne(id);
-            List<Nodes> roleNodes = new ArrayList<Nodes>();
-            RoleNode roleNode = new RoleNode(organizationService.findRoot(), account);
-            roleNodes.add(roleNode.getNodes());
-            return roleNodes;
-        } catch (ServiceException ex) {
-            throw new ServiceException(ex.getMessage() + LOAD_ERROR);
-        }
+        Account account = accountService.findOne(id);
+        List<Nodes> roleNodes = new ArrayList<Nodes>();
+        RoleNode roleNode = new RoleNode(organizationService.findRoot(), account);
+        roleNodes.add(roleNode.getNodes());
+        return roleNodes;
     }
 
     /**
@@ -73,19 +64,14 @@ public class RoleController {
      * @return 角色对象
      */
     @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public Role create(@RequestBody RoleAndOrganization roleAndOrganization) {
-        try {
-            Organization organization = organizationService.findOne(roleAndOrganization.getOrganization().getId());
-            Role role1 = new Role(roleAndOrganization.getRole().getName());
-            role1.setOrganization(organization);
-            if (!service.isDuplicateNameOnSameLevel(role1)) {
-                return service.save(role1);
-            } else {
-                throw new ServiceException(CREATE_ERROR + "角色已经存在");
-            }
-        } catch (DataAccessException ex) {
-            throw new ServiceException(CREATE_ERROR, ex);
+        Organization organization = organizationService.findOne(roleAndOrganization.getOrganization().getId());
+        Role role1 = new Role(roleAndOrganization.getRole().getName());
+        role1.setOrganization(organization);
+        if (!service.isDuplicateNameOnSameLevel(role1)) {
+            return service.save(role1);
+        } else {
+            throw new ServiceException("角色已经存在");
         }
     }
 
@@ -95,15 +81,8 @@ public class RoleController {
      * @param id id
      */
     @RequestMapping(method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.OK)
     public void deleteRole(@RequestParam("id") String id) {
-        try {
-            service.delete(id);
-        } catch (ObjectRetrievalFailureException ex) {
-            throw new ServiceException(DELETE_ERROR, ex);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(DELETE_ERROR, ex);
-        }
+        service.delete(id);
     }
 
     /**
@@ -112,15 +91,10 @@ public class RoleController {
      * @param role 角色对象
      */
     @RequestMapping(method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.OK)
     public Role updateRole(@RequestBody Role role) {
-        try {
-            Role role1 = service.findOne(role.getId());
-            role1.setName(role.getName());
-            return service.save(role1);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(UPDATE_ERROR, ex);
-        }
+        Role role1 = service.findOne(role.getId());
+        role1.setName(role.getName());
+        return service.save(role1);
     }
 
     /**
@@ -129,15 +103,8 @@ public class RoleController {
      * @param id id
      */
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
     public Role findOne(@RequestParam("id") String id) {
-        try {
-            return service.findOne(id);
-        } catch (ObjectRetrievalFailureException ex) {
-            throw new ServiceException(DELETE_ERROR, ex);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(DELETE_ERROR, ex);
-        }
+        return service.findOne(id);
     }
 
     /**
@@ -146,35 +113,23 @@ public class RoleController {
      * @param path 权限路径
      */
     @RequestMapping(value = "/getAnth", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
     public boolean getAnth(@RequestParam("path") String path) {
-        try {
-            return userDetailsUtils.isAuthorized(path);
-        } catch (ObjectRetrievalFailureException ex) {
-            throw new ServiceException(DELETE_ERROR, ex);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(DELETE_ERROR, ex);
-        }
+        return userDetailsUtils.isAuthorized(path);
     }
 
-    @RequestMapping(value = "/allocationAuth",method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/allocationAuth", method = RequestMethod.POST)
     public Role allocationAuth(@RequestBody RoleAndAuthority roleAndAuthority) {
-        try {
-            Collection<GrantedAuthorityImpl> authorities = new TreeSet<>();
-            Role role = service.findOne(roleAndAuthority.getRole());
-            GrantedAuthorityImpl grantedAuthority = gaService.findOne(roleAndAuthority.getAnth());
-            authorities.addAll(role.getAuthorities());
-            role.getAuthorities().clear();
-            if (!roleAndAuthority.isLift()) {
-                authorities.remove(grantedAuthority);
-            } else {
-                authorities.add(grantedAuthority);
-            }
-            role.getAuthorities().addAll(authorities);
-            return service.save(role);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(CREATE_ERROR, ex);
+        Collection<GrantedAuthorityImpl> authorities = new TreeSet<>();
+        Role role = service.findOne(roleAndAuthority.getRole());
+        GrantedAuthorityImpl grantedAuthority = gaService.findOne(roleAndAuthority.getAnth());
+        authorities.addAll(role.getAuthorities());
+        role.getAuthorities().clear();
+        if (!roleAndAuthority.isLift()) {
+            authorities.remove(grantedAuthority);
+        } else {
+            authorities.add(grantedAuthority);
         }
+        role.getAuthorities().addAll(authorities);
+        return service.save(role);
     }
 }

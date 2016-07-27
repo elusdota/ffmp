@@ -1,8 +1,12 @@
 package com.jrtech.templates.services;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * Created by elus on 2015-06-03.异常定义
  */
+@ResponseStatus(value= HttpStatus.INTERNAL_SERVER_ERROR)
 public class ServiceException extends RuntimeException {
 
     public ServiceException(){

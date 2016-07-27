@@ -26,12 +26,6 @@ public class GrantedAuthorityController {
     private GrantedAuthorityService service;
     @Autowired
     private RoleService roleService;
-    @Autowired
-    private NavigationService navigationService;
-    private final String LOAD_ERROR = "加载权限错误";
-    private final String CREATE_ERROR = "创建权限错误";
-    private final String UPDATE_ERROR = "修改权限错误";
-    private final String DELETE_ERROR = "删除权限错误";
 
     /**
      * 加载组织机构列表
@@ -39,19 +33,14 @@ public class GrantedAuthorityController {
      * @return 组织机构
      */
     @RequestMapping(value = "/findAll", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
     public List<Nodes> findAllRoles(@RequestParam("id") String id) {
-        try {
-            Role role=roleService.findOne(id);
-            List<Nodes> nodes = new ArrayList<Nodes>();
-            List<GrantedAuthorityImpl> grantedAuthorities = service.findRoot();
-            grantedAuthorities.forEach(grantedAuthority -> {
-                GrantedAuthorityNode grantedAuthorityNode = new GrantedAuthorityNode(grantedAuthority, role);
-                nodes.add(grantedAuthorityNode.getNodes());
-            });
-            return nodes;
-        } catch (ServiceException ex) {
-            throw new ServiceException(ex.getMessage() + LOAD_ERROR);
-        }
+        Role role = roleService.findOne(id);
+        List<Nodes> nodes = new ArrayList<Nodes>();
+        List<GrantedAuthorityImpl> grantedAuthorities = service.findRoot();
+        grantedAuthorities.forEach(grantedAuthority -> {
+            GrantedAuthorityNode grantedAuthorityNode = new GrantedAuthorityNode(grantedAuthority, role);
+            nodes.add(grantedAuthorityNode.getNodes());
+        });
+        return nodes;
     }
 }

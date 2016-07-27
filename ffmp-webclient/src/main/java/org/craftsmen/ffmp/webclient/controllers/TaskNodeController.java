@@ -16,15 +16,9 @@ import org.springframework.web.bind.annotation.*;
 public class TaskNodeController {
     @Autowired
     private TaskHistoryService service;
-    private final String LOAD_ERROR = "加载数据错误";
-    private final String CREATE_ERROR = "创建任务错误";
+
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
     public HistoryTaskNode get(@RequestParam("id") String id) {
-        try {
-            return service.findOne(id);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(LOAD_ERROR, ex);
-        }
+        return service.findOne(id);
     }
 }

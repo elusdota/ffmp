@@ -69,7 +69,8 @@ $("#submitData").click(function () {
                     getOrganizationTree();
                     resetForm();
                 }, error: function (XMLHttpRequest) {
-                    $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
                 }
             });
         } else {
@@ -82,7 +83,8 @@ $("#submitData").click(function () {
                     getOrganizationTree();
                     resetForm();
                 }, error: function (XMLHttpRequest) {
-                    $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
                 }
             });
         }

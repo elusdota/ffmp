@@ -35,9 +35,7 @@ public class RepairFormController {
     private final String CREATE_ERROR = "创建报修单错误";
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public JSONListData findHistoryTask(@RequestBody TableGetDataParameters parameters) {
-        try {
             RepairFormSpecs<RepairForm> repairFormSpecs = new RepairFormSpecs<RepairForm>();
             repairFormSpecs.setCustomer(customerService.findOneByAccount(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername())));
             PageableImpl pageable = new PageableImpl(parameters);
@@ -46,15 +44,10 @@ public class RepairFormController {
             jld.setTotal(repairForms.getTotalElements());
             jld.setRows(repairForms.getContent());
             return jld;
-        } catch (ServiceException ex) {
-            throw new ServiceException(ex.getMessage() + LOAD_ERROR);
-        }
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.OK)
     public RepairForm create(@RequestBody RepairForm repairForm) {
-        try {
             if (maintenanceProjectService.findOneByCode(repairForm.getProjectNumber())==null){
                 throw new ServiceException("无此项目编号的项目！请重新输入项目编号。");
             }
@@ -62,8 +55,5 @@ public class RepairFormController {
             repairForm.setDate(new Date());
             repairForm.setAccount(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername()));
             return service.save(repairForm);
-        } catch (DataAccessException ex) {
-            throw new ServiceException(CREATE_ERROR, ex);
-        }
     }
 }

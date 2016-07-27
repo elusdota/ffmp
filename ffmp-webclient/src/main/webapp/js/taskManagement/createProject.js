@@ -13,8 +13,9 @@ $(document).ready(function () {
                     $("#main-content").load("taskManagement/maintenanceProject", function () {
                         $("#main-content").fadeIn();
                     });
-                }, error: function (XMLHttpRequest) {
-                    $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+                },  error: function (XMLHttpRequest) {
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
                 }
             });
         }

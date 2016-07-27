@@ -60,7 +60,8 @@ $(document).ready(function () {
                 });
             },
             error: function (XMLHttpRequest) {
-                $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+                $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                $("#message").modal("show");
             }
         });
     }
@@ -84,7 +85,8 @@ $(document).ready(function () {
             success: function (data, XMLHttpRequest, jqXHR) {
                 //什么也不做
             }, error: function (XMLHttpRequest) {
-                $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+                $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                $("#message").modal("show");
             }
         });
     }
@@ -137,12 +139,13 @@ $("#submitUpdateData").click(function () {
                     $('#accountTable').bootstrapTable('refresh');
                     document.getElementById("accountUpdateForm").reset();
                     $("#accountUpdateModel").modal("hide");
-                }, error: function (XMLHttpRequest) {
-                    $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+                },  error: function (XMLHttpRequest) {
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
                 }
             });
         } else {
-            $.messager.alert("失败", "原密码输入错误！");
+            alert("失败", "原密码输入错误！");
         }
     }
 });
@@ -158,7 +161,8 @@ $("#submitData").click(function () {
                 $('#accountTable').bootstrapTable('refresh');
                 resetForm();
             }, error: function (XMLHttpRequest) {
-                $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+                $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                $("#message").modal("show");
             }
         });
     }

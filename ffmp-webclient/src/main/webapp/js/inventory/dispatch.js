@@ -141,8 +141,9 @@ $("#submitData").click(function () {
             $('#dispatchTable').bootstrapTable('refresh');
             $("#dispatchModel").modal("hide");
             $('#detailsTable').bootstrapTable('removeAll');
-        }, error: function (XMLHttpRequest) {
-            $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+        },  error: function (XMLHttpRequest) {
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     });
 });

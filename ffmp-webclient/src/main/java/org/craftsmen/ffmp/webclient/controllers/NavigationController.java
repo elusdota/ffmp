@@ -21,17 +21,11 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/rest/navigantion")
 public class NavigationController {
-    private final String READ_ERROR = "导航数据加载错误";
     @Autowired
     private NavigationService service;
 
-    @RequestMapping( method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(method = RequestMethod.GET)
     public List<GrantedAuthorityImpl> getRoot() {
-        try {
-            return service.getNavigation();
-        } catch (DataAccessException ex) {
-            throw new ServiceException(READ_ERROR, ex);
-        }
+        return service.getNavigation();
     }
 }

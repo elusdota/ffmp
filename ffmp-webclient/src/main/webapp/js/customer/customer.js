@@ -79,8 +79,9 @@ $("#submitData").click(function () {
                     $('#customerTable').bootstrapTable('refresh');
                     document.getElementById("customerForm").reset();
                     $("#customerModel").modal("hide");
-                }, error: function (XMLHttpRequest) {
-                    $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+                },  error: function (XMLHttpRequest) {
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
                 }
             });
         }
@@ -94,8 +95,9 @@ $("#submitData").click(function () {
                     $('#customerTable').bootstrapTable('refresh');
                     document.getElementById("customerForm").reset();
                     $("#customerModel").modal("hide");
-                }, error: function (XMLHttpRequest) {
-                    $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+                },  error: function (XMLHttpRequest) {
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
                 }
             });
         }

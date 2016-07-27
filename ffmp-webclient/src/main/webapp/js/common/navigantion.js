@@ -38,10 +38,9 @@ $(function () {
             }
             document.getElementById('navigantion').innerHTML = menu;
         }
-        , error: function (jqXHR, textStatus, errorThrown) {
-            if (jqXHR.status !== 200) {
-                alert("失败", jqXHR.responseJSON.message);
-            }
+        , error: function (XMLHttpRequest) {
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     });
 });

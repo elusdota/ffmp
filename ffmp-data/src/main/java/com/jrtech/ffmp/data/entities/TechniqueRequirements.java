@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by suelmer on 2016/7/17.
  */
 @Entity
-@Table(name = "TechniqueRequirements")
+@Table(name = "techniqueRequirements")
 public class TechniqueRequirements extends AbstractDomainObject{
     //名称为 强制，自定
     private String name;
