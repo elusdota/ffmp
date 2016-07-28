@@ -1,5 +1,7 @@
 package com.jrtech.ffmp.data.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +12,12 @@ import java.util.List;
  */
 @Entity
 @Table(name = "mrrstandard")
-public class MrrStandard extends AbstractDomainObject{
-
-    //设施名称
-    private String name;
+@JsonIgnoreProperties(value = { "parent" })
+public class MrrStandard extends AbstractTreeNode<MrrStandard>{
+     public  MrrStandard(){
+    }
     //编码
     private String code;
-    //父级编码
-    private  String  parentCode;
     //工作内容
     private String jobContent;
     //维管方式
@@ -31,13 +31,6 @@ public class MrrStandard extends AbstractDomainObject{
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "mrrStandard", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TechniqueRequirements> techniqueRequirementsList = new ArrayList<>();
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getCode() {
         return code;
@@ -69,14 +62,6 @@ public class MrrStandard extends AbstractDomainObject{
 
     public void setMrrMethod(String mrrMethod) {
         this.mrrMethod = mrrMethod;
-    }
-
-    public String getParentCode() {
-        return parentCode;
-    }
-
-    public void setParentCode(String parentCode) {
-        this.parentCode = parentCode;
     }
 
     public double getProportion() {

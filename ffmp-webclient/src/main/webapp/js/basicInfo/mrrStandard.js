@@ -12,19 +12,29 @@ $(function () {
         striped: true,
         singleSelect: true,
         clickToSelect: true,
+        queryParams: function (params) {
+            var fin = {
+                offset: params.offset,
+                limit: params.limit,
+                order: params.order,
+                sort: params.sort,
+                search: params.search
+            };
+            return JSON.stringify(fin);
+        },
         columns: [
             {
                 field: 'state', checkbox: true
             },
             {title: '序号', formatter: runningFormatter},
             {title: "编码", field: "code", sortable: true},
-            {title: "系统/设施名称/维护管理项目", field: "name", sortable: true},
+            {title: "系统/设施名称", field: "name", sortable: true},
             {title: "维管方式", field: "mrrMethod", sortable: true},
             {title: "工作内容", field: "jobContent", sortable: true},
             {title: "抽查比例", field: "proportion", sortable: true},
             {title: "备注", field: "remark", sortable: true},
             {
-                title: '查看详细',
+                title: '查看技术要求',
                 align: 'center',
                 sortable: true,
                 formatter: operateFormatter,
@@ -38,7 +48,7 @@ $(function () {
     }
     function operateFormatter(){
         return [
-            '<a class="edit" href="javascript:void(0)"><i class="glyphicon glyphicon-eye-open"></i> 查看详细</a>'
+            '<a class="edit" href="javascript:void(0)"><i class="glyphicon glyphicon-eye-open"></i> 技术要求</a>'
         ].join('');
     }
 
@@ -49,11 +59,8 @@ $(function () {
     };
 
     $("#createMrrStandard").click(function () {
-        //document.getElementById("inboundsForm").reset();
-        //$('#inboundsModel').modal({
-        //    backdrop: 'static',
-        //    keyboard: false
-        //});
+        $("#resetTechnique").trigger("click");
+        $('#techniqueTable').bootstrapTable("removeAll");
         $("#createMrrStandardModal").modal("show");
     });
 
@@ -79,6 +86,40 @@ $(function () {
         if ($("#techniqueForm").valid()) {
             $('#techniqueTable').bootstrapTable("append", getTechniqueData());
             $("#resetTechnique").trigger("click");
+        }
+    });
+
+    $("#createMrrStandardBtn").click(function(){
+        if($("#mrrStandardForm").valid()){
+            var selectRow = $('#mrrstandardTable').bootstrapTable('getSelections');
+            var mrrStandardVal = {
+                code: $("#code").val().trim(),
+                name: $("#name").val().trim(),
+                mrrMethod: $("#mrrMethod").val().trim(),
+                jobContent: $("#jobContent").val().trim(),
+                proportion: $("#proportion").val().trim(),
+                remark: $("#remark").val().trim(),
+                techniqueRequirementsList:$("#techniqueTable").bootstrapTable("getData")
+            };
+            var mrrStandardInfo={
+                parent: selectRow[0],
+                mrrStandard :mrrStandardVal
+            };
+            console.log("---------data----"+JSON.stringify(mrrStandardInfo));
+            $.ajax('rest/mrrstandard/create', {
+                type: 'POST',
+                data: JSON.stringify(mrrStandardInfo),
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (data, XMLHttpRequest, jqXHR) {
+                    $('#mrrstandardTable').bootstrapTable('refresh');
+                    $("#resetMrrStandard").trigger("click");
+                    $("#createMrrStandardModal").modal("hide");
+                },  error: function (XMLHttpRequest) {
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
+                }
+            });
         }
     });
 });

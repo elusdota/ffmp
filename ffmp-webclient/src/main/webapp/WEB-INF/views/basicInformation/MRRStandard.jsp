@@ -31,10 +31,10 @@
                 <button type="button" id="createMrrStandard" class="btn btn-default">创建设施维管标准</button>
             </sec:authorize>
             <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/设施维管标准管理/修改设施维管标准')">
-                <button type="button" id="updateMrrStandard" class="btn btn-default">修改设施维管标准</button>
+                <button type="button" id="updateMrrStandard" class="btn btn-default hidden">修改设施维管标准</button>
             </sec:authorize>
             <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/设施维管标准管理/删除设施维管标准')">
-                <button type="button" id="updateMrrStandard" class="btn btn-default">删除设施维管标准</button>
+                <button type="button" id="updateMrrStandard" class="btn btn-default hidden">删除设施维管标准</button>
             </sec:authorize>
         </div>
         <div class="box-body">
@@ -69,7 +69,28 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form class="form-horizontal">
+                        <form class="form-horizontal" id="mrrStandardForm">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="parent_code" class="col-md-4 control-label">上一级编码：</label>
+
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="parent_code" name="parent_code"
+                                               placeholder="编码"
+                                               readonly>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="parent_name" class="col-md-4 control-label">设施名称：</label>
+
+                                    <div class="col-md-8">
+                                        <input type="text" class="form-control" id="parent_name" name="parent_name"
+                                               placeholder="设施名称"
+                                               readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
                             <div class="form-group col-md-6">
                                 <label for="code" class="col-md-4 control-label">编码：<span
                                         class="required">*</span></label>
@@ -107,7 +128,8 @@
                                         class="required">*</span></label>
 
                                 <div class="col-md-8">
-                                    <textarea class="form-control" rows="2" id="jobContent" name="jobContent" placeholder="工作内容"
+                                    <textarea class="form-control" rows="2" id="jobContent" name="jobContent"
+                                              placeholder="工作内容"
                                               required="required"></textarea>
                                 </div>
                             </div>
@@ -129,6 +151,7 @@
                                            placeholder="备注">
                                 </div>
                             </div>
+                            <button type="reset" class="btn btn-warning hidden" id="resetMrrStandard">重置</button>
                         </form>
                     </div>
                     <div class="row">
@@ -137,21 +160,38 @@
                                 <h3 class="box-title">技术要求</h3>
                             </div>
                             <div class="box-body">
-                                <form role="form" id="techniqueForm">
-                                    <div class="form-group">
-                                        <label>技术名称</label>
-                                        <input type="text" class="form-control" id="tName" name="tName" placeholder="技术名称" required="required">
+                                <form role="form" id="techniqueForm" class="form-horizontal">
+                                    <div class="form-group col-md-6">
+                                        <label for="tName" class="col-md-4 control-label">技术名称:<span
+                                                class="required">*</span></label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="tName" name="tName"
+                                                   placeholder="技术名称" required="required">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>技术类型</label>
-                                        <input type="text" class="form-control" id="tType" name="tType" placeholder="技术类型"  required="required">
+                                    <div class="form-group col-md-6">
+                                        <label for="tType" class="col-md-4 control-label">技术类型:<span
+                                                class="required">*</span></label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control" id="tType" name="tType"
+                                                   placeholder="技术类型" required="required">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label>描述</label>
-                                        <textarea rows="2" class="form-control" id="description" name="description" placeholder="描述" ></textarea>
+                                    <div class="form-group col-md-6">
+                                        <label for="description" class="col-md-4 control-label">描述</label>
+
+                                        <div class="col-md-8">
+                                        <textarea rows="2" class="form-control" id="description" name="description"
+                                                  placeholder="描述"></textarea>
+                                        </div>
                                     </div>
-                                    <button type="reset" class="btn btn-default" id="resetTechnique">重置</button>
-                                    <button type="button" class="btn btn-primary" id="addTechnique">添加</button>
+                                    <div class="form-group col-md-12">
+                                        <div class="col-md-offset-10 col-md-2">
+                                        <button type="reset" class="btn btn-warning" id="resetTechnique">重置</button>
+                                        <button type="button" class="btn btn-primary" id="addTechnique">添加</button>
+                                    </div></div>
                                 </form>
                             </div>
                             <div class="box-footer">
@@ -167,7 +207,8 @@
             </div>
             <!-- /.modal-content -->
         </div>
-        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal-dialog -->
 </section>
 <script src="<c:url value='/bower_components/jquery-validation/dist/jquery.validate.js'/>"></script>
 <script src="<c:url value='/bower_components/jquery-validation/dist/additional-methods.js'/>"></script>
