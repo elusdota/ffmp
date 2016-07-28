@@ -9,22 +9,174 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<link rel="stylesheet" href="<c:url value='/bower_components/AdminLTE/plugins/datepicker/datepicker3.css'/>">
+<link rel="stylesheet" href="<c:url value='/bower_components/bootstrap-table/dist/bootstrap-table.min.css'/>">
 
 <section class="content-header">
-  <h1>
-    设施维管标准管理
-  </h1>
-  <ol class="breadcrumb">
-    <li><a href="index"><i class="fa fa-dashboard"></i> 主页</a></li>
-    <li><a href="#"> 基础信息管理</a></li>
-    <li class="active"> 设施维管标准管理</li>
-  </ol>
+    <h1>
+        设施维管标准管理
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="index"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li><a href="#"> 基础信息管理</a></li>
+        <li class="active"> 设施维管标准管理</li>
+    </ol>
 </section>
 
 <!-- Main content -->
 <section class="content">
-  <div class="box box-primary">
-    <div class="row">
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/设施维管标准管理/创建设施维管标准')">
+                <button type="button" id="createMrrStandard" class="btn btn-default">创建设施维管标准</button>
+            </sec:authorize>
+            <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/设施维管标准管理/修改设施维管标准')">
+                <button type="button" id="updateMrrStandard" class="btn btn-default">修改设施维管标准</button>
+            </sec:authorize>
+            <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/设施维管标准管理/删除设施维管标准')">
+                <button type="button" id="updateMrrStandard" class="btn btn-default">删除设施维管标准</button>
+            </sec:authorize>
+        </div>
+        <div class="box-body">
+            <table id="mrrstandardTable"
+                   data-toolbar="#toolbar"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-show-columns="true"
+                   data-show-export="true"
+                   data-minimum-count-columns="2"
+                   data-show-pagination-switch="true"
+                   data-single-select="true"
+                   data-pagination="true"
+                   data-id-field="id"
+                   data-show-footer="false"
+                   data-side-pagination="server"
+                   data-page-list="[5,10, 25, 50, 100, ALL]">
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+
+        </div>
     </div>
-  </div>
+    <!-- 模态框（Model） -->
+    <div id="createMrrStandardModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">创建设施维管标准</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <form class="form-horizontal">
+                            <div class="form-group col-md-6">
+                                <label for="code" class="col-md-4 control-label">编码：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="code" name="code" placeholder="编码"
+                                           required="required">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="name" class="col-md-4 control-label">设施名称：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="设施名称"
+                                           required="required">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="mrrMethod" class="col-md-4 control-label">维管方式：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <select class="form-control" name="mrrMethod" id="mrrMethod">
+                                        <option disabled="disabled" selected="selected">--请选择资维管方式--</option>
+                                        <option value="日常巡查">日常巡查</option>
+                                        <option value="单项检查">单项检查</option>
+                                        <option value="维护保养">维护保养</option>
+                                        <option value="联动检查">联动检查</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="jobContent" class="col-md-4 control-label">工作内容：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <textarea class="form-control" rows="2" id="jobContent" name="jobContent" placeholder="工作内容"
+                                              required="required"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="proportion" class="col-md-4 control-label">抽查比例：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="proportion" name="proportion"
+                                           placeholder="抽查比例"
+                                           required="required">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="remark" class="col-md-4 control-label">备注：</label>
+
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="remark" name="remark"
+                                           placeholder="备注">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <div class="box box-warning">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">技术要求</h3>
+                            </div>
+                            <div class="box-body">
+                                <form role="form" id="techniqueForm">
+                                    <div class="form-group">
+                                        <label>技术名称</label>
+                                        <input type="text" class="form-control" id="tName" name="tName" placeholder="技术名称" required="required">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>技术类型</label>
+                                        <input type="text" class="form-control" id="tType" name="tType" placeholder="技术类型"  required="required">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>描述</label>
+                                        <textarea rows="2" class="form-control" id="description" name="description" placeholder="描述" ></textarea>
+                                    </div>
+                                    <button type="reset" class="btn btn-default" id="resetTechnique">重置</button>
+                                    <button type="button" class="btn btn-primary" id="addTechnique">添加</button>
+                                </form>
+                            </div>
+                            <div class="box-footer">
+                                <table id="techniqueTable"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="createMrrStandardBtn">创建</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
 </section>
+<script src="<c:url value='/bower_components/jquery-validation/dist/jquery.validate.js'/>"></script>
+<script src="<c:url value='/bower_components/jquery-validation/dist/additional-methods.js'/>"></script>
+<script src="<c:url value='/bower_components/jquery-validation/src/localization/messages_zh.js'/>"></script>
+<script src="<c:url value='/bower_components/bootstrap-table/dist/bootstrap-table.js'/>"></script>
+<script src="<c:url value='/bower_components/bootstrap-table/dist/extensions/export/bootstrap-table-export.min.js'/>"></script>
+<script src="<c:url value='/bower_components/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js'/>"></script>
+<script src="<c:url value='/bower_components/AdminLTE/plugins/datepicker/bootstrap-datepicker.js'/>"></script>
+<script src="<c:url value='/bower_components/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js'/>"></script>
+<script src="<c:url value='/bower_components/tableExport.jquery.plugin/tableExport.min.js'/>"></script>
+<script src="<c:url value='/bower_components/jquery.base64.js/jquery.base64.js'/>"></script>
+<script src="<c:url value='/js/basicInfo/mrrStandard.js'/>"></script>
