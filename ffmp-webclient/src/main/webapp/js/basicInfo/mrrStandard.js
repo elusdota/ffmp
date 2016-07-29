@@ -83,8 +83,10 @@ $(function () {
         $("#resetMrrStandard").trigger("click");
         $techniqueTable.bootstrapTable("removeAll");
         var selectRow = $mrrstandardTable.bootstrapTable('getSelections');
-        $("#parent_code").val(selectRow[0].code);
-        $("#parent_name").val(selectRow[0].name);
+        if(selectRow.length){
+            $("#parent_code").val(selectRow[0].code);
+            $("#parent_name").val(selectRow[0].name);
+        }
         $("#createMrrStandardModal").modal("show");
     });
 

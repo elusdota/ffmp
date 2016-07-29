@@ -13,10 +13,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="contract")
-public class Contract extends AbstractDomainObject{
+public class Contract extends AbstractNamedObject{
 
-    //合同名称
-    private String name;
     //地址
     private String address;
    //负责人
@@ -130,14 +128,6 @@ public class Contract extends AbstractDomainObject{
 
     public void setManagerTel(String managerTel) {
         this.managerTel = managerTel;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPayment() {
