@@ -49,10 +49,13 @@ $(document).ready(function () {
             columns: [
                 {title: "序号", formatter: runningFormatter}
                 , {title: "设备名称", field: "name", align: 'center', sortable: true}
-                , {title: "类型", field: "type", align: 'center', sortable: true}
+                , {title: "设备编码", field: "code", align: 'center', sortable: true}
+                , {title: "大类", field: "typemax", align: 'center', sortable: true}
+                , {title: "小类", field: "typemin", align: 'center', sortable: true}
                 , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
                 , {title: "型号", field: "model", align: 'center', sortable: true}
                 , {title: "数量", field: "quantity", align: 'center', sortable: true}
+                , {title: "位置", field: "location", align: 'center', sortable: true}
             ]
         });
     }

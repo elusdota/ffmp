@@ -13,6 +13,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MaintenanceTaskRepository extends PagingAndSortingRepository<MaintenanceTask, String>, JpaSpecificationExecutor {
-    Page<MaintenanceTask> findByDelegateAndSuspended(Organization delegate,boolean suspended, Pageable pageable);
+    Page<MaintenanceTask> findByDelegateAndSuspended(Organization delegate, boolean suspended, Pageable pageable);
+
+    Page<MaintenanceTask> findBySuspended(boolean suspended, Pageable pageable);
+
     MaintenanceTask findOneByRepairnumber(String repairnumber);
 }

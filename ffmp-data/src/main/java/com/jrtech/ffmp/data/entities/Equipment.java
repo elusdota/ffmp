@@ -24,8 +24,10 @@ public class Equipment extends AbstractNamedObject {
     private Customer customer;
     //编码
     private String code;
-    //类型
-    private String type;
+    //大类
+    private String typemax;
+    //小类
+    private String typemin;
     //生产厂家
     private String manufacturer;
     //型号
@@ -53,12 +55,20 @@ public class Equipment extends AbstractNamedObject {
         this.code = code;
     }
 
-    public String getType() {
-        return type;
+    public String getTypemax() {
+        return typemax;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTypemax(String typemax) {
+        this.typemax = typemax;
+    }
+
+    public String getTypemin() {
+        return typemin;
+    }
+
+    public void setTypemin(String typemin) {
+        this.typemin = typemin;
     }
 
     public String getManufacturer() {

@@ -5,8 +5,10 @@ import com.jrtech.ffmp.data.entities.MaintenanceProject;
 import com.jrtech.ffmp.data.entities.Organization;
 import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.JSONListData;
+import com.jrtech.templates.vo.MaintenanceProjectEquipmentVo;
 import com.jrtech.templates.vo.MaintenanceProjectSpecs;
 import com.jrtech.templates.vo.TableGetDataParameters;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -31,6 +33,8 @@ public class MaintenanceProjectController {
     private CodeService codeService;
     @Autowired
     private UserDetailsUtils userDetailsUtils;
+    @Autowired
+    private MrrStandardService mrrStandardService;
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody TableGetDataParameters parameters) {
@@ -55,18 +59,49 @@ public class MaintenanceProjectController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    public MaintenanceProject update(@RequestBody MaintenanceProject maintenanceProject) {
+    public MaintenanceProject update(@RequestBody MaintenanceProjectEquipmentVo maintenanceProject) {
         MaintenanceProject maintenanceProject1 = service.findOne(maintenanceProject.getId());
-        maintenanceProject1.getEquipments().addAll(maintenanceProject.getEquipments());
-        maintenanceProject1.getEquipments().forEach(equipment -> {
-            equipment.setOwner(maintenanceProject1);
-            equipment.setCustomer(maintenanceProject1.getCustomer());
+        final int[] i = {0};
+        i[0] = maintenanceProject1.getEquipments().size();
+        maintenanceProject.getEquipments().forEach(equipment1 -> {
+            i[0] = i[0] + 1;
+            int t = i[0];
+            String code = getLastSixNum("" + t, 3);
+            equipment1.setCode(getCodeNum(maintenanceProject1.getCode(),4) +
+                    mrrStandardService.findOneByName(equipment1.getTypemax()).getCode() +
+                    mrrStandardService.findOneByName(equipment1.getTypemin()).getCode() + code);
+            equipment1.setOwner(maintenanceProject1);
+            equipment1.setCustomer(maintenanceProject1.getCustomer());
         });
+        maintenanceProject1.getEquipments().addAll(maintenanceProject.getEquipments());
         return service.save(maintenanceProject1);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public MaintenanceProject get(@RequestParam("id") String id) {
         return service.findOne(id);
+    }
+    public String getLastSixNum(String s,int v) {
+        String rs = s;
+        int i = Integer.parseInt(rs);
+        i += 1;
+        rs = "" + i;
+        for (int j = rs.length(); j < v; j++) {
+            rs = "0" + rs;
+            // 直接使用StringUtils类的leftPad方法处理补零
+            rs = StringUtils.leftPad(rs, j + 1, "0");
+        }
+        return rs;
+    }
+    public String getCodeNum(String s,int v) {
+        String rs = s;
+        int i = Integer.parseInt(rs);
+        rs = "" + i;
+        for (int j = rs.length(); j < v; j++) {
+            rs = "0" + rs;
+            // 直接使用StringUtils类的leftPad方法处理补零
+            rs = StringUtils.leftPad(rs, j, "0");
+        }
+        return rs;
     }
 }

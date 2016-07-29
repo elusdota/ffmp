@@ -116,6 +116,11 @@
                                     <label for="manufacturer" class="col-lg-6 control-label">生产厂家：<span
                                             class="required">*</span></label>
 
+                                    <%--<div class="col-lg-6">--%>
+                                        <%--<select class="form-control m-bot15" name="manufacturer" id="manufacturer"--%>
+                                        <%--required="required">--%>
+                                        <%--</select>--%>
+                                    <%--</div>--%>
                                     <div class="col-lg-6">
                                         <input type="text" class="form-control" id="manufacturer" name="manufacturer"
                                                placeholder="生产厂家"
