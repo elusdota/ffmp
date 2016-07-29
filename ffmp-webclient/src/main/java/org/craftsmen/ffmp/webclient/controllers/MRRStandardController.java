@@ -10,10 +10,10 @@ import com.jrtech.templates.vo.MrrStandardVO;
 import com.jrtech.templates.vo.TableGetDataParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Collection;
+import java.util.List;
 
 /**
  * 维管设施标准
@@ -36,13 +36,24 @@ public class MRRStandardController {
         return jld;
     }
 
+    @RequestMapping(value = "/findRoot", method = RequestMethod.GET)
+    public Iterable<MrrStandard> findAllList() {
+        return mrrStandardService.findRoot();
+    }
+
+    @RequestMapping(value = "/findByParent", method = RequestMethod.GET)
+    public Collection<MrrStandard> findByParent(@RequestParam("name") String name) {
+        MrrStandard mrrStandard = mrrStandardService.findOneByName(name);
+        return mrrStandard.getChildren();
+    }
+
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public MrrStandard create(@RequestBody MrrStandardVO mrrStandardVo) {
         if (mrrStandardVo == null) {
 
             throw new ServiceException("创建维管设施标准错误，维管设施标准数据为NULL");
         }
-        MrrStandard mrrStandard=mrrStandardVo.getMrrStandard();
+        MrrStandard mrrStandard = mrrStandardVo.getMrrStandard();
 //        MrrStandard mrrStandard1=mrrStandardService.findOne(mrrStandardVo.getParent().getId());
         mrrStandard.setParent(mrrStandardVo.getParent());
 

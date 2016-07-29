@@ -25,7 +25,7 @@ public class TaskRuntimeServiceImpl implements TaskRuntimeService {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private  OrganizationService organizationService;
+    private OrganizationService organizationService;
 
     @Override
     public Page<MaintenanceTask> findAll(Specification<MaintenanceTask> spec, Pageable pageable) {
@@ -51,13 +51,14 @@ public class TaskRuntimeServiceImpl implements TaskRuntimeService {
     public Page<MaintenanceTask> findBySuspended(Pageable pageable) {
         final Organization[] organization = {new Organization("", 2)};
         accountService.getOrganizations(userDetailsUtils.getCurrent().getUsername()).forEach(organization1 -> {
-            if(organization1.getType()==2){
-                organization[0] =organization1;
+            if (organization1.getType() == 2) {
+                organization[0] = organization1;
             }
         });
-        if(organization[0].getId()==null){
-            organization[0]=organizationService.findRoot();
+        if (organization[0].getId() == null) {
+            return repository.findBySuspended(false, pageable);
+        }else {
+            return repository.findByDelegateAndSuspended(organization[0], false, pageable);
         }
-        return repository.findByDelegateAndSuspended(organization[0],false,pageable);
     }
 }

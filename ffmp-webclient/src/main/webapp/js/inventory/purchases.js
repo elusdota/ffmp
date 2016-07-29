@@ -107,7 +107,7 @@ $("#submitData").click(function () {
             document.getElementById("purchasesForm").reset();
             $("#purchasesModel").modal("hide");
             $('#detailsTable').bootstrapTable('removeAll');
-        },  error: function (XMLHttpRequest) {
+        }, error: function (XMLHttpRequest) {
             $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
             $("#message").modal("show");
         }
@@ -136,4 +136,23 @@ function getInsertData() {
         quantity: $("#quantity").val().trim()
     }
     return data;
+}
+function getManufacturer() {
+    $.ajax("rest/Agent/getAll", {
+        type: 'GET',
+        dataType: 'json',
+        success: function (data, XMLHttpRequest, jqXHR) {
+            var selectlist = data;
+            if (data != null) {
+                for (i = 0; i < selectlist.length; i++) {
+                    $("#manufacturer").append("<option id='" + data[i].id + "' value='" + data[i].name + "'>" + data[i].name + "</option>");
+
+                }
+            }
+        },
+        error: function (XMLHttpRequest) {
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
+        }
+    });
 }

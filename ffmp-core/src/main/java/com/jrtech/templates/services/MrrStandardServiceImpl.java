@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by suelmer on 2016/7/16.
  */
@@ -28,6 +30,26 @@ public class MrrStandardServiceImpl implements MrrStandardService {
 
     @Override
     public Page<MrrStandard> findAll(Specification<MrrStandard> spec, Pageable pageable) {
-        return mrrStandardRepository.findAll(spec,pageable);
+        return mrrStandardRepository.findAll(spec, pageable);
+    }
+
+    @Override
+    public Iterable<MrrStandard> findAll() {
+        return mrrStandardRepository.findAll();
+    }
+
+    @Override
+    public Iterable<MrrStandard> findRoot() {
+        return mrrStandardRepository.findRoot();
+    }
+
+    @Override
+    public MrrStandard findOneByName(String name) {
+        return mrrStandardRepository.findOneByName(name);
+    }
+
+    @Override
+    public MrrStandard findOneByParent(MrrStandard parent) {
+        return mrrStandardRepository.findOneByParent(parent);
     }
 }

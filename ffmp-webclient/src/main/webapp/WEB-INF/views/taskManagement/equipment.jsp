@@ -53,11 +53,26 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="type" class="col-lg-4 control-label">类型：<span
+                    <label for="typemax" class="col-lg-4 control-label">大类：<span
                             class="required">*</span></label>
                     <div class="col-lg-8">
-                        <input type="text" class="form-control" id="type" name="type" placeholder="类型"
-                               required="required">
+                        <select class="form-control m-bot15 required" name="typemax" id="typemax"
+                                required="required"
+                                onchange="type_onChange()">
+                        </select>
+                        <%--<input type="text" class="form-control" id="type" name="type" placeholder="类型"--%>
+                               <%--required="required">--%>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="typemin" class="col-lg-4 control-label">小类：<span
+                            class="required">*</span></label>
+                    <div class="col-lg-8">
+                        <select class="form-control m-bot15 required" name="typemin" id="typemin"
+                                required="required">
+                        </select>
+                        <%--<input type="text" class="form-control" id="type" name="type" placeholder="类型"--%>
+                        <%--required="required">--%>
                     </div>
                 </div>
                 <div class="form-group col-md-6">

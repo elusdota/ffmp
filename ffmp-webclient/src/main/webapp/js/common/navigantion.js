@@ -9,8 +9,8 @@ $(function () {
         dataType: "json",
         mimeType: 'application/json',
         success: function (data, textStatus, jqXHR) {
-            var menu = '<li class="header">导航菜单</li>' +
-                '<li><a href="javascript:;" data-url="index"> <i class="fa fa-dashboard"></i> <span>主页</span></a></li>';
+            var menu = '<li class="header">导航菜单</li>';
+                //'<li><a href="javascript:;" data-url="index"> <i class="fa fa-dashboard"></i> <span>主页</span></a></li>';
             if (data.length) {
                 $.each(data,function(i,item){
                     var liTag='';
