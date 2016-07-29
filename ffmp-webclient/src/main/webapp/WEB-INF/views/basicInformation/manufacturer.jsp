@@ -63,42 +63,46 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">创建生产厂商信息</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="manufactureForm" class="form-horizontal">
-                        <div class="form-group col-md-6">
-                            <label for="name" class="col-md-4 control-label">厂商名称:<span
-                                    class="required">*</span></label>
+                    <div class="row">
+                        <form id="manufactureForm" class="form-horizontal">
+                            <div class="form-group col-md-6">
+                                <label for="name" class="col-md-4 control-label">厂商名称:<span
+                                        class="required">*</span></label>
 
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="name" name="name"
-                                       placeholder="厂商名称" required="required">
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="name" name="name"
+                                           placeholder="厂商名称" required="required">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="contact" class="col-md-4 control-label">联系人:<span
-                                    class="required">*</span></label>
+                            <div class="form-group col-md-6">
+                                <label for="contact" class="col-md-4 control-label">联系人:<span
+                                        class="required">*</span></label>
 
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="contact" name="contact"
-                                       placeholder="联系人" required="required">
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="contact" name="contact"
+                                           placeholder="联系人" required="required">
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="telphone" class="col-md-4 control-label">联系电话：<span
-                                    class="required">*</span></label>
+                            <div class="form-group col-md-6">
+                                <label for="telphone" class="col-md-4 control-label">联系电话：<span
+                                        class="required">*</span></label>
 
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="telphone" name="telphone"
-                                       placeholder="联系电话" required="required">
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="telphone" name="telphone"
+                                           placeholder="联系电话" required="required">
+                                </div>
                             </div>
-                        </div>
-                        <input type="hidden" class="form-control" id="manfactureId" name="manfactureId">
-                        <input type="hidden" class="form-control" id="manfactureVersion" name="manfactureVersion">
-                        <input type="hidden" class="form-control" id="manfactureAccessType" name="manfactureAccessType">
-                    </form>
+                            <input type="hidden" class="form-control" id="manfactureId" name="manfactureId">
+                            <input type="hidden" class="form-control" id="manfactureVersion" name="manfactureVersion">
+                            <input type="hidden" class="form-control" id="manfactureAccessType"
+                                   name="manfactureAccessType">
+                        </form>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-warning" data-dismiss="modal">取消</button>
