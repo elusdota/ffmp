@@ -15,7 +15,7 @@ public interface MrrStandardService {
     /**
      * 创建维管设施标准
      *
-     * @param mrrStandardVo
+     * @param mrrStandard
      * @return MrrStandard
      */
     MrrStandard save(MrrStandard mrrStandard);

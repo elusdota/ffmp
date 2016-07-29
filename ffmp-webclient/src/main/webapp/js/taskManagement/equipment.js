@@ -91,7 +91,7 @@ function getType() {
     });
 }
 function type_onChange() {
-    $.ajax("rest/mrrstandard/findByParent?name=" + $("#typemax").val().trim(), {
+    $.ajax("rest/mrrstandard/findOneByName?name=" + $("#typemax").val().trim(), {
         type: 'GET',
         dataType: 'json',
         success: function (data, XMLHttpRequest, jqXHR) {
