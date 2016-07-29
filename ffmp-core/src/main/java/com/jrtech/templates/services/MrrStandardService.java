@@ -12,7 +12,7 @@ public interface MrrStandardService {
 
     /**
      * 创建维管设施标准
-     * @param mrrStandardVo
+     * @param mrrStandard
      * @return MrrStandard
      */
     MrrStandard save(MrrStandard mrrStandard);
@@ -24,5 +24,11 @@ public interface MrrStandardService {
      */
     MrrStandard findOne(String id);
 
+    /**
+     * 查询所有的维管设施
+     * @param spec
+     * @param pageable
+     * @return
+     */
     Page<MrrStandard> findAll(Specification<MrrStandard> spec, Pageable pageable);
 }

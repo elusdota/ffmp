@@ -34,7 +34,7 @@
                 <button type="button" id="updateMrrStandard" class="btn btn-default hidden">修改设施维管标准</button>
             </sec:authorize>
             <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/设施维管标准管理/删除设施维管标准')">
-                <button type="button" id="updateMrrStandard" class="btn btn-default hidden">删除设施维管标准</button>
+                <button type="button" id="deleteMrrStandard" class="btn btn-default hidden">删除设施维管标准</button>
             </sec:authorize>
         </div>
         <div class="box-body">
@@ -63,8 +63,8 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                    <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span--%>
+                            <%--aria-hidden="true">&times;</span></button>--%>
                     <h4 class="modal-title">创建设施维管标准</h4>
                 </div>
                 <div class="modal-body">
@@ -209,6 +209,27 @@
         </div>
     </div>
     <!-- /.modal-dialog -->
+
+    <!--技术要求-->
+    <div id="techniqueModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">技术要求</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="techniqueContent"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+
 </section>
 <script src="<c:url value='/bower_components/jquery-validation/dist/jquery.validate.js'/>"></script>
 <script src="<c:url value='/bower_components/jquery-validation/dist/additional-methods.js'/>"></script>

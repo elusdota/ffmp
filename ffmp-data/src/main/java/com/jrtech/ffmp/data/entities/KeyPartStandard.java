@@ -9,10 +9,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "KeyPartStandard")
-public class KeyPartStandard extends AbstractDomainObject{
+public class KeyPartStandard extends AbstractNamedObject{
 
-    //重点部位名称
-    private String name;
     //维护管理内容
     private String mrrContent;
     //维管方式
@@ -44,14 +42,6 @@ public class KeyPartStandard extends AbstractDomainObject{
 
     public void setMrrMethod(String mrrMethod) {
         this.mrrMethod = mrrMethod;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public double getProportion() {

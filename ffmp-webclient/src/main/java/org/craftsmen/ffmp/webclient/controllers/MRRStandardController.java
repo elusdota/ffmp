@@ -32,23 +32,17 @@ public class MRRStandardController {
         JSONListData jld = new JSONListData();
         jld.setTotal(mrrStandards.getTotalElements());
         jld.setRows(mrrStandards.getContent());
-
         return jld;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public MrrStandard create(@RequestBody MrrStandardVO mrrStandardVo) {
         if (mrrStandardVo == null) {
-
             throw new ServiceException("创建维管设施标准错误，维管设施标准数据为NULL");
         }
-        MrrStandard mrrStandard=mrrStandardVo.getMrrStandard();
-//        MrrStandard mrrStandard1=mrrStandardService.findOne(mrrStandardVo.getParent().getId());
+        MrrStandard mrrStandard = mrrStandardVo.getMrrStandard();
         mrrStandard.setParent(mrrStandardVo.getParent());
-
         mrrStandard.getTechniqueRequirementsList().forEach(item -> item.setMrrStandard(mrrStandard));
-
-
         return mrrStandardService.save(mrrStandard);
     }
 }
