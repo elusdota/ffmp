@@ -158,7 +158,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="createMrrStandardBtn">创建</button>
+                    <button type="button" class="btn btn-primary" id="createContractdBtn">创建</button>
                 </div>
             </div>
             <!-- /.modal-content -->
