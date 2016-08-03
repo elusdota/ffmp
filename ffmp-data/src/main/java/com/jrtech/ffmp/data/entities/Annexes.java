@@ -1,7 +1,6 @@
 package com.jrtech.ffmp.data.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,9 +24,9 @@ public class Annexes extends AbstractDomainObject{
     private Date uploadTime;
     //备注
     private String remark;
+
     //合同
-    @JsonIgnore
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "contract_id", nullable = true)
     private Contract contract;
 

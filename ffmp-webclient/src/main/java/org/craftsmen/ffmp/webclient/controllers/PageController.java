@@ -2,7 +2,6 @@ package org.craftsmen.ffmp.webclient.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -198,4 +197,16 @@ public class PageController {
         return "/contract/contract";
     }
 
+    /**
+     * 基础信息管理->合同管理->创建/更新合同信息
+     * @param request
+     * @param response
+     * @return string
+     * @throws Exception
+     */
+    @RequestMapping("/contract/contractForm")
+    @ResponseStatus(HttpStatus.OK)
+    public String contractForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/contract/contractForm";
+    }
 }
