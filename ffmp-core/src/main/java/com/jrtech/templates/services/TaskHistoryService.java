@@ -1,5 +1,6 @@
 package com.jrtech.templates.services;
 
+import com.jrtech.ffmp.data.entities.FlowchartSteps;
 import com.jrtech.ffmp.data.entities.HistoryTaskNode;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
 
@@ -19,4 +20,6 @@ public interface TaskHistoryService {
     HistoryTaskNode findOne(String id);
 
     List<HistoryTaskNode> findByMaintenanceTaskOrderByDueDateAsc(MaintenanceTask maintenanceTask);
+
+    HistoryTaskNode findOneByMaintenanceTaskAndFlowchartSteps(MaintenanceTask maintenanceTask, FlowchartSteps flowchartSteps);
 }

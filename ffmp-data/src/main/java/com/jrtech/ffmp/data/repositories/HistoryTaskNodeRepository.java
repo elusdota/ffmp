@@ -1,6 +1,7 @@
 package com.jrtech.ffmp.data.repositories;
 
 import com.jrtech.ffmp.data.entities.Account;
+import com.jrtech.ffmp.data.entities.FlowchartSteps;
 import com.jrtech.ffmp.data.entities.HistoryTaskNode;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import org.springframework.data.domain.Page;
@@ -19,4 +20,6 @@ public interface HistoryTaskNodeRepository extends PagingAndSortingRepository<Hi
     HistoryTaskNode findOneByName(String name);
 
     List<HistoryTaskNode> findByMaintenanceTaskOrderByDueDateAsc(MaintenanceTask maintenanceTask);
+
+    HistoryTaskNode findOneByMaintenanceTaskAndFlowchartSteps(MaintenanceTask maintenanceTask, FlowchartSteps flowchartSteps);
 }

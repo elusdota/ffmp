@@ -9,14 +9,10 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.access.AccessDeniedHandlerImpl;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -39,27 +35,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/css/**")
                 .permitAll()
                 .and()
-                .exceptionHandling().accessDeniedHandler(new AccessDeniedHandlerImpl() {
-            @Override
-            public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-                super.handle(request, response, accessDeniedException);
-                accessDeniedException.printStackTrace();
-            }
-        })
-                .and()
-                        // Login
                 .formLogin().loginPage("/login")
                 .loginProcessingUrl(LOGIN_PROCESSING_URL)
                 .failureUrl("/login?error").defaultSuccessUrl("/index").and()
                 .logout().logoutUrl("/j_spring_security_logout")
                 .invalidateHttpSession(true).logoutSuccessUrl("/login")
-                // .and()
-                // .headers()
-                // .addHeaderWriter(new
-                // XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
                 .and().csrf().disable();
+//                .authorizeRequests()
+//                .and()
+//                .httpBasic()
+//                .authenticationEntryPoint(oauth2AuthenticationEntryPoint());
+//                .rememberMe().and().sessionManagement().maximumSessions(1)
+//                .maxSessionsPreventsLogin(true)
+//                .expiredUrl("/login?expired");
+        // .and()
+        // .headers()
+        // .addHeaderWriter(new
+        // XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
     }
-
     /**
      * <b>Remember me</b> implementation.
      *

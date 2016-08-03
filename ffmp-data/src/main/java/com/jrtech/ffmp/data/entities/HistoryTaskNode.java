@@ -25,16 +25,16 @@ public class HistoryTaskNode extends AbstractNamedObject {
     private Account delegate;
     //是否中止任务
     private boolean suspended;
-    //备注
+    //备注任务参数
     private String description;
-    //执行类型 operation：操作，strat:开始，end:结束，subroutine：子节点，condition,条件，inputoutput：输入输出
-    private String type;
+    //任务步骤
+    @NotNull
+    @ManyToOne
+    private FlowchartSteps flowchartSteps;
     //执行日期
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private Date dueDate;
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Equipment> equipments=new ArrayList<Equipment>();
 
     public MaintenanceTask getMaintenanceTask() {
         return maintenanceTask;
@@ -60,9 +60,6 @@ public class HistoryTaskNode extends AbstractNamedObject {
         this.dueDate = dueDate;
     }
 
-    public Collection<Equipment> getEquipments() {
-        return equipments;
-    }
 
     public boolean isSuspended() {
         return suspended;
@@ -80,11 +77,11 @@ public class HistoryTaskNode extends AbstractNamedObject {
         this.description = description;
     }
 
-    public String getType() {
-        return type;
+    public FlowchartSteps getFlowchartSteps() {
+        return flowchartSteps;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setFlowchartSteps(FlowchartSteps flowchartSteps) {
+        this.flowchartSteps = flowchartSteps;
     }
 }

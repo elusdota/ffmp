@@ -75,7 +75,7 @@ $("#createRepair").click(function () {
     });
     $("#repairModel").modal("show");
 });
-$("#giveupData").click(function () {-
+$("#giveupData").click(function () {
     document.getElementById("repairForm").reset();
     $("#repairModel").modal("hide");
 });
