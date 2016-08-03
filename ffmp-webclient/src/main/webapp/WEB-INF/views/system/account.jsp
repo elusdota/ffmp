@@ -39,6 +39,7 @@
                    data-show-refresh="true"
                    data-show-toggle="true"
                    data-search="true"
+                   data-sort-stable="true"
                    data-show-columns="true"
                    data-show-export="true"
                    data-minimum-count-columns="2"

@@ -14,7 +14,7 @@ $(document).ready(function () {
             $("#customer").val(data.customer.name);
             $("#description").val(data.description);
             $("#repairnumber").val(data.repairnumber);
-        },  error: function (XMLHttpRequest) {
+        }, error: function (XMLHttpRequest) {
             $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
             $("#message").modal("show");
         }
@@ -24,26 +24,20 @@ $(document).ready(function () {
         contentType: 'application/json',
         dataType: 'json',
         success: function (data, XMLHttpRequest, jqXHR) {
+            var stepse = data.flowchartStepses;
             var code;
-            var sv;
-            for (i = 0; i < data.length; i++) {
-                if(i==0){
-                    code = data[i].id + '=>' + data[i].type + ': ' + data[i].name + '|past\n';
-                    sv=data[i].id+'->';
-                }else{
-                    code = code + data[i].id + '=>' + data[i].type + ': ' + data[i].name + '|invalid\n';
-                    if(data[i].type=='end'){
-                        sv=sv+data[i].id+'\n';
-                    }else{
-                        sv=sv+ data[i].id+'->';
-                    }
+            var sv = data.value;
+            for (i = 0; i < stepse.length; i++) {
+                if (i == 0) {
+                    code = stepse[i].parametric + "=>" + stepse[i].type + ": " + stepse[i].name + "|"+stepse[i].color+"\n";
+                } else {
+                    code = code + stepse[i].parametric + "=>" + stepse[i].type + ": " + stepse[i].name + "|"+stepse[i].color+"\n";
                 }
             }
             var chart;
-            chart = flowchart.parse(code+sv);
+            alert(code + sv);
+            chart = flowchart.parse(code + sv);
             chart.drawSVG('canvas', {
-                // 'x': 30,
-                // 'y': 50,
                 'line-width': 3,
                 'line-length': 50,
                 'text-margin': 10,
@@ -60,29 +54,29 @@ $(document).ready(function () {
                 'arrow-end': 'block',
                 'scale': 1,
                 'symbols': {
-                    'start': {
-                        'font-color': 'red',
-                        'element-color': 'green',
-                        'fill': 'yellow'
-                    },
+                    //'start': {
+                    //    'font-color': 'red',
+                    //    'element-color': 'green',
+                    //    'fill': 'yellow'
+                    //},
                     'end': {
                         'class': 'end-element'
                     }
                 },
                 'flowstate': {
-                    'past': {'fill': '#CCCCCC', 'font-size': 12},
+                    'without': {'fill': '#CCCCCC', 'font-size': 12},
                     'current': {'fill': 'yellow', 'font-color': 'red', 'font-weight': 'bold'},
                     'future': {'fill': '#FFFF99'},
                     'request': {'fill': 'blue'},
                     'invalid': {'fill': '#444444'},
-                    'approved': {'fill': '#58C4A3', 'font-size': 12, 'yes-text': 'APPROVED', 'no-text': 'n/a'},
-                    'rejected': {'fill': '#C45879', 'font-size': 12, 'yes-text': 'n/a', 'no-text': 'REJECTED'}
+                    'approved': {'fill': '#58C4A3', 'font-size': 12,'yes-text': '批准', 'no-text': ''},
+                    'rejected': {'fill': '#C45879', 'font-size': 12, 'yes-text': '', 'no-text': '拒绝'}
                 }
             });
             for (i = 0; i < data.length; i++) {
-                var d=data[i].id;
-                $('[id^='+data[i].id+']').click(function(){
-                    $("#main-content").load("taskManagement/taskNode?id="+d, function () {
+                var d = data[i].id;
+                $('[id^=' + data[i].id + ']').click(function () {
+                    $("#main-content").load("taskManagement/taskNode?id=" + d, function () {
                         $("#main-content").fadeIn();
                     });
                 });
@@ -95,10 +89,10 @@ $(document).ready(function () {
 });
 $("#viewProject").click(function () {
     var data = $("#proid").val().trim();
-    $("#main-content").load("taskManagement/projectInformation?id="+data, function () {
+    $("#main-content").load("taskManagement/projectInformation?id=" + data, function () {
         $("#main-content").fadeIn();
     });
 });
-function test(){
+function test() {
     alert('info here');
 }

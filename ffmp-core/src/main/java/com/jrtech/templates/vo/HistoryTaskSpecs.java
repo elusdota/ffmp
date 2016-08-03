@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jiangliang on 2016/7/24.
+ * Created by jiangliang on 2016/7/24.任务节点查询对象，elus
  */
 public class HistoryTaskSpecs<T> {
     private Customer customer;

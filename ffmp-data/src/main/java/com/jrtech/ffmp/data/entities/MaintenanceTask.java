@@ -17,8 +17,11 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "MaintenanceTask")
-@JsonIgnoreProperties(value = {"delegate","historyTaskNodes"})
+@JsonIgnoreProperties(value = {"delegate"})
 public class MaintenanceTask extends AbstractNamedObject {
+    @NotNull
+    @ManyToOne
+    private TaskDefinition taskDefinition;
     //任务创建者，所有者
     @ManyToOne
     private Account owner;
@@ -37,9 +40,6 @@ public class MaintenanceTask extends AbstractNamedObject {
     //委托执行机构
     @ManyToOne
     private Organization delegate;
-    //历史任务节点
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "maintenanceTask", cascade = { CascadeType.ALL }, orphanRemoval = true)
-    private Collection<HistoryTaskNode> historyTaskNodes=new ArrayList<HistoryTaskNode>();
     //起始日期
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "zh", timezone = "GMT+8")
@@ -50,6 +50,14 @@ public class MaintenanceTask extends AbstractNamedObject {
     private Date enddate;
     //备注
     private String description;
+
+    public TaskDefinition getTaskDefinition() {
+        return taskDefinition;
+    }
+
+    public void setTaskDefinition(TaskDefinition taskDefinition) {
+        this.taskDefinition = taskDefinition;
+    }
 
     public Account getOwner() {
         return owner;
@@ -89,10 +97,6 @@ public class MaintenanceTask extends AbstractNamedObject {
 
     public void setDelegate(Organization delegate) {
         this.delegate = delegate;
-    }
-
-    public Collection<HistoryTaskNode> getHistoryTaskNodes() {
-        return historyTaskNodes;
     }
 
     public Date getStartdate() {

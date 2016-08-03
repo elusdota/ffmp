@@ -9,14 +9,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.web.access.AccessDeniedHandlerImpl;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 @Configuration
 @EnableWebSecurity
@@ -34,32 +31,33 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
+        http.csrf().disable();
         http.authorizeRequests().antMatchers("/js/**")
                 .permitAll()
                 .antMatchers("/css/**")
                 .permitAll()
-                .and()
-                .exceptionHandling().accessDeniedHandler(new AccessDeniedHandlerImpl() {
-            @Override
-            public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-                super.handle(request, response, accessDeniedException);
-                accessDeniedException.printStackTrace();
-            }
-        })
-                .and()
-                        // Login
-                .formLogin().loginPage("/login")
+                .antMatchers("/bower_components/**")
+                .permitAll()
+                .antMatchers("/login/**").permitAll()
+                .anyRequest().authenticated();
+        http.httpBasic().disable();
+        http.formLogin()
+                .loginPage("/login")
                 .loginProcessingUrl(LOGIN_PROCESSING_URL)
-                .failureUrl("/login?error").defaultSuccessUrl("/index").and()
-                .logout().logoutUrl("/j_spring_security_logout")
-                .invalidateHttpSession(true).logoutSuccessUrl("/login")
-                // .and()
-                // .headers()
-                // .addHeaderWriter(new
-                // XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+                .failureUrl("/login?error")
+                .defaultSuccessUrl("/index", true)
                 .and().csrf().disable();
+        http.logout()
+                .logoutUrl("/j_spring_security_logout")
+                .invalidateHttpSession(true).logoutSuccessUrl("/login")
+                .and().csrf().disable();
+        http.exceptionHandling()
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
+//        http
+//         .headers()
+//         .addHeaderWriter(new
+//         XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
     }
-
     /**
      * <b>Remember me</b> implementation.
      *

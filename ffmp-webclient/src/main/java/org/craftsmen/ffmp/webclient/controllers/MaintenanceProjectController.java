@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by jiangliang on 2016/7/15.
+ * Created by jiangliang on 2016/7/15.项目控制器，elus
  */
 @RestController
 @RequestMapping(value = "/rest/maintenanceProject")
@@ -65,7 +65,7 @@ public class MaintenanceProjectController {
         i[0] = maintenanceProject1.getEquipments().size();
         maintenanceProject.getEquipments().forEach(equipment1 -> {
             i[0] = i[0] + 1;
-            int t = i[0];
+            int t = i[0]-1;
             String code = getLastSixNum("" + t, 3);
             equipment1.setCode(getCodeNum(maintenanceProject1.getCode(),4) +
                     mrrStandardService.findOneByName(equipment1.getTypemax()).getCode() +

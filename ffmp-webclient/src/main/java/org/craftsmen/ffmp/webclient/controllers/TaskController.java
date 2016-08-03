@@ -3,6 +3,7 @@ package org.craftsmen.ffmp.webclient.controllers;
 import com.jrtech.ffmp.data.entities.HistoryTaskNode;
 import com.jrtech.ffmp.data.entities.MaintenanceProject;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
+import com.jrtech.ffmp.data.entities.TaskDefinition;
 import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by jiangliang on 2016/7/17.
+ * Created by jiangliang on 2016/7/17.任务控制器,elus
  */
 @RestController
 @RequestMapping(value = "/rest/task")
@@ -25,6 +26,8 @@ public class TaskController {
     private TaskRuntimeService service;
     @Autowired
     private TaskHistoryService taskHistoryService;
+    @Autowired
+    private TaskDefinitionService taskDefinitionService;
     @Autowired
     private AccountService accountService;
     @Autowired
@@ -65,15 +68,10 @@ public class TaskController {
                 throw new ServiceException("报修单编号不存在！请检查数据。");
             }
         }
+        TaskDefinition taskDefinition = taskDefinitionService.findOneByName("维修任务");
         MaintenanceProject maintenanceProject = maintenanceProjectService.findOneByName(maintenanceTask.getMaintenanceProject().getName());
-        HistoryTaskNode historyTaskNode = new HistoryTaskNode();
-        historyTaskNode.setName("创建任务");
-        historyTaskNode.setDueDate(new Date());
-        historyTaskNode.setType("start");
-        historyTaskNode.setDelegate(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername()));
-        historyTaskNode.setMaintenanceTask(maintenanceTask);
-        maintenanceTask.getHistoryTaskNodes().add(historyTaskNode);
         maintenanceTask.setMaintenanceProject(maintenanceProject);
+        maintenanceTask.setTaskDefinition(taskDefinition);
         maintenanceTask.setCustomer(maintenanceProject.getCustomer());
         maintenanceTask.setDelegate(maintenanceProject.getDelegate());
         maintenanceTask.setOwner(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername()));
@@ -82,9 +80,6 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.PUT)
     public MaintenanceTask update(@RequestBody MaintenanceTask maintenanceTask) {
-        maintenanceTask.getHistoryTaskNodes().forEach(historyTaskNode -> {
-            historyTaskNode.setMaintenanceTask(maintenanceTask);
-        });
         return service.save(maintenanceTask);
     }
 
@@ -100,9 +95,22 @@ public class TaskController {
     }
 
     @RequestMapping(value = "/flowchart", method = RequestMethod.GET)
-    public List<HistoryTaskNode> getFlowchart(@RequestParam("id") String id) {
+    public TaskDefinition getFlowchart(@RequestParam("id") String id) {
         MaintenanceTask maintenanceTask = service.findOne(id);
         List<HistoryTaskNode> historyTaskNodes = taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask);
-        return historyTaskNodes;
+        maintenanceTask.getTaskDefinition().getFlowchartStepses().forEach(flowchartSteps -> {
+            HistoryTaskNode historyTaskNode=taskHistoryService.findOneByMaintenanceTaskAndFlowchartSteps(maintenanceTask, flowchartSteps);
+            if (historyTaskNode==null) {
+              flowchartSteps.setColor("without");
+            }
+            else{
+                if(historyTaskNode.getDescription()=="yes"){
+                    flowchartSteps.setColor("approved");
+                }else{
+                    flowchartSteps.setColor("rejected");
+                }
+            }
+        });
+        return maintenanceTask.getTaskDefinition();
     }
 }

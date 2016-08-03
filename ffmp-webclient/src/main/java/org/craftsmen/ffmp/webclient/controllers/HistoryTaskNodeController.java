@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by jiangliang on 2016/7/27.
+ * Created by jiangliang on 2016/7/27.任务执行节点控制器elus
  */
 @RestController
 @RequestMapping(value = "/rest/historyTaskNode")

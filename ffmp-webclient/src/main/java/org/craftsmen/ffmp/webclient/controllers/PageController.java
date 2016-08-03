@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by jiangliang on 2016/6/22.
+ * Created by jiangliang on 2016/6/22.页面跳转控制器，elus
  */
 @Controller
 public class PageController {
-    @RequestMapping(value = {"/", "/login"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login(
             @RequestParam(value = "error", required = false) String error) {
         ModelAndView model = new ModelAndView();

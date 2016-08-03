@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
- * Created by jiangliang on 2016/7/25.
+ * Created by jiangliang on 2016/7/25.报修单服务接口，elus
  */
 public interface RepairFormService {
     RepairForm save(RepairForm repairForm);

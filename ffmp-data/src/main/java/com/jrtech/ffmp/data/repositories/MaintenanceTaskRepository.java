@@ -9,7 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by jiangliang on 2016/7/14.
+ * Created by jiangliang on 2016/7/14.任务数据接口，elus
  */
 @Repository
 public interface MaintenanceTaskRepository extends PagingAndSortingRepository<MaintenanceTask, String>, JpaSpecificationExecutor {

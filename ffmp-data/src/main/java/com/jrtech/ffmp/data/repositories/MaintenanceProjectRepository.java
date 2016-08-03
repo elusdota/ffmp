@@ -6,7 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by jiangliang on 2016/7/14.
+ * Created by jiangliang on 2016/7/14.项目数据接口
  */
 @Repository
 public interface MaintenanceProjectRepository extends PagingAndSortingRepository<MaintenanceProject, String>, JpaSpecificationExecutor {

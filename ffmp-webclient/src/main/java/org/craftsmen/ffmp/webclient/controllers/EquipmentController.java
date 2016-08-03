@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by jiangliang on 2016/7/27.
+ * Created by jiangliang on 2016/7/27.设备操作控制器,elus
  */
 @RestController
 @RequestMapping(value = "/rest/equipment")

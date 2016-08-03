@@ -1,5 +1,6 @@
 package com.jrtech.templates.services;
 
+import com.jrtech.ffmp.data.entities.FlowchartSteps;
 import com.jrtech.ffmp.data.entities.HistoryTaskNode;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.repositories.HistoryTaskNodeRepository;
@@ -33,5 +34,10 @@ public class TaskHistoryServiceImpl implements TaskHistoryService {
     @Override
     public List<HistoryTaskNode> findByMaintenanceTaskOrderByDueDateAsc(MaintenanceTask maintenanceTask) {
         return repository.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask);
+    }
+
+    @Override
+    public HistoryTaskNode findOneByMaintenanceTaskAndFlowchartSteps(MaintenanceTask maintenanceTask, FlowchartSteps flowchartSteps) {
+        return repository.findOneByMaintenanceTaskAndFlowchartSteps(maintenanceTask,flowchartSteps);
     }
 }

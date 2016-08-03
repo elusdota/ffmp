@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
- * Created by jiangliang on 2016/7/14.
+ * Created by jiangliang on 2016/7/14.任务服务接口，elus
  */
 public interface TaskRuntimeService {
     //查询

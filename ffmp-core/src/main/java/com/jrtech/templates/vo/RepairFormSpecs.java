@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jiangliang on 2016/7/25.
+ * Created by jiangliang on 2016/7/25.保修单查询对象,elus
  */
 public class RepairFormSpecs<T> {
     private Customer customer;

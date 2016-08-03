@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 /**
- * Created by jiangliang on 2016/7/23.
+ * Created by jiangliang on 2016/7/23.客户控制器,elus
  */
 @RestController
 @RequestMapping(value = "/rest/customer")

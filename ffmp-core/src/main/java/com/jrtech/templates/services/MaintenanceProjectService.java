@@ -6,7 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
- * Created by jiangliang on 2016/7/14.
+ * Created by jiangliang on 2016/7/14.项目服务接口，elus
  */
 public interface MaintenanceProjectService {
     Page<MaintenanceProject> findAll(Specification<MaintenanceProject> spec, Pageable pageable);

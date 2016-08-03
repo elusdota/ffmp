@@ -1,17 +1,12 @@
 package com.jrtech.templates.services;
 
 import com.jrtech.ffmp.data.common.AccessType;
-import com.jrtech.ffmp.data.entities.Account;
-import com.jrtech.ffmp.data.entities.GrantedAuthorityImpl;
-import com.jrtech.ffmp.data.entities.Organization;
-import com.jrtech.ffmp.data.entities.Role;
-import com.jrtech.ffmp.data.repositories.AccountRepository;
-import com.jrtech.ffmp.data.repositories.GrantedAuthorityRepository;
-import com.jrtech.ffmp.data.repositories.OrganizationRepository;
-import com.jrtech.ffmp.data.repositories.RoleRepository;
+import com.jrtech.ffmp.data.entities.*;
+import com.jrtech.ffmp.data.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,6 +20,8 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
     private RoleRepository roleRepository;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private TaskDefinitionRepository taskDefinitionRepository;
 
     /* (non-Javadoc)
      * @see com.jrtech.SystemInitializeService#createData()
@@ -35,6 +32,7 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         createOrganization();
         createRoles();
         createAccounts();
+        createTaskDefinition();
     }
 
     /* (non-Javadoc)
@@ -46,6 +44,7 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         deleteRoles();
         deleteOrganization();
         deleteGrantedAuthorities();
+        deleteTaskDefinition();
     }
 
     private void deleteGrantedAuthorities() {
@@ -60,6 +59,12 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         if (null != root) {
             orgRepository.delete(root);
         }
+    }
+    private void deleteTaskDefinition() {
+        Iterable<TaskDefinition> taskDefinitions=taskDefinitionRepository.findAll();
+        taskDefinitions.forEach(taskDefinition -> {
+            taskDefinitionRepository.delete(taskDefinition.getId());
+        });
     }
 
     private void deleteRoles() {
@@ -499,5 +504,26 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
 
         account = new Account("user", "user");
         accountRepository.save(account);
+    }
+    private void createTaskDefinition() {
+        TaskDefinition taskDefinition=new TaskDefinition("维修任务");
+        String value="st->cond1(right)\n"+"cond1(yes)->cond2\n"+"cond1(no)->op2->cond3\n"+"cond2(yes,right)->op1(right)->op2\n"+"cond2(no)->en1\n"
+                +"cond3(yes)->cond4(right)\n"+"cond3(no,right)->op2\n"+"cond4(yes)->en\n"+"cond4(no)->op2\n";
+        taskDefinition.setValue(value);
+        List<FlowchartSteps> flowchartStepses=new ArrayList<>();
+        flowchartStepses.add(new FlowchartSteps("开始", "st", "start","cond1",""));
+        flowchartStepses.add(new FlowchartSteps("是否需要更换材料", "cond1", "condition","cond2","op2"));
+        flowchartStepses.add(new FlowchartSteps("客户是否批准更换材料", "cond2", "condition","op1","en1"));
+        flowchartStepses.add(new FlowchartSteps("申请材料", "op1", "operation","op2",""));
+        flowchartStepses.add(new FlowchartSteps("维修", "op2", "operation","",""));
+        flowchartStepses.add(new FlowchartSteps("客户审核是否维修完成", "cond3", "condition","cond4","op2"));
+        flowchartStepses.add(new FlowchartSteps("维保总监审核是否维修完成", "cond4", "condition","en","op2"));
+        flowchartStepses.add(new FlowchartSteps("终止","en1","end","",""));
+        flowchartStepses.add(new FlowchartSteps("结束","en","end","",""));
+        taskDefinition.getFlowchartStepses().addAll(flowchartStepses);
+        taskDefinition.getFlowchartStepses().forEach(flowchartSteps -> {
+            flowchartSteps.setTaskDefinition(taskDefinition);
+        });
+        taskDefinitionRepository.save(taskDefinition);
     }
 }
