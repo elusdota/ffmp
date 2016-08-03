@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * Created by jiangliang on 2016/7/17.
+ * Created by jiangliang on 2016/7/17.任务节点控制器，elus
  */
 @RestController
 @RequestMapping(value = "/rest/taskNode")

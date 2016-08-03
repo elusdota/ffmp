@@ -30,9 +30,9 @@ $(document).ready(function () {
             field: 'state', checkbox: true
         }
             , {title: '序号', formatter: runningFormatter}
-            , {title: "单据编号", field: "number"}
-            , {title: "操作人", field: "executor"}
-            , {title: "创建日期", field: "date"}
+            , {title: "单据编号", field: "number", sortable: true}
+            , {title: "操作人", field: "executor", sortable: true}
+            , {title: "创建日期", field: "date", sortable: true}
             , {
                 title: '查看详细',
                 align: 'center',

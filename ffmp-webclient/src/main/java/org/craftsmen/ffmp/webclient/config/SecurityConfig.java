@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.header.writers.frameoptions.XFrameOptionsHeaderWriter;
 
 
 @Configuration
@@ -30,28 +31,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // @formatter:off
+        http.csrf().disable();
         http.authorizeRequests().antMatchers("/js/**")
                 .permitAll()
                 .antMatchers("/css/**")
                 .permitAll()
-                .and()
-                .formLogin().loginPage("/login")
+                .antMatchers("/bower_components/**")
+                .permitAll()
+                .antMatchers("/login/**").permitAll()
+                .anyRequest().authenticated();
+        http.httpBasic().disable();
+        http.formLogin()
+                .loginPage("/login")
                 .loginProcessingUrl(LOGIN_PROCESSING_URL)
-                .failureUrl("/login?error").defaultSuccessUrl("/index").and()
-                .logout().logoutUrl("/j_spring_security_logout")
+                .failureUrl("/login?error")
+                .defaultSuccessUrl("/index", true)
+                .and().csrf().disable();
+        http.logout()
+                .logoutUrl("/j_spring_security_logout")
                 .invalidateHttpSession(true).logoutSuccessUrl("/login")
                 .and().csrf().disable();
-//                .authorizeRequests()
-//                .and()
-//                .httpBasic()
-//                .authenticationEntryPoint(oauth2AuthenticationEntryPoint());
-//                .rememberMe().and().sessionManagement().maximumSessions(1)
-//                .maxSessionsPreventsLogin(true)
-//                .expiredUrl("/login?expired");
-        // .and()
-        // .headers()
-        // .addHeaderWriter(new
-        // XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+        http.exceptionHandling()
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
+//        http
+//         .headers()
+//         .addHeaderWriter(new
+//         XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
     }
     /**
      * <b>Remember me</b> implementation.

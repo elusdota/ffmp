@@ -7,7 +7,7 @@ import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import java.util.List;
 
 /**
- * Created by jiangliang on 2016/7/14.
+ * Created by jiangliang on 2016/7/14.任务执行节点服务接口,elus
  */
 public interface TaskHistoryService {
     //保存

@@ -32,8 +32,8 @@ $(document).ready(function () {
             field: 'state', checkbox: true
         }
             , {title: '序号', formatter: runningFormatter}
-            , {title: "账号", field: "name"}
-            , {title: "类型", field: "accessType"}]
+            , {title: "账号", field: "name", sortable: true}
+            , {title: "类型", field: "accessType", sortable: true}]
     });
     //根据选择的账户加载角色树
     function loadRoles(row) {

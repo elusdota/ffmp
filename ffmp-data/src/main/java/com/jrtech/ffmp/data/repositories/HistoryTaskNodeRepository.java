@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * Created by jiangliang on 2016/7/14.
+ * Created by jiangliang on 2016/7/14.任务执行节点数据接口，elus
  */
 @Repository
 public interface HistoryTaskNodeRepository extends PagingAndSortingRepository<HistoryTaskNode, String>, JpaSpecificationExecutor {

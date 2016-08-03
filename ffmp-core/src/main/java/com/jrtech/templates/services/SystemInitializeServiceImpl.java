@@ -28,10 +28,10 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
      */
     @Override
     public void createData() {
-//        createGrantedAuthorities();
-//        createOrganization();
-//        createRoles();
-//        createAccounts();
+        createGrantedAuthorities();
+        createOrganization();
+        createRoles();
+        createAccounts();
         createTaskDefinition();
     }
 
@@ -40,10 +40,10 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
      */
     @Override
     public void clearData() {
-//        deleteAccounts();
-//        deleteRoles();
-//        deleteOrganization();
-//        deleteGrantedAuthorities();
+        deleteAccounts();
+        deleteRoles();
+        deleteOrganization();
+        deleteGrantedAuthorities();
         deleteTaskDefinition();
     }
 

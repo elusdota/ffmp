@@ -28,11 +28,11 @@ $(document).ready(function () {
             field: 'state', checkbox: true
         }
             , {title: '序号', formatter: runningFormatter}
-            , {title: "报修单编号", field: "code"}
-            , {title: "项目编号", field: "projectNumber"}
-            , {title: "报修人", field: "person"}
-            , {title: "故障部位", field: "parts"}
-            , {title: "故障描述", field: "description"}
+            , {title: "报修单编号", field: "code", sortable: true}
+            , {title: "项目编号", field: "projectNumber", sortable: true}
+            , {title: "报修人", field: "person", sortable: true}
+            , {title: "故障部位", field: "parts", sortable: true}
+            , {title: "故障描述", field: "description", sortable: true}
         ]
     });
 //序号加载
@@ -92,7 +92,7 @@ $("#queryTask").click(function () {
                 });
             }
             $('#repairTable').bootstrapTable('refresh');
-        },  error: function (XMLHttpRequest) {
+        }, error: function (XMLHttpRequest) {
             $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
             $("#message").modal("show");
         }

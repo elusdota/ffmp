@@ -28,11 +28,11 @@ $(document).ready(function () {
             field: 'state', checkbox: true
         }
             , {title: '序号', formatter: runningFormatter}
-            , {title: "任务名称", field: "name"}
-            , {title: "报修单编号", field: "repairnumber"}
-            , {title: "起始日期", field: "startdate"}
-            , {title: "到期日期", field: "enddate"}
-            , {title: "任务描述", field: "description"}
+            , {title: "任务名称", field: "name", sortable: true}
+            , {title: "报修单编号", field: "repairnumber", sortable: true}
+            , {title: "起始日期", field: "startdate", sortable: true}
+            , {title: "到期日期", field: "enddate", sortable: true}
+            , {title: "任务描述", field: "description", sortable: true}
         ]
     });
 //序号加载

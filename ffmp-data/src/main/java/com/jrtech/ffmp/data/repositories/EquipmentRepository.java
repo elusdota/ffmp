@@ -9,7 +9,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by jiangliang on 2016/7/27.
+ * Created by jiangliang on 2016/7/27.设备操作数据接口，elus
  */
 @Repository
 public interface EquipmentRepository extends PagingAndSortingRepository<Equipment, String>, JpaSpecificationExecutor {

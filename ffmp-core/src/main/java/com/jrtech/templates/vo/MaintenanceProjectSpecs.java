@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by jiangliang on 2016/7/23.
+ * Created by jiangliang on 2016/7/23.项目查询对象，elus
  */
 @Service
 public class MaintenanceProjectSpecs<T> {

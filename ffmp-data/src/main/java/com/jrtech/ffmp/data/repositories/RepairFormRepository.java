@@ -6,7 +6,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by jiangliang on 2016/7/25.
+ * Created by jiangliang on 2016/7/25.保修单数据接口
  */
 @Repository
 public interface RepairFormRepository extends PagingAndSortingRepository<RepairForm, String>, JpaSpecificationExecutor {

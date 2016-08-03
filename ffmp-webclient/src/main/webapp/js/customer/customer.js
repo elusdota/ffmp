@@ -27,14 +27,14 @@ $(document).ready(function () {
             field: 'state', checkbox: true
         }
             , {title: '序号', formatter: runningFormatter}
-            , {title: "客户名称", field: "name"}
-            , {title: "客户编码", field: "code"}
-            , {title: "联系人", field: "contect"}
-            , {title: "联系电话", field: "telephone"}
-            , {title: "地址", field: "address"}
-            , {title: "邮箱", field: "email"}
-            , {title: "税号", field: "taxId"}
-            , {title: "创建时间", field: "createTime"}
+            , {title: "客户名称", field: "name", sortable: true}
+            , {title: "客户编码", field: "code", sortable: true}
+            , {title: "联系人", field: "contect", sortable: true}
+            , {title: "联系电话", field: "telephone", sortable: true}
+            , {title: "地址", field: "address", sortable: true}
+            , {title: "邮箱", field: "email", sortable: true}
+            , {title: "税号", field: "taxId", sortable: true}
+            , {title: "创建时间", field: "createTime", sortable: true}
         ]
     });
 //序号加载
