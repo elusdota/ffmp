@@ -107,7 +107,7 @@ $(function () {
                 telphone: $("#telphone").val().trim(),
                 id: $("#manfactureId").val().trim(),
                 version: $("#manfactureVersion").val().trim(),
-                accessType: $("#manfactureAccessType").val().trim(),
+                accessType: $("#manfactureAccessType").val().trim()
             };
         }else{
             val = {
