@@ -29,6 +29,8 @@
     "jquery-validation": "^1.15.0",
     "bootstrap-treeview": "^1.2.0",
     "flowchart": "^1.6.3",
-    "raphael": "2.2.1"
+    "raphael": "2.2.1",
+    "select2": "^4.0.3",
+    "select2-bootstrap-theme": "^0.1.0-beta.8"
   }
 }

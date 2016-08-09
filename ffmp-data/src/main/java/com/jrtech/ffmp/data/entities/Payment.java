@@ -14,14 +14,14 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "Payment")
-public class Payment extends AbstractDomainObject{
+public class Payment extends AbstractDomainObject {
 
-//    期数
+    // 期数
     private int period;
 
     //付款时间
     @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "zh", timezone = "GMT+8")
     private Date paymentDate;
 
     //票据(普票，专票，收据)

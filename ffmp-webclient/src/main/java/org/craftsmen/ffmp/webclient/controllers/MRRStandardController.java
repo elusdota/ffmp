@@ -50,7 +50,6 @@ public class MRRStandardController {
             throw new ServiceException("创建维管设施标准错误，维管设施标准数据为NULL");
         }
         MrrStandard mrrStandard = mrrStandardVo.getMrrStandard();
-//        MrrStandard mrrStandard1=mrrStandardService.findOne(mrrStandardVo.getParent().getId());
         mrrStandard.setParent(mrrStandardVo.getParent());
 
         mrrStandard.getTechniqueRequirementsList().forEach(item -> item.setMrrStandard(mrrStandard));

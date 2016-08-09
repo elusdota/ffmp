@@ -11,6 +11,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link rel="stylesheet" href="<c:url value='/bower_components/bootstrap-table/dist/bootstrap-table.min.css'/>">
 <link rel="stylesheet" href="<c:url value='/bower_components/AdminLTE/plugins/datepicker/datepicker3.css'/>">
+<link rel="stylesheet" href="<c:url value='/bower_components/select2/dist/css/select2.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/bower_components/select2-bootstrap-theme/dist/select2-bootstrap.min.css'/>">
 
 <section class="content-header">
     <h1>
@@ -43,8 +45,8 @@
                                 class="required">*</span></label>
 
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="customer" name="customer" placeholder="客户名称"
-                                   required="required">
+                            <select class="form-control select2"  id="customer" data-placeholder="选择客户名称" style="width: 100%;">
+                            </select>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -97,12 +99,12 @@
                                    placeholder="税号" required="required">
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 date">
                         <label for="expiry" class="col-md-4 control-label">合同效期：<span
                                 class="required">*</span></label>
 
                         <div class="col-md-8">
-                            <input type="text" data-date-format="yyyy-mm-dd" data-date-end-date="0d"
+                            <input type="text" data-date-format="yyyy-mm-dd"
                                    class="form-control datepicker"
                                    data-provide="datepicker" id="expiry">
                         </div>
@@ -112,8 +114,13 @@
                                 class="required">*</span></label>
 
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="contractType" name="contractType"
-                                   placeholder="合同类别" required="required">
+                            <select class="form-control" id="contractType" required="required">
+                                <option disabled="disabled" selected="selected">--请选择合同类别--</option>
+                                <option value="自营--维保">自营--维保</option>
+                                <option value="自营--检测">自营--检测</option>
+                                <option value="合作--维保">合作--维保</option>
+                                <option value="合作--检测">合作--检测</option>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -129,7 +136,7 @@
                         <label for="content" class="col-md-4 control-label">合同内容：</label>
 
                         <div class="col-md-8">
-                                    <textarea type="text" class="form-control" rows="2" id="content" name="content"
+                                    <textarea class="form-control" rows="2" id="content" name="content"
                                               placeholder="合同内容"></textarea>
                         </div>
                     </div>
@@ -138,21 +145,21 @@
             </div>
         </div>
         <div class="box-body">
-            <div class="row"><p>付款方式：</p></div>
+            <div><h4>付款方式：</h4></div>
             <div class="row">
                 <form role="form" id="paymentMethodForm" class="form-horizontal">
-                    <div class="form-group col-md-6">
+                    <div class="form-group col-md-6 date">
                         <label for="paymentDate" class="col-md-4 control-label">付款时间：<span
                                 class="required">*</span></label>
 
                         <div class="col-md-8">
-                            <input type="text" data-date-format="yyyy-mm-dd" data-date-end-date="0d"
+                            <input type="text" data-date-format="yyyy-mm-dd"
                                    class="form-control datepicker"
                                    data-provide="datepicker" id="paymentDate" name="paymentDate">
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="receipt" class="col-md-4 control-label">票据类型:<span
+                        <label for="receipt" class="col-md-4 control-label">票据类型: <span
                                 class="required">*</span></label>
 
                         <div class="col-md-8">
@@ -192,14 +199,13 @@
                 </form>
             </div>
             <hr>
-            <div class="row">
+            <div class="table-responsive">
                 <table id="paymentTable"></table>
             </div>
-
         </div>
         <div class="box-footer clearfix">
-            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary" id="createContractdBtn">创建</button>
+            <button type="button"  class="btn btn-danger"  id="cancelBtn">取消</button>
+            <button type="button" class="btn btn-primary pull-right" id="createContractdBtn">创建</button>
         </div>
     </div>
 
@@ -215,8 +221,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="btn">创建</button>
+                    <button type="button" class="btn btn-danger"  id="cancel">取消</button>
+                    <button type="button" class="btn btn-primary pull-right" id="btn">创建</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -234,4 +240,6 @@
 <script src="<c:url value='/bower_components/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js'/>"></script>
 <script src="<c:url value='/bower_components/tableExport.jquery.plugin/tableExport.min.js'/>"></script>
 <script src="<c:url value='/bower_components/jquery.base64.js/jquery.base64.js'/>"></script>
+<script src="<c:url value='/bower_components/select2/dist/js/i18n/zh-CN.js'/>"></script>
+<script src="<c:url value='/bower_components/select2/dist/js/select2.full.min.js'/>"></script>
 <script src="<c:url value='/js/contract/contractForm.js'/>"></script>

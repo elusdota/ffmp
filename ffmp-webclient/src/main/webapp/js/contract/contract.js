@@ -26,7 +26,7 @@
             },
             {title: "序号", formatter: runningFormatter},
             {title: "合同名称", field: "name", align: 'center', sortable: true},
-            {title: "客户名称", field: "customer", align: 'center', sortable: true},
+            {title: "客户名称", field: "customer.name", align: 'center', sortable: true},
             {title: "负责人", field: "manager", align: 'center', sortable: true},
             {title: "负责人电话", field: "managerTel", align: 'center', sortable: true},
             {title: "付款方式", field: "payment", align: 'center', sortable: true},
