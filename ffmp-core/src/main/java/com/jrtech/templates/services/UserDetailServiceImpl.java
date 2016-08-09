@@ -20,26 +20,25 @@ import com.jrtech.templates.services.AccountService;
 @Component
 public class UserDetailServiceImpl implements UserDetailsService {
 
-	@Autowired
-	private AccountService accountService;
+    @Autowired
+    private AccountService accountService;
 
-	@Override
-	public UserDetails loadUserByUsername(String name)
-			throws UsernameNotFoundException {
-		System.out.println(name+"---------------------name");
-		Account account = accountService.findOneByName(name);
-		if (null == account) {
-			throw new UsernameNotFoundException(name + " not found");
-		}
-		return buildUserFromAccount(account);
-	}
+    @Override
+    public UserDetails loadUserByUsername(String name)
+            throws UsernameNotFoundException {
+        Account account = accountService.findOneByName(name);
+        if (null == account) {
+            throw new UsernameNotFoundException(name + " not found");
+        }
+        return buildUserFromAccount(account);
+    }
 
-	private User buildUserFromAccount(Account account) {
-		Collection<GrantedAuthority> authorities = new HashSet<>();
+    private User buildUserFromAccount(Account account) {
+        Collection<GrantedAuthority> authorities = new HashSet<>();
 
-		account.getRoles().forEach(role -> {
-			authorities.addAll(role.getAuthorities());
-		});
-		return new User(account.getName(), account.getPassword(), authorities);
-	}
+        account.getRoles().forEach(role -> {
+            authorities.addAll(role.getAuthorities());
+        });
+        return new User(account.getName(), account.getPassword(), authorities);
+    }
 }
