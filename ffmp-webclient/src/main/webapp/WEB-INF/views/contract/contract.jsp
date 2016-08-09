@@ -9,6 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<link rel="stylesheet" href="<c:url value='/bower_components/bootstrap-table/dist/bootstrap-table.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/bower_components/AdminLTE/plugins/datepicker/datepicker3.css'/>">
 
 <section class="content-header">
     <h1>
@@ -28,10 +30,10 @@
                 <button type="button" id="createContract" class="btn btn-default">创建合同信息</button>
             </sec:authorize>
             <sec:authorize access="@userDetailsUtils.isAuthorized('/合同管理/修改合同信息')">
-                <button type="button" id="updateContract" class="btn btn-default">修改合同信息</button>
+                <button type="button" id="updateContract" class="btn btn-default" disabled>修改合同信息</button>
             </sec:authorize>
             <sec:authorize access="@userDetailsUtils.isAuthorized('/合同管理/查询合同信息')">
-                <button type="button" id="deleteContract" class="btn btn-default">查询合同信息</button>
+                <button type="button" id="deleteContract" class="btn btn-default" disabled>查询合同信息</button>
             </sec:authorize>
         </div>
         <div class="box-body">
@@ -113,43 +115,69 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="agent" class="col-md-4 control-label">经办人：</label>
+                                <label for="agent" class="col-md-4 control-label">经办人：<span
+                                        class="required">*</span></label>
 
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" id="agent" name="agent"
-                                           placeholder="经办人">
+                                           placeholder="经办人"  required="required">
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="amount" class="col-md-4 control-label">合同金额：</label>
+                                <label for="amount" class="col-md-4 control-label">合同金额：<span
+                                        class="required">*</span></label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="amount" name="amount"
-                                           placeholder="合同金额">
+
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="amount" name="amount"
+                                               placeholder="合同金额"  required="required">
+                                        <div class="input-group-addon">元</div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="TaxNO" class="col-md-4 control-label">税号：</label>
+                                <label for="TaxNO" class="col-md-4 control-label">税号：<span
+                                        class="required">*</span></label>
 
                                 <div class="col-md-8">
                                     <input type="text" class="form-control" id="TaxNO" name="TaxNO"
-                                           placeholder="税号">
+                                           placeholder="税号"  required="required">
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="expiry" class="col-md-4 control-label">效期：</label>
+                                <label for="expiry" class="col-md-4 control-label">合同效期：<span
+                                        class="required">*</span></label>
 
                                 <div class="col-md-8">
-                                    <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker"
+                                    <input type="text" data-date-format="yyyy-mm-dd" data-date-end-date="0d"  class="form-control datepicker"
                                            data-provide="datepicker" id="expiry">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="contractType" class="col-md-4 control-label">合同类别：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <input  type="text" class="form-control"  id="contractType" name="contractType"
+                                           placeholder="合同类别"  required="required">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="address" class="col-md-4 control-label">项目地址：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <input  type="text" class="form-control"  id="address" name="address"
+                                            placeholder="项目地址"  required="required">
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
                                 <label for="content" class="col-md-4 control-label">合同内容：</label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="content" name="content"
-                                           placeholder="合同内容">
+                                    <textarea type="text" class="form-control" rows="2"  id="content" name="content"
+                                           placeholder="合同内容"></textarea>
                                 </div>
                             </div>
                             <button type="reset" class="btn btn-warning hidden" id="resetContract">重置</button>

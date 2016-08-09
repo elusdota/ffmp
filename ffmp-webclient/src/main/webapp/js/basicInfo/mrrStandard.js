@@ -139,6 +139,7 @@ $(function () {
     $("#createMrrStandardBtn").click(function () {
         var selectRow = $mrrstandardTable.bootstrapTable('getSelections');
         if ($("#mrrStandardForm").valid()) {
+            var techniqueVal = $techniqueTable.bootstrapTable("getData");
             var mrrStandardVal = {
                 code: $("#code").val().trim(),
                 name: $("#name").val().trim(),
@@ -146,7 +147,7 @@ $(function () {
                 jobContent: $("#jobContent").val().trim(),
                 proportion: $("#proportion").val().trim(),
                 remark: $("#remark").val().trim(),
-                techniqueRequirementsList: $techniqueTable.bootstrapTable("getData")
+                techniqueRequirementsList: techniqueVal instanceof Array ? techniqueVal : []
             };
             var mrrStandardInfo = {
                 parent: selectRow[0],

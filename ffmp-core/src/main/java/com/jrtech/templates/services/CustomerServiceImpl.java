@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by jiangliang on 2016/7/23.
@@ -63,4 +63,10 @@ public class CustomerServiceImpl implements CustomerService {
             return true;
         }
     }
+
+    @Override
+    public List<Customer> findByNameLike(String name) {
+        return repository.findByNameLike(name);
+    }
+
 }

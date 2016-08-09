@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -28,4 +27,6 @@ public interface CustomerService {
     Customer findOne(String id);
 
     boolean isDuplicateNameOnSameLevel(Customer customer);
+
+    List<Customer> findByNameLike(String name);
 }

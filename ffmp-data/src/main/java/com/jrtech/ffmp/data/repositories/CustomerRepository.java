@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by jiangliang on 2016/7/23.
  */
@@ -14,4 +16,6 @@ public interface CustomerRepository extends PagingAndSortingRepository<Customer,
     Customer findOneByName(String name);
 
     Customer findOneByAccount(Account account);
+
+    List<Customer> findByNameLike(String name);
 }

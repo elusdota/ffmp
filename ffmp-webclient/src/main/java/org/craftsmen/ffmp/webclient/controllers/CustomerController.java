@@ -8,13 +8,11 @@ import com.jrtech.templates.vo.CommonSpecs;
 import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.TableGetDataParameters;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpStatus;
-import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by jiangliang on 2016/7/23.客户控制器,elus
@@ -83,5 +81,10 @@ public class CustomerController {
     @RequestMapping(method = RequestMethod.DELETE)
     public void delete(@RequestParam("id") String id) {
         service.delete(id);
+    }
+
+    @RequestMapping(value = "/findByNameLike",method = RequestMethod.GET)
+    public List<Customer> findByNameLike(@RequestParam("name") String name) {
+       return service.findByNameLike("%"+name+"%");
     }
 }

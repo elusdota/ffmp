@@ -1,20 +1,20 @@
-package com.jrtech.ffmp.data.entities;
+package com.jrtech.templates.vo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.data.annotation.CreatedDate;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import com.jrtech.ffmp.data.entities.Payment;
+
 import java.util.Date;
 import java.util.Set;
 
 /**
- * Created by suelmer on 2016/7/5.
+ * 合同vo对象
+ * Created by suelmer on 2016/7/28.
  */
-@Entity
-@Table(name = "contract")
-public class Contract extends AbstractNamedObject {
+public class ContractVO {
 
+    private String id;
+    //合同名称
+    private String name;
     //地址
     private String address;
     //负责人
@@ -28,31 +28,14 @@ public class Contract extends AbstractNamedObject {
     //税号
     private String TaxNO;
     //合同内容
-    @Lob
     private String content;
     //合同类别
     private String contractType;
-
     //效期
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private Date expiry;
-
-    //创建时间
-    @CreatedDate
-    @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
-    private Date createTime;
-
     //客户
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = true)
-    private Customer customer;
-
+    private String customerId;
     //付款方式
-    @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-    @JoinColumn(name="contract_id")
     private Set<Payment> paymentSet;
 
     public String getAddress() {
@@ -61,6 +44,14 @@ public class Contract extends AbstractNamedObject {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getTaxNO() {
+        return TaxNO;
+    }
+
+    public void setTaxNO(String taxNO) {
+        TaxNO = taxNO;
     }
 
     public String getAgent() {
@@ -87,20 +78,20 @@ public class Contract extends AbstractNamedObject {
         this.content = content;
     }
 
-    public Date getCreateTime() {
-        return createTime;
+    public String getContractType() {
+        return contractType;
     }
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
+    public void setContractType(String contractType) {
+        this.contractType = contractType;
     }
 
-    public Customer getCustomer() {
-        return customer;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public Date getExpiry() {
@@ -109,6 +100,14 @@ public class Contract extends AbstractNamedObject {
 
     public void setExpiry(Date expiry) {
         this.expiry = expiry;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getManager() {
@@ -127,20 +126,12 @@ public class Contract extends AbstractNamedObject {
         this.managerTel = managerTel;
     }
 
-    public String getTaxNO() {
-        return TaxNO;
+    public String getName() {
+        return name;
     }
 
-    public void setTaxNO(String taxNO) {
-        TaxNO = taxNO;
-    }
-
-    public String getContractType() {
-        return contractType;
-    }
-
-    public void setContractType(String contractType) {
-        this.contractType = contractType;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Payment> getPaymentSet() {
@@ -151,3 +142,5 @@ public class Contract extends AbstractNamedObject {
         this.paymentSet = paymentSet;
     }
 }
+
+
