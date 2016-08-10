@@ -97,10 +97,12 @@ public class PageController {
     public String runTask(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/runTask";
     }
+
     @RequestMapping("/taskManagement/historyTask")
     public String historyTask(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/historyTask";
     }
+
     @RequestMapping("/taskManagement/createTask")
     public String createTask(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/createTask";
@@ -126,6 +128,7 @@ public class PageController {
     public String customer(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/customer/customer";
     }
+
     @RequestMapping("/taskManagement/repairForm")
     public String repairForm(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/repairForm";
@@ -133,6 +136,7 @@ public class PageController {
 
     /**
      * 基础信息管理->城市区域管理
+     *
      * @param request
      * @param response
      * @return String
@@ -146,6 +150,7 @@ public class PageController {
 
     /**
      * 基础信息管理->重点部位标准
+     *
      * @param request
      * @param response
      * @return String
@@ -159,6 +164,7 @@ public class PageController {
 
     /**
      * 基础信息管理->设施维管标准
+     *
      * @param request
      * @param response
      * @return String
@@ -173,6 +179,7 @@ public class PageController {
 
     /**
      * 基础信息管理->生产厂家管理
+     *
      * @param request
      * @param response
      * @return String
@@ -186,6 +193,7 @@ public class PageController {
 
     /**
      * 基础信息管理->合同管理
+     *
      * @param request
      * @param response
      * @return String
@@ -199,6 +207,7 @@ public class PageController {
 
     /**
      * 基础信息管理->合同管理->创建/更新合同信息
+     *
      * @param request
      * @param response
      * @return string
@@ -208,5 +217,11 @@ public class PageController {
     @ResponseStatus(HttpStatus.OK)
     public String contractForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "/contract/contractForm";
+    }
+
+    @RequestMapping("/taskManagement/serachEquipment")
+    @ResponseStatus(HttpStatus.OK)
+    public String serachEquipment(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/taskManagement/serachEquipment";
     }
 }

@@ -248,16 +248,12 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         second.setIcons("fa-steam");
         second.setParent(root);
         root.getChildren().add(second);
-        third = new GrantedAuthorityImpl("修改设备信息");
+        third = new GrantedAuthorityImpl("打印条形码");
         third.setIcons("fa-pencil");
         third.setParent(second);
         second.getChildren().add(third);
         third = new GrantedAuthorityImpl("设备查询");
         third.setIcons("fa-search");
-        third.setParent(second);
-        second.getChildren().add(third);
-        third = new GrantedAuthorityImpl("移除设备");
-        third.setIcons("fa-remove");
         third.setParent(second);
         second.getChildren().add(third);
         second = new GrantedAuthorityImpl("待完成任务");
@@ -525,5 +521,20 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
             flowchartSteps.setTaskDefinition(taskDefinition);
         });
         taskDefinitionRepository.save(taskDefinition);
+        TaskDefinition taskDefinition1=new TaskDefinition("巡检任务");
+        String value1="st->op(right)->cond1\n"+"cond1(yes)->cond2\n"+"cond1(no)->op\n"
+                +"cond2(yes)->en\n"+"cond2(no)->op\n";
+        taskDefinition.setValue(value1);
+        List<FlowchartSteps> flowchartStepses1=new ArrayList<>();
+        flowchartStepses1.add(new FlowchartSteps("开始", "st", "start","op",""));
+        flowchartStepses1.add(new FlowchartSteps("巡检", "op", "operation","cond1",""));
+        flowchartStepses1.add(new FlowchartSteps("客户审核是否巡检完成", "cond1", "condition","cond2","op"));
+        flowchartStepses1.add(new FlowchartSteps("维保总监审核是否巡检完成", "cond2", "condition","en","op"));
+        flowchartStepses1.add(new FlowchartSteps("结束","en","end","",""));
+        taskDefinition1.getFlowchartStepses().addAll(flowchartStepses1);
+        taskDefinition1.getFlowchartStepses().forEach(flowchartSteps -> {
+            flowchartSteps.setTaskDefinition(taskDefinition1);
+        });
+        taskDefinitionRepository.save(taskDefinition1);
     }
 }

@@ -5,6 +5,7 @@ $(document).ready(function () {
     $('.datepicker').datepicker({
         language: 'zh-CN'
     });
+    $("#viewDispatch").attr("disabled", "true");
     $('#dispatchTable').bootstrapTable({
         method: 'POST',
         url: 'rest/dispatch/findAll',
@@ -26,6 +27,9 @@ $(document).ready(function () {
             };
             return JSON.stringify(fin);
         },
+        onCheck: function (row) {
+            $("#viewDispatch").removeAttr("disabled");
+        },
         columns: [{
             field: 'state', checkbox: true
         }
@@ -33,13 +37,6 @@ $(document).ready(function () {
             , {title: "单据编号", field: "number", sortable: true}
             , {title: "操作人", field: "executor", sortable: true}
             , {title: "创建日期", field: "date", sortable: true}
-            , {
-                title: '查看详细',
-                align: 'center',
-                sortable: true,
-                formatter: operateFormatter2,
-                events: 'operateEvents2'
-            }
         ]
     });
     $('#inventoryTable').bootstrapTable({
@@ -92,27 +89,6 @@ $(document).ready(function () {
     function runningFormatter(value, row, index) {
         return index + 1;
     }
-
-    function operateFormatter2(value, row, index) {
-        return [
-            '<a class="edit" href="javascript:void(0)">',
-            '查看详细</a>'
-        ].join('');
-    }
-
-    window.operateEvents2 = {
-        'click .edit': function (e, value, row, index) {
-            $("#submitData").addClass("hidden");
-            $("#dispatchForm").addClass("hidden");
-            $('#detailsTable').bootstrapTable('removeAll');
-            $('#detailsTable').bootstrapTable("append", row.dispatchdetails);
-            $('#dispatchModel').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-            $("#dispatchModel").modal("show");
-        }
-    }
 });
 $("#insertTable").click(function () {
     var data = $('#inventoryTable').bootstrapTable('getSelections')[0];
@@ -123,6 +99,19 @@ $("#insertTable").click(function () {
 
 $("#queryDispatch").click(function () {
     $('#dispatchTable').bootstrapTable('refresh');
+});
+
+$("#viewDispatch").click(function () {
+    var row = $('#dispatchTable').bootstrapTable('getSelections')[0];
+    $("#submitData").addClass("hidden");
+    $("#dispatchForm").addClass("hidden");
+    $('#detailsTable').bootstrapTable('removeAll');
+    $('#detailsTable').bootstrapTable("append", row.dispatchdetails);
+    $('#dispatchModel').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $("#dispatchModel").modal("show");
 });
 $("#createDispatch").click(function () {
     $('#dispatchModel').modal({
@@ -141,7 +130,7 @@ $("#submitData").click(function () {
             $('#dispatchTable').bootstrapTable('refresh');
             $("#dispatchModel").modal("hide");
             $('#detailsTable').bootstrapTable('removeAll');
-        },  error: function (XMLHttpRequest) {
+        }, error: function (XMLHttpRequest) {
             $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
             $("#message").modal("show");
         }

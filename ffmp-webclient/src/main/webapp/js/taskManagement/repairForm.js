@@ -87,7 +87,7 @@ $("#queryTask").click(function () {
         dataType: 'json',
         success: function (data, XMLHttpRequest, jqXHR) {
             if (data != null) {
-                $("#main-content").load("taskManagement/projectInformation?id=" + data.id, function () {
+                $("#main-content").load("taskManagement/taskInformation?id=" + data.id, function () {
                     $("#main-content").fadeIn();
                 });
             }

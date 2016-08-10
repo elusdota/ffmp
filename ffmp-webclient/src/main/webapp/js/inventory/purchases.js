@@ -5,6 +5,7 @@ $(document).ready(function () {
     $('.datepicker').datepicker({
         language: 'zh-CN'
     });
+    $("#viewPurchases").attr("disabled", "true");
     $('#purchasesTable').bootstrapTable({
         method: 'POST',
         url: 'rest/purchases/findAll',
@@ -26,6 +27,12 @@ $(document).ready(function () {
             };
             return JSON.stringify(fin);
         },
+        onCheck: function (row) {
+            $("#viewPurchases").removeAttr("disabled");
+        },
+        //onNoCheck:function (row) {
+        //    $("#viewPurchases").attr("disabled", "true");
+        //},
         columns: [{
             field: 'state', checkbox: true
         }
@@ -33,13 +40,6 @@ $(document).ready(function () {
             , {title: "单据编号", field: "number", sortable: true}
             , {title: "操作人", field: "executor", sortable: true}
             , {title: "创建日期", field: "date", sortable: true}
-            , {
-                title: '查看详细',
-                align: 'center',
-                sortable: true,
-                formatter: operateFormatter2,
-                events: 'operateEvents2'
-            }
         ]
     });
     $('#detailsTable').bootstrapTable({
@@ -54,26 +54,6 @@ $(document).ready(function () {
         ],
         striped: true
     });
-    function operateFormatter2(value, row, index) {
-        return [
-            '<a class="edit" href="javascript:void(0)">',
-            '查看详细</a>'
-        ].join('');
-    }
-
-    window.operateEvents2 = {
-        'click .edit': function (e, value, row, index) {
-            $("#submitData").addClass("hidden");
-            $("#purchasesForm").addClass("hidden");
-            $('#detailsTable').bootstrapTable('removeAll');
-            $('#detailsTable').bootstrapTable("append", row.purchasesdetails);
-            $('#purchasesModel').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-            $("#purchasesModel").modal("show");
-        }
-    }
 //序号加载
     function runningFormatter(value, row, index) {
         return index + 1;
@@ -82,6 +62,18 @@ $(document).ready(function () {
 });
 $("#queryPurchases").click(function () {
     $('#purchasesTable').bootstrapTable('refresh');
+});
+$("#viewPurchases").click(function () {
+    var row = $('#purchasesTable').bootstrapTable('getSelections')[0];
+    $("#submitData").addClass("hidden");
+    $("#purchasesForm").addClass("hidden");
+    $('#detailsTable').bootstrapTable('removeAll');
+    $('#detailsTable').bootstrapTable("append", row.purchasesdetails);
+    $('#purchasesModel').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $("#purchasesModel").modal("show");
 });
 $("#createPurchases").click(function () {
     document.getElementById("purchasesForm").reset();

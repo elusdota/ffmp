@@ -61,6 +61,9 @@
                 <sec:authorize access="@userDetailsUtils.isAuthorized('/仓库管理/入库单/创建入库单')">
                     <button type="button" id="createInbounds" class="btn btn-default pull-left">创建入库单</button>
                 </sec:authorize>
+                <sec:authorize access="@userDetailsUtils.isAuthorized('/仓库管理/入库单/查看入库单详情')">
+                    <button type="button" id="viewInbounds" class="btn btn-default pull-left">查看入库单详情</button>
+                </sec:authorize>
                 <sec:authorize access="@userDetailsUtils.isAuthorized('/仓库管理/入库单/入库单查询')">
                     <button type="button" id="queryInbounds" class="btn btn-default pull-right">查询</button>
                 </sec:authorize>

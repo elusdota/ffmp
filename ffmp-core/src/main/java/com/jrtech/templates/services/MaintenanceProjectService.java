@@ -11,6 +11,8 @@ import org.springframework.data.jpa.domain.Specification;
 public interface MaintenanceProjectService {
     Page<MaintenanceProject> findAll(Specification<MaintenanceProject> spec, Pageable pageable);
 
+    Iterable<MaintenanceProject> findAll();
+
     MaintenanceProject findOneByName(String name);
 
     MaintenanceProject findOneByCode(String code);

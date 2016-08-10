@@ -73,7 +73,9 @@ public class OrganizationController {
      * @return 组织机构
      */
     @RequestMapping(method = RequestMethod.PUT)
-    public Organization updateOrganization(@RequestBody OrganizationPost organization) {
-        return service.save(organization.getOrganization());
+    public Organization updateOrganization(@RequestBody Organization organization) {
+        service.findOne(organization.getId());
+        organization.setParent(service.findOne(organization.getId()).getParent());
+        return service.save(organization);
     }
 }

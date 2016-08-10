@@ -9,7 +9,7 @@ $(document).ready(function () {
         dataType: 'json',
         success: function (data, XMLHttpRequest, jqXHR) {
             $("#name").val(data.name);
-            $("#maintenanceProject").val(data.maintenanceProject.name);
+            $("#maintenanceProject").val(data.maintenanceProject.code);
             $("#proid").val(data.maintenanceProject.id);
             $("#customer").val(data.customer.name);
             $("#description").val(data.description);
@@ -35,7 +35,6 @@ $(document).ready(function () {
                 }
             }
             var chart;
-            alert(code + sv);
             chart = flowchart.parse(code + sv);
             chart.drawSVG('canvas', {
                 'line-width': 3,

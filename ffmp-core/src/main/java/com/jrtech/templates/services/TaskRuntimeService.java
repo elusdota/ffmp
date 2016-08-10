@@ -21,6 +21,8 @@ public interface TaskRuntimeService {
     //id查询
     MaintenanceTask findOne(String id);
 
+    MaintenanceTask findOneByName(String name);
+
     //获取登录用户分页任务列表
     Page<MaintenanceTask> findBySuspended(Pageable pageable);
 }

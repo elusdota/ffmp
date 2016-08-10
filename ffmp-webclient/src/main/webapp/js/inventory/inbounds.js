@@ -5,6 +5,7 @@ $(document).ready(function () {
     $('.datepicker').datepicker({
         language: 'zh-CN'
     });
+    $("#viewInbounds").attr("disabled", "true");
     $('#inboundsTable').bootstrapTable({
         method: 'POST',
         url: 'rest/inbounds/findAll',
@@ -26,6 +27,9 @@ $(document).ready(function () {
             };
             return JSON.stringify(fin);
         },
+        onCheck: function (row) {
+            $("#viewInbounds").removeAttr("disabled");
+        },
         columns: [{
             field: 'state', checkbox: true
         }
@@ -33,13 +37,6 @@ $(document).ready(function () {
             , {title: "单据编号", field: "number", sortable: true}
             , {title: "操作人", field: "executor", sortable: true}
             , {title: "创建日期", field: "date", sortable: true}
-            , {
-                title: '查看详细',
-                align: 'center',
-                sortable: true,
-                formatter: operateFormatter2,
-                events: 'operateEvents2'
-            }
         ]
     });
     $('#detailsTable').bootstrapTable({
@@ -56,26 +53,6 @@ $(document).ready(function () {
         ],
         striped: true
     });
-    function operateFormatter2(value, row, index) {
-        return [
-            '<a class="edit" href="javascript:void(0)">',
-            '查看详细</a>'
-        ].join('');
-    }
-
-    window.operateEvents2 = {
-        'click .edit': function (e, value, row, index) {
-            $("#submitData").addClass("hidden");
-            $("#inboundsForm").addClass("hidden");
-            $('#detailsTable').bootstrapTable('removeAll');
-            $('#detailsTable').bootstrapTable("append", row.inboundsdetails);
-            $('#inboundsModel').modal({
-                backdrop: 'static',
-                keyboard: false
-            });
-            $("#inboundsModel").modal("show");
-        }
-    }
 //序号加载
     function runningFormatter(value, row, index) {
         return index + 1;
@@ -85,6 +62,18 @@ $(document).ready(function () {
 ;
 $("#createInbounds").click(function () {
     document.getElementById("inboundsForm").reset();
+    $('#inboundsModel').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $("#inboundsModel").modal("show");
+});
+$("#viewInbounds").click(function () {
+    var row = $('#inboundsTables').bootstrapTable('getSelections')[0];
+    $("#submitData").addClass("hidden");
+    $("#inboundsForm").addClass("hidden");
+    $('#detailsTable').bootstrapTable('removeAll');
+    $('#detailsTable').bootstrapTable("append", row.inboundsdetails);
     $('#inboundsModel').modal({
         backdrop: 'static',
         keyboard: false

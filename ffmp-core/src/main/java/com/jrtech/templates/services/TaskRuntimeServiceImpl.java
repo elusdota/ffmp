@@ -48,6 +48,11 @@ public class TaskRuntimeServiceImpl implements TaskRuntimeService {
     }
 
     @Override
+    public MaintenanceTask findOneByName(String name) {
+        return null;
+    }
+
+    @Override
     public Page<MaintenanceTask> findBySuspended(Pageable pageable) {
         final Organization[] organization = {new Organization("", 2)};
         accountService.getOrganizations(userDetailsUtils.getCurrent().getUsername()).forEach(organization1 -> {

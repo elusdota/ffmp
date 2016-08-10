@@ -22,7 +22,7 @@ $(document).ready(function () {
     });
     function getSaveData() {
         var maintenanceProject = {
-            name: $('#maintenanceProject').val()
+            code: $('#maintenanceProject').val()
         };
         var data = {
             maintenanceProject:maintenanceProject,
