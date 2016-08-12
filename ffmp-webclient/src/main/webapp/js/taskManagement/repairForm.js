@@ -14,6 +14,9 @@ $(document).ready(function () {
         onCheck: function (row) {
             $("#queryTask").removeAttr("disabled");
         },
+        onUncheck: function (row) {
+            $("#queryTask").attr("disabled", "true");
+        },
         queryParams: function (params) {
             var fin = {
                 offset: params.offset,

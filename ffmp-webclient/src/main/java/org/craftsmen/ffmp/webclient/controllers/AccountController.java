@@ -2,12 +2,10 @@ package org.craftsmen.ffmp.webclient.controllers;
 
 import com.jrtech.ffmp.data.entities.Account;
 import com.jrtech.ffmp.data.entities.Role;
-import com.jrtech.templates.services.AccountService;
-import com.jrtech.templates.services.PageableImpl;
-import com.jrtech.templates.services.RoleService;
-import com.jrtech.templates.services.ServiceException;
+import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.AccountAndRole;
 import com.jrtech.templates.vo.JSONListData;
+import com.jrtech.templates.vo.PasswordVo;
 import com.jrtech.templates.vo.TableGetDataParameters;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.orm.ObjectRetrievalFailureException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -30,6 +29,8 @@ public class AccountController {
     private AccountService service;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private UserDetailsUtils userDetailsUtils;
 
     /**
      * 加载账户列表
@@ -58,7 +59,8 @@ public class AccountController {
     @RequestMapping(method = RequestMethod.POST)
     public Account create(@RequestBody Account account) {
         if (service.findOneByName(account.getName()) == null) {
-            account.setPassword("123456");
+            String password = new BCryptPasswordEncoder().encode("123456");
+            account.setPassword(password);
             return service.save(account);
         } else {
             throw new ServiceException("创建账户失败，账户已经存在！");
@@ -76,15 +78,30 @@ public class AccountController {
     }
 
     /**
+     * 获取登录用户
+     *
+     * @return 账户对象
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public Account getLoginAccount() {
+        return service.findOneByName(userDetailsUtils.getCurrent().getUsername());
+    }
+
+    /**
      * 修改账户
      *
-     * @param account 账户
+     * @param passwordVo 账户密码对比对象
      */
-    @RequestMapping(method = RequestMethod.PUT)
-    public Account updateAccount(@RequestBody Account account) {
-        Account account1 = service.findOne(account.getId());
-        account1.setPassword(account.getPassword());
-        return service.save(account1);
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public Account updateAccount(@RequestBody PasswordVo passwordVo) {
+        Account account1 = service.findOne(passwordVo.getAccount().getId());
+        String password1 = new BCryptPasswordEncoder().encode(passwordVo.getAccount().getPassword());
+        if (new BCryptPasswordEncoder().matches(passwordVo.getRawpassword(), account1.getPassword())) {
+            account1.setPassword(password1);
+            return service.save(account1);
+        } else {
+            throw new ServiceException("原密码输入错误！请重新输入。");
+        }
     }
 
     @RequestMapping(value = "/allocationRole", method = RequestMethod.POST)

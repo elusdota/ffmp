@@ -30,6 +30,9 @@ $(document).ready(function () {
         onCheck: function (row) {
             $("#viewDispatch").removeAttr("disabled");
         },
+        onUncheck: function (row) {
+            $("#viewDispatch").attr("disabled", "true");
+        },
         columns: [{
             field: 'state', checkbox: true
         }

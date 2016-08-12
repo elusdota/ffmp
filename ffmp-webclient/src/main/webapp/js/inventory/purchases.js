@@ -30,9 +30,9 @@ $(document).ready(function () {
         onCheck: function (row) {
             $("#viewPurchases").removeAttr("disabled");
         },
-        //onNoCheck:function (row) {
-        //    $("#viewPurchases").attr("disabled", "true");
-        //},
+        onUncheck: function (row) {
+            $("#viewPurchases").attr("disabled", "true");
+        },
         columns: [{
             field: 'state', checkbox: true
         }

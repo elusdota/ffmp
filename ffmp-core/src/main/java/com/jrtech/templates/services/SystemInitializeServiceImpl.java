@@ -4,6 +4,7 @@ import com.jrtech.ffmp.data.common.AccessType;
 import com.jrtech.ffmp.data.entities.*;
 import com.jrtech.ffmp.data.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -152,6 +153,7 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         third.setParent(second);
         second.getChildren().add(third);
         second = new GrantedAuthorityImpl("职工管理");
+        second.setSrc("basicInformation/employee");
         second.setIcons("fa-child");
         second.setParent(root);
         root.getChildren().add(second);
@@ -493,12 +495,13 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
 
     private void createAccounts() {
         Role admin = roleRepository.findOneByName("系统管理员");
-        Account account = new Account("admin", "admin");
+        String password = new BCryptPasswordEncoder().encode("admin");
+        Account account = new Account("admin", password);
         account.setAccessType(AccessType.SYSTEM);
         account.getRoles().add(admin);
         accountRepository.save(account);
-
-        account = new Account("user", "user");
+        String password1 = new BCryptPasswordEncoder().encode("user");
+        account = new Account("user", password1);
         accountRepository.save(account);
     }
     private void createTaskDefinition() {
