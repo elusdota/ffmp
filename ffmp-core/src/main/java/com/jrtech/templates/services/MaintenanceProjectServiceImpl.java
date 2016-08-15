@@ -21,6 +21,11 @@ public class MaintenanceProjectServiceImpl implements  MaintenanceProjectService
     }
 
     @Override
+    public Iterable<MaintenanceProject> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
     public MaintenanceProject findOneByName(String name) {
         return repository.findOneByName(name);
     }

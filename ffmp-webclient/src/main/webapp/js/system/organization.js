@@ -25,7 +25,8 @@ function getOrganizationTree() {
             });
         },
         error: function (XMLHttpRequest) {
-            $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     });
 }
@@ -56,10 +57,10 @@ $("#updateOrganization").click(function () {
 });
 //数据提交事件定义
 $("#submitData").click(function () {
-    var org = $('#organization').treeview('getSelected');
     var id = $("#organizationId").val();
     if ($("#organizationForm").valid()) {
         if (id == null || id == "") {
+            var org = $('#organization').treeview('getSelected');
             $.ajax('rest/organization', {
                 type: 'POST',
                 data: JSON.stringify(getdata(org)),
@@ -107,17 +108,13 @@ function getdata(org) {
     return data;
 }
 //获取修改数据方法
-function getUpdatedata(org) {
+function getUpdatedata() {
     var organization = {
         id: $("#organizationId").val(),
         name: $('#name').val(),
         type: $('#type').val()
     };
-    var data = {
-        organization: organization,
-        parentId: org[0].id
-    };
-    return data;
+    return organization;
 }
 //模态框form初始化
 function resetForm() {

@@ -96,6 +96,7 @@ function type_onChange() {
         dataType: 'json',
         success: function (data, XMLHttpRequest, jqXHR) {
             var selectlist = data;
+            $("#typemin").empty();
             if (data != null) {
                 for (i = 0; i < selectlist.length; i++) {
                     $("#typemin").append("<option id='" + data[i].id + "' value='" + data[i].name + "'>" + data[i].name + "</option>");

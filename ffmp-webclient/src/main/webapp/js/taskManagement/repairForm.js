@@ -14,6 +14,9 @@ $(document).ready(function () {
         onCheck: function (row) {
             $("#queryTask").removeAttr("disabled");
         },
+        onUncheck: function (row) {
+            $("#queryTask").attr("disabled", "true");
+        },
         queryParams: function (params) {
             var fin = {
                 offset: params.offset,
@@ -87,7 +90,7 @@ $("#queryTask").click(function () {
         dataType: 'json',
         success: function (data, XMLHttpRequest, jqXHR) {
             if (data != null) {
-                $("#main-content").load("taskManagement/projectInformation?id=" + data.id, function () {
+                $("#main-content").load("taskManagement/taskInformation?id=" + data.id, function () {
                     $("#main-content").fadeIn();
                 });
             }

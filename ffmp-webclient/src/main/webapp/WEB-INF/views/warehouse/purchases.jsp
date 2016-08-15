@@ -61,6 +61,9 @@
                 <sec:authorize access="@userDetailsUtils.isAuthorized('/仓库管理/采购单/创建采购单')">
                     <button type="button" id="createPurchases" class="btn btn-default pull-left">创建采购单</button>
                 </sec:authorize>
+                <sec:authorize access="@userDetailsUtils.isAuthorized('/仓库管理/采购单/查看采购单详情')">
+                    <button type="button" id="viewPurchases" class="btn btn-default pull-left">查看采购单详情</button>
+                </sec:authorize>
                 <sec:authorize access="@userDetailsUtils.isAuthorized('/仓库管理/采购单/采购单查询')">
                     <button type="button" id="queryPurchases" class="btn btn-default pull-right">查询</button>
                 </sec:authorize>

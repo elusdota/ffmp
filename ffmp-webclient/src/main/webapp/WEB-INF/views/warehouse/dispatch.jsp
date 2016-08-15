@@ -61,6 +61,9 @@
                 <sec:authorize access="@userDetailsUtils.isAuthorized('/仓库管理/出库单/创建出库单')">
                     <button type="button" id="createDispatch" class="btn btn-default pull-left">创建出库单</button>
                 </sec:authorize>
+                <sec:authorize access="@userDetailsUtils.isAuthorized('/仓库管理/出库单/查看出库单详情')">
+                    <button type="button" id="viewDispatch" class="btn btn-default pull-left">查看出库单详情</button>
+                </sec:authorize>
                 <sec:authorize access="@userDetailsUtils.isAuthorized('/仓库管理/出库单/出库单查询')">
                     <button type="button" id="queryDispatch" class="btn btn-default pull-right">查询</button>
                 </sec:authorize>

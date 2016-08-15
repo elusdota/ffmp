@@ -14,6 +14,9 @@ $(document).ready(function () {
         onCheck: function (row) {
             $("#updateCustomer").removeAttr("disabled");
         },
+        onUncheck: function (row) {
+            $("#updateCustomer").attr("disabled", "true");
+        },
         queryParams: function (params) {
             var fin = {
                 offset: params.offset,

@@ -16,6 +16,10 @@ $(document).ready(function () {
             $("#queryProject").removeAttr("disabled");
             $("#allocationEquipment").removeAttr("disabled");
         },
+        onUncheck: function (row) {
+            $("#queryProject").attr("disabled", "true");
+            $("#allocationEquipment").attr("disabled", "true");
+        },
         queryParams: function (params) {
             var fin = {
                 offset: params.offset,

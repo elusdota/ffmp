@@ -5,14 +5,12 @@ import com.jrtech.ffmp.data.entities.MaintenanceProject;
 import com.jrtech.templates.services.EquipmentService;
 import com.jrtech.templates.services.MaintenanceProjectService;
 import com.jrtech.templates.services.PageableImpl;
+import com.jrtech.templates.vo.CommonSpecs;
 import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.TableGetDataParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by jiangliang on 2016/7/27.设备操作控制器,elus
@@ -24,14 +22,35 @@ public class EquipmentController {
     private EquipmentService service;
     @Autowired
     private MaintenanceProjectService maintenanceProjectService;
+
     @RequestMapping(value = "/findProject", method = RequestMethod.POST)
-    public JSONListData findAll(@RequestBody TableGetDataParameters parameters) {
+    public JSONListData findProject(@RequestBody TableGetDataParameters parameters) {
         PageableImpl pageable = new PageableImpl(parameters);
-        MaintenanceProject maintenanceProject=maintenanceProjectService.findOne(parameters.getSearch());
-        Page<Equipment> equipments = service.findByOwner(maintenanceProject,pageable);
+        MaintenanceProject maintenanceProject = maintenanceProjectService.findOne(parameters.getSearch());
+        Page<Equipment> equipments = service.findByOwner(maintenanceProject, pageable);
         JSONListData jld = new JSONListData();
         jld.setTotal(equipments.getTotalElements());
         jld.setRows(equipments.getContent());
         return jld;
+    }
+
+    @RequestMapping(value = "/findAll", method = RequestMethod.POST)
+    public JSONListData findAll(@RequestBody TableGetDataParameters parameters) {
+        PageableImpl pageable = new PageableImpl(parameters);
+        Page<Equipment> equipments = service.findAll(new CommonSpecs<Equipment>().spec(parameters), pageable);
+        JSONListData jld = new JSONListData();
+        jld.setTotal(equipments.getTotalElements());
+        jld.setRows(equipments.getContent());
+        return jld;
+    }
+
+    /**
+     * 扫描条码 通过条码返回设备信息
+     * @param code
+     * @return 设备信息
+     */
+    @RequestMapping(method = RequestMethod.GET)
+    public Equipment get(@RequestParam("code") String code) {
+        return service.findOneByCode(code);
     }
 }

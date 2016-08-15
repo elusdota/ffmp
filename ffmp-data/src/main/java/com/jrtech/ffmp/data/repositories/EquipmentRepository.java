@@ -14,4 +14,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EquipmentRepository extends PagingAndSortingRepository<Equipment, String>, JpaSpecificationExecutor {
     Page<Equipment> findByOwner(MaintenanceProject owner, Pageable pageable);
+
+    Equipment findOneByCode(String code);
 }

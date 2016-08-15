@@ -1,6 +1,11 @@
 package org.craftsmen.ffmp.webclient.controllers;
 
+<<<<<<< HEAD
 import com.jrtech.templates.services.ServiceException;
+=======
+import com.jrtech.templates.services.UserDetailsUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+>>>>>>> fec36587a454d3845b7507f1913a51bacd0c9e3f
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +22,10 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 public class PageController {
+    @Autowired
+    private UserDetailsUtils userDetailsUtils;
+
+    //登陆
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login(
             @RequestParam(value = "error", required = false) String error) {
@@ -29,56 +38,73 @@ public class PageController {
         return model;
     }
 
+    //主页
     @RequestMapping(value = {"/index"}, method = RequestMethod.GET)
-    public String index(HttpServletRequest rq, HttpServletResponse response) throws Exception {
-        return "/index";
+    public ModelAndView index(HttpServletRequest rq, HttpServletResponse response) throws Exception {
+        ModelAndView model = new ModelAndView();
+        String username = userDetailsUtils.getCurrent().getUsername();
+        if (username != null) {
+            model.addObject("username", username);
+        }
+        model.setViewName("index");
+        return model;
     }
 
+    //角色
     @RequestMapping(value = {"/system/role"}, method = RequestMethod.GET)
     public String role(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/system/role";
     }
 
+    //账户
     @RequestMapping("/system/account")
     public String account(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/system/account";
     }
 
+    //组织机构
     @RequestMapping(value = {"/basicInformation/organization"}, method = RequestMethod.GET)
     public String organization(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/basicInformation/organization";
     }
 
+    //采购
     @RequestMapping("/warehouse/purchases")
     public String purchases(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/warehouse/purchases";
     }
 
+    //入库
     @RequestMapping("/warehouse/inbounds")
     public String inbounds(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/warehouse/inbounds";
     }
 
+    //库存
     @RequestMapping("/warehouse/inventory")
     public String inventory(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/warehouse/inventory";
     }
 
+    //出库
     @RequestMapping("/warehouse/dispatch")
     public String dispatch(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/warehouse/dispatch";
     }
 
+    //项目
     @RequestMapping("/taskManagement/maintenanceProject")
     public String maintenanceProject(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/maintenanceProject";
     }
 
+    //创建项目
     @RequestMapping("/taskManagement/createProject")
     public String createProject(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/createProject";
     }
 
+    //设备
     @RequestMapping("/taskManagement/equipment")
     public ModelAndView equipment(@RequestParam("id") String id) throws Exception {
         ModelAndView model = new ModelAndView();
@@ -87,6 +113,7 @@ public class PageController {
         return model;
     }
 
+    //项目信息
     @RequestMapping("/taskManagement/projectInformation")
     public ModelAndView projectInformation(@RequestParam("id") String id) throws Exception {
         ModelAndView model = new ModelAndView();
@@ -95,19 +122,25 @@ public class PageController {
         return model;
     }
 
+    //活动任务
     @RequestMapping("/taskManagement/runTask")
     public String runTask(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/runTask";
     }
+
+    //历史节点
     @RequestMapping("/taskManagement/historyTask")
     public String historyTask(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/historyTask";
     }
+
+    //创建任务
     @RequestMapping("/taskManagement/createTask")
     public String createTask(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/createTask";
     }
 
+    //任务信息
     @RequestMapping("/taskManagement/taskInformation")
     public ModelAndView taskInformation(@RequestParam("id") String id) throws Exception {
         ModelAndView model = new ModelAndView();
@@ -116,6 +149,7 @@ public class PageController {
         return model;
     }
 
+    //任务节点
     @RequestMapping("/taskManagement/taskNode")
     public ModelAndView taskNode(@RequestParam("id") String id) throws Exception {
         ModelAndView model = new ModelAndView();
@@ -124,10 +158,13 @@ public class PageController {
         return model;
     }
 
+    //客户
     @RequestMapping("/customer/customer")
     public String customer(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/customer/customer";
     }
+
+    //报修单
     @RequestMapping("/taskManagement/repairForm")
     public String repairForm(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/repairForm";
@@ -135,6 +172,7 @@ public class PageController {
 
     /**
      * 基础信息管理->城市区域管理
+     *
      * @param request
      * @param response
      * @return String
@@ -148,6 +186,7 @@ public class PageController {
 
     /**
      * 基础信息管理->重点部位标准
+     *
      * @param request
      * @param response
      * @return String
@@ -161,6 +200,7 @@ public class PageController {
 
     /**
      * 基础信息管理->设施维管标准
+     *
      * @param request
      * @param response
      * @return String
@@ -175,6 +215,7 @@ public class PageController {
 
     /**
      * 基础信息管理->生产厂家管理
+     *
      * @param request
      * @param response
      * @return String
@@ -188,6 +229,7 @@ public class PageController {
 
     /**
      * 基础信息管理->合同管理
+     *
      * @param request
      * @param response
      * @return String
@@ -201,6 +243,7 @@ public class PageController {
 
     /**
      * 基础信息管理->合同管理->创建/更新合同信息
+     *
      * @param request
      * @param response
      * @return string
@@ -210,5 +253,41 @@ public class PageController {
     @ResponseStatus(HttpStatus.OK)
     public String contractForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "/contract/contractForm";
+    }
+
+    //设备查询
+    @RequestMapping("/taskManagement/serachEquipment")
+    @ResponseStatus(HttpStatus.OK)
+    public String serachEquipment(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/taskManagement/serachEquipment";
+    }
+
+    //职工管理
+    @RequestMapping("/basicInformation/employee")
+    @ResponseStatus(HttpStatus.OK)
+    public String employee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/basicInformation/employee";
+    }
+
+    //创建职工
+    @RequestMapping("/basicInformation/createEmployee")
+    @ResponseStatus(HttpStatus.OK)
+    public String createEmployee(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/basicInformation/createEmployee";
+    }
+
+    //修改职工
+    @RequestMapping("/basicInformation/updateEmployee")
+    public ModelAndView updateEmployee(@RequestParam("id") String id) throws Exception {
+        ModelAndView model = new ModelAndView();
+        model.addObject("id", id);
+        model.setViewName("basicInformation/updateEmployee");
+        return model;
+    }
+
+    @RequestMapping("/system/information")
+    @ResponseStatus(HttpStatus.OK)
+    public String information(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/system/information";
     }
 }

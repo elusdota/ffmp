@@ -4,6 +4,7 @@ import com.jrtech.ffmp.data.common.AccessType;
 import com.jrtech.ffmp.data.entities.*;
 import com.jrtech.ffmp.data.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -152,6 +153,7 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         third.setParent(second);
         second.getChildren().add(third);
         second = new GrantedAuthorityImpl("职工管理");
+        second.setSrc("basicInformation/employee");
         second.setIcons("fa-child");
         second.setParent(root);
         root.getChildren().add(second);
@@ -248,16 +250,12 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         second.setIcons("fa-steam");
         second.setParent(root);
         root.getChildren().add(second);
-        third = new GrantedAuthorityImpl("修改设备信息");
+        third = new GrantedAuthorityImpl("打印条形码");
         third.setIcons("fa-pencil");
         third.setParent(second);
         second.getChildren().add(third);
         third = new GrantedAuthorityImpl("设备查询");
         third.setIcons("fa-search");
-        third.setParent(second);
-        second.getChildren().add(third);
-        third = new GrantedAuthorityImpl("移除设备");
-        third.setIcons("fa-remove");
         third.setParent(second);
         second.getChildren().add(third);
         second = new GrantedAuthorityImpl("待完成任务");
@@ -497,12 +495,13 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
 
     private void createAccounts() {
         Role admin = roleRepository.findOneByName("系统管理员");
-        Account account = new Account("admin", "admin");
+        String password = new BCryptPasswordEncoder().encode("admin");
+        Account account = new Account("admin", password);
         account.setAccessType(AccessType.SYSTEM);
         account.getRoles().add(admin);
         accountRepository.save(account);
-
-        account = new Account("user", "user");
+        String password1 = new BCryptPasswordEncoder().encode("user");
+        account = new Account("user", password1);
         accountRepository.save(account);
     }
     private void createTaskDefinition() {
@@ -525,5 +524,20 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
             flowchartSteps.setTaskDefinition(taskDefinition);
         });
         taskDefinitionRepository.save(taskDefinition);
+        TaskDefinition taskDefinition1=new TaskDefinition("巡检任务");
+        String value1="st->op(right)->cond1\n"+"cond1(yes)->cond2\n"+"cond1(no)->op\n"
+                +"cond2(yes)->en\n"+"cond2(no)->op\n";
+        taskDefinition.setValue(value1);
+        List<FlowchartSteps> flowchartStepses1=new ArrayList<>();
+        flowchartStepses1.add(new FlowchartSteps("开始", "st", "start","op",""));
+        flowchartStepses1.add(new FlowchartSteps("巡检", "op", "operation","cond1",""));
+        flowchartStepses1.add(new FlowchartSteps("客户审核是否巡检完成", "cond1", "condition","cond2","op"));
+        flowchartStepses1.add(new FlowchartSteps("维保总监审核是否巡检完成", "cond2", "condition","en","op"));
+        flowchartStepses1.add(new FlowchartSteps("结束","en","end","",""));
+        taskDefinition1.getFlowchartStepses().addAll(flowchartStepses1);
+        taskDefinition1.getFlowchartStepses().forEach(flowchartSteps -> {
+            flowchartSteps.setTaskDefinition(taskDefinition1);
+        });
+        taskDefinitionRepository.save(taskDefinition1);
     }
 }

@@ -43,4 +43,9 @@ $(function () {
             $("#message").modal("show");
         }
     });
+    $("#personalInformation").click(function () {
+        $("#main-content").load("system/information", function () {
+            $("#main-content").fadeIn();
+        });
+    });
 });

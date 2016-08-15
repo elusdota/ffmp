@@ -1,9 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="utf-8"%>
+<%@ page language="java" pageEncoding="UTF-8"%>
 <html>
 <head>
-  <meta charset="utf-8">
+  <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+  <meta http-equiv="content-language" content="zh-CN" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>消防服务管理系统-系统用户登录</title>
   <!-- Tell the browser to be responsive to screen width -->
@@ -24,7 +25,6 @@
   <!-- /.login-logo -->
   <div class="login-box-body">
     <p class="login-box-msg">人和/智诚/卓越/善行/悦动</p>
-
     <form name='loginForm'
           action="<c:url value='/j_spring_security_check' />" method='POST'>
       <div class="form-group has-feedback">
@@ -32,10 +32,10 @@
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type='password' name='password' class="form-control" placeholder="密码">
+        <input type='password' name='password'  class="form-control" placeholder="密码">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
-       <div class="form-group has-feedback">
+    <div class="form-group has-feedback">
         <div class="row">
           <div class="col-md-6">
             <input type="text" class="form-control" placeholder="验证码">
@@ -67,7 +67,7 @@
           <c:out value="${serviceException}"/>
         </div>
       </c:if>
-    </form> 
+    </form>
 
     <a href="#">忘记密码</a><br>
     <!-- <a href="register.html" class="text-center">Register a new membership</a> -->

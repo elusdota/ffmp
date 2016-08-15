@@ -18,6 +18,9 @@ $(document).ready(function () {
             $("#allocationRole").removeAttr("disabled");
             loadRoles(row);
         },
+        onUncheck: function (row) {
+            getAnth();
+        },
         queryParams: function (params) {
             var fin = {
                 offset: params.offset,
@@ -65,6 +68,7 @@ $(document).ready(function () {
             }
         });
     }
+
 //账户角色分配数据获取
     function getallocationAuthData(org, row, allocation) {
         var data = {
@@ -74,6 +78,7 @@ $(document).ready(function () {
         }
         return data;
     }
+
 //执行角色分配
     function allocationAnth(auth) {
         $.ajax("rest/account/allocationRole", {
@@ -90,6 +95,7 @@ $(document).ready(function () {
             }
         });
     }
+
 //序号加载
     function runningFormatter(value, row, index) {
         return index + 1;
@@ -127,26 +133,21 @@ $("#updateAccount").click(function () {
 });
 //定义数据修改提交点击
 $("#submitUpdateData").click(function () {
-    var data = $('#accountTable').bootstrapTable('getSelections');
     if ($("#accountForm").valid()) {
-        if (data[0].password == $('#password').val()) {
-            $.ajax('rest/account', {
-                type: 'PUT',
-                data: JSON.stringify(getupdatedata()),
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function (data, XMLHttpRequest, jqXHR) {
-                    $('#accountTable').bootstrapTable('refresh');
-                    document.getElementById("accountUpdateForm").reset();
-                    $("#accountUpdateModel").modal("hide");
-                },  error: function (XMLHttpRequest) {
-                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
-                    $("#message").modal("show");
-                }
-            });
-        } else {
-            alert("失败", "原密码输入错误！");
-        }
+        $.ajax('rest/account/update', {
+            type: 'POST',
+            data: JSON.stringify(getupdatedata()),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data, XMLHttpRequest, jqXHR) {
+                $('#accountTable').bootstrapTable('refresh');
+                document.getElementById("accountUpdateForm").reset();
+                $("#accountUpdateModel").modal("hide");
+            }, error: function (XMLHttpRequest) {
+                $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                $("#message").modal("show");
+            }
+        });
     }
 });
 //定义数据添加提交点击事件
@@ -190,7 +191,11 @@ function getupdatedata() {
         name: $('#name1').val(),
         password: $('#newpassword').val()
     };
-    return data;
+    var data1={
+        account:data,
+        rawpassword: $('#password').val()
+    }
+    return data1;
 }
 //模态框数据清除和关闭
 function resetForm() {

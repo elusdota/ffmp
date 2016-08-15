@@ -63,13 +63,13 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.POST)
     public MaintenanceTask create(@RequestBody MaintenanceTask maintenanceTask) {
-        if (maintenanceTask.getRepairnumber() != null) {
+        if (!maintenanceTask.getRepairnumber().isEmpty()) {
             if (repairFormService.findOneByCode(maintenanceTask.getRepairnumber()) == null) {
                 throw new ServiceException("报修单编号不存在！请检查数据。");
             }
         }
         TaskDefinition taskDefinition = taskDefinitionService.findOneByName("维修任务");
-        MaintenanceProject maintenanceProject = maintenanceProjectService.findOneByName(maintenanceTask.getMaintenanceProject().getName());
+        MaintenanceProject maintenanceProject = maintenanceProjectService.findOneByCode(maintenanceTask.getMaintenanceProject().getCode());
         maintenanceTask.setMaintenanceProject(maintenanceProject);
         maintenanceTask.setTaskDefinition(taskDefinition);
         maintenanceTask.setCustomer(maintenanceProject.getCustomer());

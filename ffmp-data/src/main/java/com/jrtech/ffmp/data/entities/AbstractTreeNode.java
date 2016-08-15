@@ -14,7 +14,7 @@ public class AbstractTreeNode<T> extends AbstractNamedObject {
 	
 	@ManyToOne
 	private T parent = null;
-	@OneToMany(mappedBy = "parent", cascade = { CascadeType.ALL }, fetch = FetchType.EAGER, orphanRemoval = true)
+	@OneToMany(mappedBy = "parent", cascade = { CascadeType.REMOVE }, fetch = FetchType.EAGER, orphanRemoval = true)
 	protected Collection<T> children = new TreeSet<T>();
 
 	protected AbstractTreeNode() {
