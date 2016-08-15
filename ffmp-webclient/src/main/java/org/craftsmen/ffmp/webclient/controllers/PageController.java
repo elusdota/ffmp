@@ -1,11 +1,8 @@
 package org.craftsmen.ffmp.webclient.controllers;
 
-<<<<<<< HEAD
 import com.jrtech.templates.services.ServiceException;
-=======
 import com.jrtech.templates.services.UserDetailsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> fec36587a454d3845b7507f1913a51bacd0c9e3f
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +29,7 @@ public class PageController {
         ModelAndView model = new ModelAndView();
         if (error != null) {
 //            model.addObject("serviceException", "用户名或密码错误!");
-            throw new ServiceException("用户名或密码错误!","login");
+            throw new ServiceException("用户名或密码错误!", "login");
         }
         model.setViewName("login");
         return model;
@@ -90,6 +87,18 @@ public class PageController {
     @RequestMapping("/warehouse/dispatch")
     public String dispatch(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/warehouse/dispatch";
+    }
+
+    //报损
+    @RequestMapping("/warehouse/loss")
+    public String loss(HttpServletRequest rq, HttpServletResponse response) throws Exception {
+        return "/warehouse/loss";
+    }
+
+    //报溢
+    @RequestMapping("/warehouse/overflow")
+    public String overflow(HttpServletRequest rq, HttpServletResponse response) throws Exception {
+        return "/warehouse/overflow";
     }
 
     //项目

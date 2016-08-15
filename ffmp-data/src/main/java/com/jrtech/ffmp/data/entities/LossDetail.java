@@ -7,11 +7,11 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by jiangliang on 2016/6/29.出库单子表，elus
+ * Created by jiangliang on 2016/8/15.报损单子表，elus
  */
 @Entity
-@JsonIgnoreProperties(value = {"dispatch"})
-public class DispatchDetail extends AbstractNamedObject {
+@JsonIgnoreProperties(value = {"loss"})
+public class LossDetail extends AbstractNamedObject {
     //库存id
     private String inventory_id;
     //类型
@@ -30,7 +30,7 @@ public class DispatchDetail extends AbstractNamedObject {
     private double amount;
     @NotNull
     @ManyToOne
-    private Dispatch dispatch;
+    private Loss loss;
 
     public String getInventory_id() {
         return inventory_id;
@@ -96,11 +96,11 @@ public class DispatchDetail extends AbstractNamedObject {
         this.amount = amount;
     }
 
-    public Dispatch getDispatch() {
-        return dispatch;
+    public Loss getLoss() {
+        return loss;
     }
 
-    public void setDispatch(Dispatch dispatch) {
-        this.dispatch = dispatch;
+    public void setLoss(Loss loss) {
+        this.loss = loss;
     }
 }

@@ -27,7 +27,12 @@ public class CodeService {
     private RepairFormService repairFormService;
     @Autowired
     private MaintenanceProjectService maintenanceProjectService;
+    @Autowired
+    private OverflowService overflowService;
+    @Autowired
+    private LossService lossService;
     private static String STATNUM = "000001";
+
     /**
      * 判断序号是否到了最后一个
      */
@@ -43,6 +48,7 @@ public class CodeService {
         }
         return rs;
     }
+
     public String getReLastSixNum(String s) {
         String rs = s;
         int i = Integer.parseInt(rs);
@@ -76,6 +82,7 @@ public class CodeService {
 
         return codeToken;
     }
+
     /**
      * 产生采购单不重复的号码 加锁
      */
@@ -90,13 +97,14 @@ public class CodeService {
         }
         return code;
     }
+
     /**
      * 产生入库单不重复的号码 加锁
      */
     public synchronized String getInboundsNum() {
         String code = "";
         PageableImpl pageable = new PageableImpl(buildInventorySearch());
-        long last6Num = inboundsService.findAll(new WarehouseSpecs<Inbounds>().spec(buildInventorySearch()),pageable).getTotalElements();
+        long last6Num = inboundsService.findAll(new WarehouseSpecs<Inbounds>().spec(buildInventorySearch()), pageable).getTotalElements();
         if (last6Num == 0) {
             code = STATNUM;
         } else {
@@ -104,13 +112,44 @@ public class CodeService {
         }
         return code;
     }
+
+    /**
+     * 产生报溢单不重复的号码 加锁
+     */
+    public synchronized String getOverflowNum() {
+        String code = "";
+        PageableImpl pageable = new PageableImpl(buildInventorySearch());
+        long last6Num = overflowService.findAll(new WarehouseSpecs<Overflow>().spec(buildInventorySearch()), pageable).getTotalElements();
+        if (last6Num == 0) {
+            code = STATNUM;
+        } else {
+            code = getLastSixNum(String.valueOf(last6Num));
+        }
+        return code;
+    }
+    /**
+     * 产生报损单不重复的号码 加锁
+     */
+    public synchronized String getLossNum() {
+        String code = "";
+        PageableImpl pageable = new PageableImpl(buildInventorySearch());
+        long last6Num = lossService.findAll(new WarehouseSpecs<Loss>().spec(buildInventorySearch()), pageable).getTotalElements();
+        if (last6Num == 0) {
+            code = STATNUM;
+        } else {
+            code = getLastSixNum(String.valueOf(last6Num));
+        }
+        return code;
+    }
+
     /**
      * 产生出库单不重复的号码 加锁
      */
     public synchronized String getDispatchNum() {
         String code = "";
         PageableImpl pageable = new PageableImpl(buildInventorySearch());
-        long last6Num = dispatchService.findAll(new WarehouseSpecs<Dispatch>().spec(buildInventorySearch()), pageable).getTotalElements();;
+        long last6Num = dispatchService.findAll(new WarehouseSpecs<Dispatch>().spec(buildInventorySearch()), pageable).getTotalElements();
+        ;
         if (last6Num == 0) {
             code = STATNUM;
         } else {
@@ -118,13 +157,15 @@ public class CodeService {
         }
         return code;
     }
+
     /**
      * 产生客户不重复的号码 加锁
      */
     public synchronized String getCustomerNum() {
         String code = "";
         PageableImpl pageable = new PageableImpl(buildInventorySearch());
-        long last6Num = customerService.findAll(new CommonSpecs<Customer>().spec(bulidParameters()), pageable).getTotalElements();;
+        long last6Num = customerService.findAll(new CommonSpecs<Customer>().spec(bulidParameters()), pageable).getTotalElements();
+        ;
         if (last6Num == 0) {
             code = STATNUM;
         } else {
@@ -132,13 +173,15 @@ public class CodeService {
         }
         return code;
     }
+
     /**
      * 产生报修单不重复的号码 加锁
      */
     public synchronized String getRepairFormNum() {
         String code = "";
         PageableImpl pageable = new PageableImpl(buildInventorySearch());
-        long last6Num = repairFormService.findAll(new RepairFormSpecs<RepairForm>().spec(bulidParameters()), pageable).getTotalElements();;
+        long last6Num = repairFormService.findAll(new RepairFormSpecs<RepairForm>().spec(bulidParameters()), pageable).getTotalElements();
+        ;
         if (last6Num == 0) {
             code = STATNUM;
         } else {
@@ -146,13 +189,15 @@ public class CodeService {
         }
         return code;
     }
+
     /**
      * 产生项目不重复的号码 加锁
      */
     public synchronized String getMaintenanceProjectNum() {
         String code = "";
         PageableImpl pageable = new PageableImpl(buildInventorySearch());
-        long last6Num = maintenanceProjectService.findAll(new CommonSpecs<MaintenanceProject>().spec(bulidParameters()), pageable).getTotalElements();;
+        long last6Num = maintenanceProjectService.findAll(new CommonSpecs<MaintenanceProject>().spec(bulidParameters()), pageable).getTotalElements();
+        ;
         if (last6Num == 0) {
             code = STATNUM;
         } else {
@@ -160,14 +205,16 @@ public class CodeService {
         }
         return code;
     }
-    public InventorySearch buildInventorySearch(){
-        InventorySearch inventorySearch=new InventorySearch();
+
+    public InventorySearch buildInventorySearch() {
+        InventorySearch inventorySearch = new InventorySearch();
         inventorySearch.setLimit(10);
         inventorySearch.setOffset(0);
         return inventorySearch;
     }
-    public TableGetDataParameters bulidParameters(){
-        TableGetDataParameters parameters=new TableGetDataParameters();
+
+    public TableGetDataParameters bulidParameters() {
+        TableGetDataParameters parameters = new TableGetDataParameters();
         parameters.setLimit(10);
         parameters.setOffset(0);
         return parameters;
