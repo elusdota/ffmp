@@ -26,7 +26,7 @@ public class ContractVO {
     //金额
     private double amount;
     //税号
-    private String TaxNO;
+    private String taxNO;
     //合同内容
     private String content;
     //合同类别
@@ -47,11 +47,11 @@ public class ContractVO {
     }
 
     public String getTaxNO() {
-        return TaxNO;
+        return taxNO;
     }
 
     public void setTaxNO(String taxNO) {
-        TaxNO = taxNO;
+        this.taxNO = taxNO;
     }
 
     public String getAgent() {

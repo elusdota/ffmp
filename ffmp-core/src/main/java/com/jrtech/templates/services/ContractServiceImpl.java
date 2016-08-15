@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * Created by suelmer on 2016/7/18.
  */
@@ -34,6 +36,7 @@ public class ContractServiceImpl implements ContractService {
         contract.setManagerTel(contractVO.getManagerTel());
         contract.setName(contractVO.getName());
         contract.setTaxNO(contractVO.getTaxNO());
+        contract.setCreateTime(new Date());
         contract.setPaymentSet(contractVO.getPaymentSet());
         return contractRepository.save(contract);
     }

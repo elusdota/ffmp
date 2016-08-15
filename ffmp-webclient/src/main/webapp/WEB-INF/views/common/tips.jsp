@@ -22,7 +22,7 @@
             </div>
             <div class="modal-body">
                 <c:if test="${not empty serviceException}">
-                    <font color="red"><c:out value="${serviceException.getMessage()}"/></font>
+                    <font color="red"><c:out value="${serviceException}"/></font>
                 </c:if>
             </div>
             <div class="modal-footer">

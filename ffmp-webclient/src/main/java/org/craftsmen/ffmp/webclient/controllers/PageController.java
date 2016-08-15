@@ -1,5 +1,6 @@
 package org.craftsmen.ffmp.webclient.controllers;
 
+import com.jrtech.templates.services.ServiceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,8 @@ public class PageController {
             @RequestParam(value = "error", required = false) String error) {
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "用户名或密码错误!");
+//            model.addObject("serviceException", "用户名或密码错误!");
+            throw new ServiceException("用户名或密码错误!","login");
         }
         model.setViewName("login");
         return model;

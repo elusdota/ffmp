@@ -60,11 +60,11 @@
         </div>
         <!-- /.col -->
       </div>
-      <c:if test="${not empty error}">
+      <c:if test="${not empty serviceException}">
         <div class="alert alert-warning alert-dismissible">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           <h4><i class="icon fa fa-warning"></i> 警告!</h4>
-          <c:out value="${error}"/>
+          <c:out value="${serviceException}"/>
         </div>
       </c:if>
     </form> 

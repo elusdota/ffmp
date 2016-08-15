@@ -26,7 +26,7 @@ public class Contract extends AbstractNamedObject {
     //金额
     private double amount;
     //税号
-    private String TaxNO;
+    private String taxNO;
     //合同内容
     @Lob
     private String content;
@@ -128,11 +128,11 @@ public class Contract extends AbstractNamedObject {
     }
 
     public String getTaxNO() {
-        return TaxNO;
+        return taxNO;
     }
 
     public void setTaxNO(String taxNO) {
-        TaxNO = taxNO;
+        this.taxNO = taxNO;
     }
 
     public String getContractType() {
