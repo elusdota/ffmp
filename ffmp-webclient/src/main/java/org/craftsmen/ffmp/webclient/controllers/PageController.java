@@ -1,11 +1,7 @@
 package org.craftsmen.ffmp.webclient.controllers;
-
-<<<<<<< HEAD
 import com.jrtech.templates.services.ServiceException;
-=======
 import com.jrtech.templates.services.UserDetailsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
->>>>>>> fec36587a454d3845b7507f1913a51bacd0c9e3f
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
