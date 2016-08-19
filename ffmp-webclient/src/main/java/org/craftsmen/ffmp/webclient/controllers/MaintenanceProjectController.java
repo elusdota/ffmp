@@ -52,8 +52,14 @@ public class MaintenanceProjectController {
     public MaintenanceProject create(@RequestBody MaintenanceProject maintenanceProject) {
         maintenanceProject.setCode(codeService.getMaintenanceProjectNum());
         Organization organization = organizationService.findOneByName(maintenanceProject.getDelegate().getName());
+        if(organization==null){
+            throw new ServiceException("维保小组不存在，请重新输入！");
+        }
         maintenanceProject.setDelegate(organization);
         Customer customer = customerService.findOneByName(maintenanceProject.getCustomer().getName());
+        if(customer==null){
+            throw new ServiceException("客户不存在，请重新输入！");
+        }
         maintenanceProject.setCustomer(customer);
         return service.save(maintenanceProject);
     }
@@ -65,9 +71,9 @@ public class MaintenanceProjectController {
         i[0] = maintenanceProject1.getEquipments().size();
         maintenanceProject.getEquipments().forEach(equipment1 -> {
             i[0] = i[0] + 1;
-            int t = i[0]-1;
+            int t = i[0] - 1;
             String code = getLastSixNum("" + t, 3);
-            equipment1.setCode(getCodeNum(maintenanceProject1.getCode(),4) +
+            equipment1.setCode(getCodeNum(maintenanceProject1.getCode(), 4) +
                     mrrStandardService.findOneByName(equipment1.getTypemax()).getCode() +
                     mrrStandardService.findOneByName(equipment1.getTypemin()).getCode() + code);
             equipment1.setOwner(maintenanceProject1);

@@ -12,6 +12,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+
 /**
  * Created by jiangliang on 2016/7/17.任务节点控制器，elus
  */
@@ -34,12 +36,18 @@ public class TaskNodeController {
 
     /**
      * 创建任务历史节点，elus
+     *
      * @param historyTaskNode
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    public HistoryTaskNode create(@RequestBody HistoryTaskNode historyTaskNode) {
-//        FlowchartSteps flowchartSteps=
+    public HistoryTaskNode create(@RequestBody String id,String rest) {
+        HistoryTaskNode historyTaskNode=new HistoryTaskNode();
+        historyTaskNode.setMaintenanceTask(taskRuntimeService.findOne(id));
+        historyTaskNode.setName(getShtep(id).getName());
+        historyTaskNode.setDueDate(new Date());
+        historyTaskNode.setDescription(rest);
+        historyTaskNode.setFlowchartSteps(getShtep(id));
         return service.save(historyTaskNode);
     }
 
@@ -52,6 +60,19 @@ public class TaskNodeController {
     @RequestMapping(value = "/getSteps", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public FlowchartSteps getSteps(@RequestParam("id") String id) {
+        return getShtep(id);
+//        MaintenanceTask maintenanceTask = taskRuntimeService.findOne(id);
+//        HistoryTaskNode historyTaskNode = taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask).get(0);
+//        if (null != historyTaskNode) {
+//            FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric(historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
+//            return null == flowchartSteps ? null : flowchartSteps;
+//        } else {
+//            FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric("st");
+//            return flowchartSteps;
+//        }
+    }
+
+    public FlowchartSteps getShtep(String id) {
         MaintenanceTask maintenanceTask = taskRuntimeService.findOne(id);
         HistoryTaskNode historyTaskNode = taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask).get(0);
         if (null != historyTaskNode) {
@@ -62,5 +83,4 @@ public class TaskNodeController {
             return flowchartSteps;
         }
     }
-
 }

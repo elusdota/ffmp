@@ -271,6 +271,10 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         third.setIcons("fa-hand-lizard-o");
         third.setParent(second);
         second.getChildren().add(third);
+        third = new GrantedAuthorityImpl("任务审核");
+        third.setIcons("fa-hourglass-end");
+        third.setParent(second);
+        second.getChildren().add(third);
         second = new GrantedAuthorityImpl("历史任务");
         second.setSrc("taskManagement/historyTask");
         second.setIcons("fa-archive");
@@ -549,8 +553,8 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         flowchartStepses.add(new FlowchartSteps("客户是否批准更换材料", "cond2", "condition","op1","en1"));
         flowchartStepses.add(new FlowchartSteps("申请材料", "op1", "operation","op2",""));
         flowchartStepses.add(new FlowchartSteps("维修", "op2", "operation","",""));
-        flowchartStepses.add(new FlowchartSteps("客户审核是否维修完成", "cond3", "condition","cond4","op2"));
-        flowchartStepses.add(new FlowchartSteps("维保总监审核是否维修完成", "cond4", "condition","en","op2"));
+        flowchartStepses.add(new FlowchartSteps("客户审核", "cond3", "condition","cond4","op2"));
+        flowchartStepses.add(new FlowchartSteps("维保总监审核", "cond4", "condition","en","op2"));
         flowchartStepses.add(new FlowchartSteps("终止","en1","end","",""));
         flowchartStepses.add(new FlowchartSteps("结束","en","end","",""));
         taskDefinition.getFlowchartStepses().addAll(flowchartStepses);
@@ -565,8 +569,8 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         List<FlowchartSteps> flowchartStepses1=new ArrayList<>();
         flowchartStepses1.add(new FlowchartSteps("开始", "st", "start","op",""));
         flowchartStepses1.add(new FlowchartSteps("巡检", "op", "operation","cond1",""));
-        flowchartStepses1.add(new FlowchartSteps("客户审核是否巡检完成", "cond1", "condition","cond2","op"));
-        flowchartStepses1.add(new FlowchartSteps("维保总监审核是否巡检完成", "cond2", "condition","en","op"));
+        flowchartStepses1.add(new FlowchartSteps("客户审核", "cond1", "condition","cond2","op"));
+        flowchartStepses1.add(new FlowchartSteps("维保总监审核", "cond2", "condition","en","op"));
         flowchartStepses1.add(new FlowchartSteps("结束","en","end","",""));
         taskDefinition1.getFlowchartStepses().addAll(flowchartStepses1);
         taskDefinition1.getFlowchartStepses().forEach(flowchartSteps -> {

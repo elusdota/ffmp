@@ -9,6 +9,7 @@ import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.TableGetDataParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -57,7 +58,7 @@ public class CustomerController {
             role.setOrganization(organizationService.findRoot());
             roleService.save(role);
         }
-        Account account = new Account(customer.getName(), customer.getTelephone());
+        Account account = new Account(customer.getName(), new BCryptPasswordEncoder().encode(customer.getTelephone()));
         account.getRoles().add(role);
         accountService.save(account);
         customer.setAccount(account);//
@@ -83,8 +84,8 @@ public class CustomerController {
         service.delete(id);
     }
 
-    @RequestMapping(value = "/findByNameLike",method = RequestMethod.GET)
+    @RequestMapping(value = "/findByNameLike", method = RequestMethod.GET)
     public List<Customer> findByNameLike(@RequestParam("name") String name) {
-       return service.findByNameLike("%"+name+"%");
+        return service.findByNameLike("%" + name + "%");
     }
 }

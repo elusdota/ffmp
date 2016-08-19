@@ -3,6 +3,7 @@
  */
 $(document).ready(function () {
     $("#viewTask").attr("disabled", "true");
+    $("#auditTask").attr("disabled", "true");
     $('#taskTable').bootstrapTable({
         method: 'POST',
         url: 'rest/task/findRunTask',
@@ -13,9 +14,26 @@ $(document).ready(function () {
         clickToSelect: true,
         onCheck: function (row) {
             $("#viewTask").removeAttr("disabled");
+            $.ajax('rest/taskNode/getSteps?id=' + row.id, {
+                type: 'GET',
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (data, XMLHttpRequest, jqXHR) {
+                    if (data.name == '维保总监审核') {
+                        $("#auditTask").removeAttr("disabled");
+                    }
+                    else {
+                        $("#auditTask").attr("disabled", "true");
+                    }
+                }, error: function (XMLHttpRequest) {
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
+                }
+            });
         },
         onUncheck: function (row) {
             $("#viewTask").attr("disabled", "true");
+            $("#auditTask").attr("disabled", "true");
         },
         queryParams: function (params) {
             var fin = {
@@ -51,7 +69,13 @@ $("#createTask").click(function () {
 });
 $("#viewTask").click(function () {
     var data = $('#taskTable').bootstrapTable('getSelections');
-    $("#main-content").load("taskManagement/taskInformation?id="+data[0].id, function () {
+    $("#main-content").load("taskManagement/taskInformation?id=" + data[0].id, function () {
+        $("#main-content").fadeIn();
+    });
+});
+$("#auditTask").click(function () {
+    var data = $('#taskTable').bootstrapTable('getSelections');
+    $("#main-content").load("taskManagement/auditTask?id=" + data[0].id, function () {
         $("#main-content").fadeIn();
     });
 });
