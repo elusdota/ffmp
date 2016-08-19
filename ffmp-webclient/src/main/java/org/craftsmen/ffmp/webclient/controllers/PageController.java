@@ -299,4 +299,13 @@ public class PageController {
     public String information(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "/system/information";
     }
+
+    //任务审核
+    @RequestMapping("/taskManagement/auditTask")
+    public ModelAndView auditTask(@RequestParam("id") String id) throws Exception {
+        ModelAndView model = new ModelAndView();
+        model.addObject("id", id);
+        model.setViewName("taskManagement/auditTask");
+        return model;
+    }
 }
