@@ -16,7 +16,7 @@
     <section class="content-header">
         <h1>
             库存管理
-            <small>Version 2.0</small>
+            <small>s</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-bank"></i> 仓库管理</a></li>

@@ -7,13 +7,11 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 /**
- * Created by jiangliang on 2016/6/29.出库单子表，elus
+ * Created by jiangliang on 2016/8/15.报溢单子表，elus
  */
 @Entity
-@JsonIgnoreProperties(value = {"dispatch"})
-public class DispatchDetail extends AbstractNamedObject {
-    //库存id
-    private String inventory_id;
+@JsonIgnoreProperties(value = {"overflow"})
+public class OverflowDetail extends AbstractNamedObject {
     //类型
     private String type;
     //生产厂家
@@ -30,15 +28,7 @@ public class DispatchDetail extends AbstractNamedObject {
     private double amount;
     @NotNull
     @ManyToOne
-    private Dispatch dispatch;
-
-    public String getInventory_id() {
-        return inventory_id;
-    }
-
-    public void setInventory_id(String inventory_id) {
-        this.inventory_id = inventory_id;
-    }
+    private Overflow overflow;
 
     public String getType() {
         return type;
@@ -96,11 +86,11 @@ public class DispatchDetail extends AbstractNamedObject {
         this.amount = amount;
     }
 
-    public Dispatch getDispatch() {
-        return dispatch;
+    public Overflow getOverflow() {
+        return overflow;
     }
 
-    public void setDispatch(Dispatch dispatch) {
-        this.dispatch = dispatch;
+    public void setOverflow(Overflow overflow) {
+        this.overflow = overflow;
     }
 }

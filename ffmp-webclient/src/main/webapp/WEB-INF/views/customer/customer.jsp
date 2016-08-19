@@ -16,7 +16,7 @@
   <section class="content-header">
     <h1>
       客户信息管理
-      <small>Version 2.0</small>
+      <small></small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-wrench"></i> 客户信息管理</a></li>

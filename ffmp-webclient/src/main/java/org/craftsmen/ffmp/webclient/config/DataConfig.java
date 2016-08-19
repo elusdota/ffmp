@@ -36,9 +36,9 @@ public class DataConfig {
         props.setProperty("jmxEnabled", "true");
         props.setProperty("jdbcInterceptors", "org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer");
         props.setProperty("username", "root");
-        props.setProperty("password", "password");
+        props.setProperty("password", "123456");
         props.setProperty("driverClassName", "com.mysql.jdbc.Driver");
-        props.setProperty("url", "jdbc:mysql://127.0.0.1:3306/ffmp?useUnicode=true&characterEncoding=UTF-8");
+        props.setProperty("url", "jdbc:mysql://localhost:3306/ffmps?useUnicode=true&characterEncoding=UTF-8");
         try {
             return factory.createDataSource(props);
         } catch (Exception e) {

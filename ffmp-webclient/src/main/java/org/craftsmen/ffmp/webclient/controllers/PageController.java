@@ -1,8 +1,10 @@
 package org.craftsmen.ffmp.webclient.controllers;
+
 import com.jrtech.templates.services.ServiceException;
 import com.jrtech.templates.services.UserDetailsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,6 +30,10 @@ public class PageController {
         ModelAndView model = new ModelAndView();
         if (error != null) {
 //            model.addObject("serviceException", "用户名或密码错误!");
+            String password = new BCryptPasswordEncoder().encode("123456");
+            System.out.println("123456---------密码-------"+password);
+            String password1 = new BCryptPasswordEncoder().encode("admin");
+            System.out.println("admin---------密码-------"+password1);
             throw new ServiceException("用户名或密码错误!","login");
         }
         model.setViewName("login");
@@ -86,6 +92,18 @@ public class PageController {
     @RequestMapping("/warehouse/dispatch")
     public String dispatch(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/warehouse/dispatch";
+    }
+
+    //报损
+    @RequestMapping("/warehouse/loss")
+    public String loss(HttpServletRequest rq, HttpServletResponse response) throws Exception {
+        return "/warehouse/loss";
+    }
+
+    //报溢
+    @RequestMapping("/warehouse/overflow")
+    public String overflow(HttpServletRequest rq, HttpServletResponse response) throws Exception {
+        return "/warehouse/overflow";
     }
 
     //项目

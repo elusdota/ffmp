@@ -16,7 +16,7 @@
     <section class="content-header">
         <h1>
             查看任务
-            <small>Version 2.0</small>
+            <small></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-wrench"></i> 维管工作管理</a></li>

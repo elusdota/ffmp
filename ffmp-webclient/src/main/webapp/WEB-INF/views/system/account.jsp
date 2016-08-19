@@ -14,7 +14,7 @@
 <section class="content-header">
     <h1>
         账户管理
-        <small>Version 2.0</small>
+        <small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-cogs"></i> 系统管理</a></li>

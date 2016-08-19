@@ -8,15 +8,15 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * Created by jiangliang on 2016/6/29.出库单，elus
+ * Created by jiangliang on 2016/8/15.报损单主表，elus
  */
 @Entity
-public class Dispatch extends AbstractDomainObject {
+public class Loss extends AbstractDomainObject {
     //金额合计
     private double sum;
     private String number;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "dispatch", cascade = {CascadeType.ALL}, orphanRemoval = true)
-    private Collection<DispatchDetail> dispatchdetails = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "loss", cascade = {CascadeType.ALL}, orphanRemoval = true)
+    private Collection<LossDetail> lossdetails = new ArrayList<>();
     //创建日期
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
@@ -46,6 +46,10 @@ public class Dispatch extends AbstractDomainObject {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public Collection<LossDetail> getLossdetails() {
+        return lossdetails;
     }
 
     public Date getDate() {
@@ -86,9 +90,5 @@ public class Dispatch extends AbstractDomainObject {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public Collection<DispatchDetail> getDispatchdetails() {
-        return dispatchdetails;
     }
 }
