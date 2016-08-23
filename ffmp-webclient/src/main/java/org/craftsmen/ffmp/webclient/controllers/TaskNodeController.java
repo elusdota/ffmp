@@ -3,6 +3,7 @@ package org.craftsmen.ffmp.webclient.controllers;
 import com.jrtech.ffmp.data.entities.FlowchartSteps;
 import com.jrtech.ffmp.data.entities.HistoryTaskNode;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
+import com.jrtech.ffmp.data.entities.TaskDefinition;
 import com.jrtech.templates.services.FlowchartStepsService;
 import com.jrtech.templates.services.ServiceException;
 import com.jrtech.templates.services.TaskHistoryService;
@@ -78,11 +79,15 @@ public class TaskNodeController {
         List<HistoryTaskNode> historyTaskNodes=taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask);
         if (historyTaskNodes.size() > 0) {
             HistoryTaskNode historyTaskNode = historyTaskNodes.get(0);
-            FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric(historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
+            FlowchartSteps flowchartSteps = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(),historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
             return null == flowchartSteps ? null : flowchartSteps;
         } else {
-            FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric("st");
+            FlowchartSteps flowchartSteps = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(),"st");
             return flowchartSteps;
         }
+    }
+    public FlowchartSteps findOneByTaskDefinitionAndParametric(TaskDefinition taskDefinition,String parametric){
+        FlowchartSteps flowchartSteps = flowchartStepsService.findOneByTaskDefinitionAndParametric(taskDefinition,parametric);
+        return flowchartSteps;
     }
 }

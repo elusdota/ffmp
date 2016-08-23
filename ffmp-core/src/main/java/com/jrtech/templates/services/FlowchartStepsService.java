@@ -2,6 +2,7 @@ package com.jrtech.templates.services;
 
 
 import com.jrtech.ffmp.data.entities.FlowchartSteps;
+import com.jrtech.ffmp.data.entities.TaskDefinition;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface FlowchartStepsService {
      * @return
      */
     FlowchartSteps findOneByParametric(String parametric);
+    FlowchartSteps findOneByTaskDefinitionAndParametric(TaskDefinition taskDefinition,String parametric);
 }
