@@ -82,8 +82,9 @@ public class TaskNodeController {
 
     public FlowchartSteps getShtep(String id) {
         MaintenanceTask maintenanceTask = taskRuntimeService.findOne(id);
-        HistoryTaskNode historyTaskNode = taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask).get(0);
-        if (null != historyTaskNode) {
+        List<HistoryTaskNode> historyTaskNodes=taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask);
+        if (historyTaskNodes.size() > 0) {
+            HistoryTaskNode historyTaskNode = historyTaskNodes.get(0);
             FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric(historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
             return null == flowchartSteps ? null : flowchartSteps;
         } else {

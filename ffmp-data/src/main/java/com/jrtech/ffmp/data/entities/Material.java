@@ -21,7 +21,6 @@ public class Material extends AbstractDomainObject{
     //申请人
     @ManyToOne
     private Account delegate;
-
     //生产厂家
     private String manufacturer;
     //型号

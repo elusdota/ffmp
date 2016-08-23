@@ -57,7 +57,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">
-            采购单
+            客户
           </h4>
         </div>
         <div class="modal-body">

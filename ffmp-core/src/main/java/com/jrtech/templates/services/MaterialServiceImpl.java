@@ -1,5 +1,6 @@
 package com.jrtech.templates.services;
 
+import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.entities.Material;
 import com.jrtech.ffmp.data.repositories.MaterialRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,5 +29,10 @@ public class MaterialServiceImpl implements MaterialService {
     @Override
     public Page<Material> findAll(Specification<Material> spec, Pageable pageable) {
         return materialRepository.findAll(spec,pageable);
+    }
+
+    @Override
+    public Page<Material> findByMaintenanceTask(MaintenanceTask maintenanceTask, Pageable pageable) {
+        return materialRepository.findByMaintenanceTask(maintenanceTask,pageable);
     }
 }

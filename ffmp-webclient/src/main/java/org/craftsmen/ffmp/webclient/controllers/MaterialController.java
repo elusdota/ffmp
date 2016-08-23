@@ -1,8 +1,10 @@
 package org.craftsmen.ffmp.webclient.controllers;
 
+import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.entities.Material;
 import com.jrtech.templates.services.MaterialService;
 import com.jrtech.templates.services.PageableImpl;
+import com.jrtech.templates.services.TaskRuntimeService;
 import com.jrtech.templates.vo.CommonSpecs;
 import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.TableGetDataParameters;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class MaterialController {
     @Autowired
     private MaterialService materialService;
+    @Autowired
+    private TaskRuntimeService runtimeService;
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody TableGetDataParameters parameters) {
@@ -30,7 +34,17 @@ public class MaterialController {
         JSONListData jld = new JSONListData();
         jld.setTotal(mrrStandards.getTotalElements());
         jld.setRows(mrrStandards.getContent());
+        return jld;
+    }
 
+    @RequestMapping(value = "/findByMaintenanceTask", method = RequestMethod.POST)
+    public JSONListData findByMaintenanceTask(@RequestBody TableGetDataParameters parameters) {
+        PageableImpl pageable = new PageableImpl(parameters);
+        MaintenanceTask maintenanceTask=runtimeService.findOne(parameters.getSearch());
+        Page<Material> mrrStandards = materialService.findByMaintenanceTask(maintenanceTask, pageable);
+        JSONListData jld = new JSONListData();
+        jld.setTotal(mrrStandards.getTotalElements());
+        jld.setRows(mrrStandards.getContent());
         return jld;
     }
 
