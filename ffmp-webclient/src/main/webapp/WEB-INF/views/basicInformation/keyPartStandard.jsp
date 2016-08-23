@@ -11,6 +11,13 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link rel="stylesheet" href="<c:url value='/bower_components/AdminLTE/plugins/datepicker/datepicker3.css'/>">
 <link rel="stylesheet" href="<c:url value='/bower_components/bootstrap-table/dist/bootstrap-table.min.css'/>">
+<style type="text/css">
+    *
+    label.error
+    {
+        color:Red;
+    }
+</style>
 
 <section class="content-header">
   <h1>

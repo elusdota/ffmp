@@ -118,16 +118,18 @@ public class RoleController {
     }
 
     @RequestMapping(value = "/allocationAuth", method = RequestMethod.POST)
-    public Role allocationAuth(@RequestBody RoleAndAuthority roleAndAuthority) {
+    public synchronized Role allocationAuth(@RequestBody RoleAndAuthority roleAndAuthority) {
         Collection<GrantedAuthorityImpl> authorities = new TreeSet<>();
         Role role = service.findOne(roleAndAuthority.getRole());
         GrantedAuthorityImpl grantedAuthority = gaService.findOne(roleAndAuthority.getAnth());
         authorities.addAll(role.getAuthorities());
         role.getAuthorities().clear();
         if (!roleAndAuthority.isLift()) {
+//            role.getAuthorities().remove(grantedAuthority);
             authorities.remove(grantedAuthority);
         } else {
             authorities.add(grantedAuthority);
+//            role.getAuthorities().add(grantedAuthority);
         }
         role.getAuthorities().addAll(authorities);
         return service.save(role);

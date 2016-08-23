@@ -12,6 +12,13 @@
 
 <link rel="stylesheet" href="<c:url value='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>">
 <link rel="stylesheet" href="<c:url value='/bower_components/bootstrap-treeview/src/css/bootstrap-treeview.css'/>">
+<style type="text/css">
+  *
+  label.error
+  {
+    color:Red;
+  }
+</style>
 <section class="content-header">
   <!-- Content Header (Page header) -->
   <section class="content-header">

@@ -13,6 +13,13 @@
 <link rel="stylesheet" href="<c:url value='/bower_components/AdminLTE/plugins/datepicker/datepicker3.css'/>">
 <link rel="stylesheet" href="<c:url value='/bower_components/select2/dist/css/select2.min.css'/>">
 <link rel="stylesheet" href="<c:url value='/bower_components/select2-bootstrap-theme/dist/select2-bootstrap.min.css'/>">
+<style type="text/css">
+    *
+    label.error
+    {
+        color:Red;
+    }
+</style>
 
 <section class="content-header">
     <h1>

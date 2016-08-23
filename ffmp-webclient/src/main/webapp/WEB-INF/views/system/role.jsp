@@ -5,12 +5,19 @@
 
 <link rel="stylesheet" href="<c:url value='/bower_components/bootstrap/dist/css/bootstrap.min.css'/>">
 <link rel="stylesheet" href="<c:url value='/bower_components/bootstrap-treeview/src/css/bootstrap-treeview.css'/>">
+<style type="text/css">
+    *
+    label.error
+    {
+        color:Red;
+    }
+</style>
 <section class="content-header">
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
             角色管理
-            <small>/small>
+            <small></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-cogs"></i> 系统管理</a></li>

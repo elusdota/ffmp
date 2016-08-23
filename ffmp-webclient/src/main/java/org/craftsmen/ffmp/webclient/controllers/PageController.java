@@ -30,10 +30,6 @@ public class PageController {
         ModelAndView model = new ModelAndView();
         if (error != null) {
 //            model.addObject("serviceException", "用户名或密码错误!");
-            String password = new BCryptPasswordEncoder().encode("123456");
-            System.out.println("123456---------密码-------"+password);
-            String password1 = new BCryptPasswordEncoder().encode("admin");
-            System.out.println("admin---------密码-------"+password1);
             throw new ServiceException("用户名或密码错误!","login");
         }
         model.setViewName("login");
