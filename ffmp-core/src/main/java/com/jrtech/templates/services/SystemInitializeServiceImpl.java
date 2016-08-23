@@ -247,6 +247,7 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         third.setParent(second);
         second.getChildren().add(third);
         second = new GrantedAuthorityImpl("项目设备管理");
+        second.setSrc("taskManagement/serachEquipment");
         second.setIcons("fa-steam");
         second.setParent(root);
         root.getChildren().add(second);
@@ -273,6 +274,10 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         second.getChildren().add(third);
         third = new GrantedAuthorityImpl("任务审核");
         third.setIcons("fa-hourglass-end");
+        third.setParent(second);
+        second.getChildren().add(third);
+        third = new GrantedAuthorityImpl("申请材料");
+        third.setIcons("fa-hand-lizard-o");
         third.setParent(second);
         second.getChildren().add(third);
         second = new GrantedAuthorityImpl("历史任务");

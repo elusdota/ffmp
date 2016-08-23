@@ -73,10 +73,13 @@ public class CustomerController {
     @RequestMapping(method = RequestMethod.PUT)
     public Customer update(@RequestBody Customer customer) {
         Customer customer1 = service.findOne(customer.getId());
-        customer.setAccount(customer1.getAccount());
-        customer.setCreateTime(customer1.getCreateTime());
-        customer.setCode(customer1.getCode());
-        return service.save(customer);
+        customer1.setName(customer.getName());
+        customer1.setAddress(customer.getAddress());
+        customer1.setContect(customer.getContect());
+        customer1.setEmail(customer.getEmail());
+        customer1.setTaxId(customer.getTaxId());
+        customer1.setTelephone(customer.getTelephone());
+        return service.save(customer1);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

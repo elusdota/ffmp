@@ -122,7 +122,7 @@
                     <label for="serving" class="col-lg-6 control-label">是否离职：</label>
 
                     <div class="col-lg-6 checkbox">
-                        <select class="col-lg-1 combobox form-control" name="serving" id="serving" readonly>
+                        <select class="col-lg-1 combobox form-control" name="work" id="work" readonly>
                             <option VALUE="true">在职</option>
                             <option VALUE="false">离职</option>
                         </select>

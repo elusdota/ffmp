@@ -1,5 +1,6 @@
 package com.jrtech.templates.services;
 
+import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.entities.Material;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +16,6 @@ public interface MaterialService {
     Material findOne(String id);
 
     Page<Material> findAll(Specification<Material> spec, Pageable pageable);
+
+    Page<Material> findByMaintenanceTask(MaintenanceTask maintenanceTask, Pageable pageable);
 }

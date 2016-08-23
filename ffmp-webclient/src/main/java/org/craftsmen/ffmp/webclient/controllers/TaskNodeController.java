@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by jiangliang on 2016/7/17.任务节点控制器，elus
@@ -37,12 +38,12 @@ public class TaskNodeController {
     /**
      * 创建任务历史节点，elus
      *
-     * @param historyTaskNode
+     * @param
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    public HistoryTaskNode create(@RequestBody String id,String rest) {
-        HistoryTaskNode historyTaskNode=new HistoryTaskNode();
+    public HistoryTaskNode create(@RequestBody String id, String rest) {
+        HistoryTaskNode historyTaskNode = new HistoryTaskNode();
         historyTaskNode.setMaintenanceTask(taskRuntimeService.findOne(id));
         historyTaskNode.setName(getShtep(id).getName());
         historyTaskNode.setDueDate(new Date());
@@ -74,8 +75,9 @@ public class TaskNodeController {
 
     public FlowchartSteps getShtep(String id) {
         MaintenanceTask maintenanceTask = taskRuntimeService.findOne(id);
-        HistoryTaskNode historyTaskNode = taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask).get(0);
-        if (null != historyTaskNode) {
+        List<HistoryTaskNode> historyTaskNodes=taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask);
+        if (historyTaskNodes.size() > 0) {
+            HistoryTaskNode historyTaskNode = historyTaskNodes.get(0);
             FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric(historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
             return null == flowchartSteps ? null : flowchartSteps;
         } else {

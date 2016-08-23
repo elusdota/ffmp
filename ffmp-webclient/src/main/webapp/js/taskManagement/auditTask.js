@@ -19,6 +19,62 @@ $(document).ready(function () {
             $("#message").modal("show");
         }
     });
+    $('#materialTable').bootstrapTable({
+        method: 'POST',
+        url: 'rest/material/findByMaintenanceTask',
+        sidePagination: 'server',
+        striped: true,
+        singleSelect: true,
+        checkbox: true,
+        clickToSelect: true,
+        queryParams: function (params) {
+            var fin = {
+                offset: params.offset,
+                limit: params.limit,
+                order: params.order,
+                sort: params.sort,
+                search: id
+            };
+            return JSON.stringify(fin);
+        },
+        columns: [{title: "序号", formatter: runningFormatter}
+            , {title: "材料名称", field: "name", align: 'center', sortable: true}
+            , {title: "生产厂家", field: "manufacturer", align: 'center', sortable: true}
+            , {title: "型号", field: "model", align: 'center', sortable: true}
+            , {title: "单位", field: "unite", align: 'center', sortable: true}
+            , {title: "数量", field: "quantity", align: 'center', sortable: true}
+            , {title: "单价", field: "price", align: 'center', sortable: true}
+            , {title: "金额", field: "total", align: 'center', sortable: true}
+        ]
+    });
+    $('#materialTable').bootstrapTable({
+        method: 'POST',
+        url: 'rest/material/findByMaintenanceTask',
+        sidePagination: 'server',
+        striped: true,
+        singleSelect: true,
+        checkbox: true,
+        clickToSelect: true,
+        queryParams: function (params) {
+            var fin = {
+                offset: params.offset,
+                limit: params.limit,
+                order: params.order,
+                sort: params.sort,
+                search: id
+            };
+            return JSON.stringify(fin);
+        },
+        columns: [{title: "序号", formatter: runningFormatter}
+            , {title: "材料名称", field: "name", align: 'center', sortable: true}
+            , {title: "生产厂家", field: "manufacturer", align: 'center', sortable: true}
+            , {title: "型号", field: "model", align: 'center', sortable: true}
+            , {title: "单位", field: "unite", align: 'center', sortable: true}
+            , {title: "数量", field: "quantity", align: 'center', sortable: true}
+            , {title: "单价", field: "price", align: 'center', sortable: true}
+            , {title: "金额", field: "total", align: 'center', sortable: true}
+        ]
+    });
     $.ajax('rest/taskEquipemt?id=' + id, {
         type: 'GET',
         contentType: 'application/json',
