@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by jiangliang on 2016/7/17.任务节点控制器，elus
@@ -55,7 +56,7 @@ public class TaskNodeController {
         historyTaskNode.setDescription(historyTaskNodeVO.getStepResult());
         historyTaskNode.setFlowchartSteps(getShtep(historyTaskNodeVO.getMaintenanceTaskId()));
         historyTaskNode =  service.save(historyTaskNode);
-        System.out.println("historyTaskNode---------" +historyTaskNode.getId());
+        System.out.println("historyTaskNode---------" + historyTaskNode.getId());
         return historyTaskNode;
     }
 
