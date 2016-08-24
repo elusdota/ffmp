@@ -4,12 +4,9 @@ import com.jrtech.ffmp.data.entities.FlowchartSteps;
 import com.jrtech.ffmp.data.entities.HistoryTaskNode;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.entities.TaskDefinition;
-import com.jrtech.templates.services.FlowchartStepsService;
-import com.jrtech.templates.services.ServiceException;
-import com.jrtech.templates.services.TaskHistoryService;
-import com.jrtech.templates.services.TaskRuntimeService;
+import com.jrtech.templates.services.*;
+import com.jrtech.templates.vo.HistoryTaskNodeVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +27,10 @@ public class TaskNodeController {
     private TaskHistoryService taskHistoryService;
     @Autowired
     private FlowchartStepsService flowchartStepsService;
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private UserDetailsUtils userDetailsUtils;
 
     @RequestMapping(method = RequestMethod.GET)
     public HistoryTaskNode get(@RequestParam("id") String id) {
@@ -39,18 +40,25 @@ public class TaskNodeController {
     /**
      * 创建任务历史节点，elus
      *
-     * @param
+     * @param HistoryTaskNodeVO
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    public HistoryTaskNode create(@RequestBody String id, String rest) {
-        HistoryTaskNode historyTaskNode = new HistoryTaskNode();
-        historyTaskNode.setMaintenanceTask(taskRuntimeService.findOne(id));
-        historyTaskNode.setName(getShtep(id).getName());
+    public HistoryTaskNode create(@RequestBody HistoryTaskNodeVO historyTaskNodeVO) {
+        System.out.println("任务id---------"+historyTaskNodeVO.getMaintenanceTaskId());
+        System.out.println("步骤---------" + historyTaskNodeVO.getStepResult());
+        String userName =  userDetailsUtils.getCurrent().getUsername();
+        System.out.println("userName---------" +userName);
+        HistoryTaskNode historyTaskNode=new HistoryTaskNode();
+        historyTaskNode.setMaintenanceTask(taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId()));
+        historyTaskNode.setName(getShtep(historyTaskNodeVO.getMaintenanceTaskId()).getName());
         historyTaskNode.setDueDate(new Date());
-        historyTaskNode.setDescription(rest);
-        historyTaskNode.setFlowchartSteps(getShtep(id));
-        return service.save(historyTaskNode);
+        historyTaskNode.setDelegate(accountService.findOneByName(userName));
+        historyTaskNode.setDescription(historyTaskNodeVO.getStepResult());
+        historyTaskNode.setFlowchartSteps(getShtep(historyTaskNodeVO.getMaintenanceTaskId()));
+        historyTaskNode =  service.save(historyTaskNode);
+        System.out.println("historyTaskNode---------" + historyTaskNode.getId());
+        return historyTaskNode;
     }
 
     /**
@@ -64,7 +72,7 @@ public class TaskNodeController {
     public FlowchartSteps getSteps(@RequestParam("id") String id) {
         return getShtep(id);
 //        MaintenanceTask maintenanceTask = taskRuntimeService.findOne(id);
-//        HistoryTaskNode historyTaskNode = taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask).get(0);
+//        HistoryTaskNode historyTaskNode = taskHistoryService.findByMaintenanceTaskOrderByDueDateDesc(maintenanceTask).get(0);
 //        if (null != historyTaskNode) {
 //            FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric(historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
 //            return null == flowchartSteps ? null : flowchartSteps;
@@ -76,7 +84,7 @@ public class TaskNodeController {
 
     public FlowchartSteps getShtep(String id) {
         MaintenanceTask maintenanceTask = taskRuntimeService.findOne(id);
-        List<HistoryTaskNode> historyTaskNodes=taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask);
+        List<HistoryTaskNode> historyTaskNodes=taskHistoryService.findByMaintenanceTaskOrderByDueDateDesc(maintenanceTask);
         if (historyTaskNodes.size() > 0) {
             HistoryTaskNode historyTaskNode = historyTaskNodes.get(0);
             FlowchartSteps flowchartSteps = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(),historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
@@ -86,7 +94,7 @@ public class TaskNodeController {
             return flowchartSteps;
         }
     }
-    public FlowchartSteps findOneByTaskDefinitionAndParametric(TaskDefinition taskDefinition,String parametric){
+    private FlowchartSteps findOneByTaskDefinitionAndParametric(TaskDefinition taskDefinition,String parametric){
         FlowchartSteps flowchartSteps = flowchartStepsService.findOneByTaskDefinitionAndParametric(taskDefinition,parametric);
         return flowchartSteps;
     }
