@@ -90,6 +90,6 @@ public class FlowchartSteps extends AbstractNamedObject {
         if (null == par) {
            return null;
         }
-        return "yes" == par ? yes : no;
+        return "yes" .equals(par)  ? yes : no;
     }
 }

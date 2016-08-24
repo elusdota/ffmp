@@ -32,8 +32,8 @@ public class TaskHistoryServiceImpl implements TaskHistoryService {
     }
 
     @Override
-    public List<HistoryTaskNode> findByMaintenanceTaskOrderByDueDateAsc(MaintenanceTask maintenanceTask) {
-        return repository.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask);
+    public List<HistoryTaskNode> findByMaintenanceTaskOrderByDueDateDesc(MaintenanceTask maintenanceTask) {
+        return repository.findByMaintenanceTaskOrderByDueDateDesc(maintenanceTask);
     }
 
     @Override

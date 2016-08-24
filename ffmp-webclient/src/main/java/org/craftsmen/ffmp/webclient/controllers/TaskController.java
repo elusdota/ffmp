@@ -7,13 +7,10 @@ import com.jrtech.ffmp.data.entities.TaskDefinition;
 import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -97,7 +94,7 @@ public class TaskController {
     @RequestMapping(value = "/flowchart", method = RequestMethod.GET)
     public TaskDefinition getFlowchart(@RequestParam("id") String id) {
         MaintenanceTask maintenanceTask = service.findOne(id);
-        List<HistoryTaskNode> historyTaskNodes = taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask);
+        List<HistoryTaskNode> historyTaskNodes = taskHistoryService.findByMaintenanceTaskOrderByDueDateDesc(maintenanceTask);
         maintenanceTask.getTaskDefinition().getFlowchartStepses().forEach(flowchartSteps -> {
             HistoryTaskNode historyTaskNode=taskHistoryService.findOneByMaintenanceTaskAndFlowchartSteps(maintenanceTask, flowchartSteps);
             if (historyTaskNode==null) {

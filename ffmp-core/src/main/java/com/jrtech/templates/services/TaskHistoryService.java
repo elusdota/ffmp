@@ -19,7 +19,7 @@ public interface TaskHistoryService {
     //id查询
     HistoryTaskNode findOne(String id);
 
-    List<HistoryTaskNode> findByMaintenanceTaskOrderByDueDateAsc(MaintenanceTask maintenanceTask);
+    List<HistoryTaskNode> findByMaintenanceTaskOrderByDueDateDesc(MaintenanceTask maintenanceTask);
 
     HistoryTaskNode findOneByMaintenanceTaskAndFlowchartSteps(MaintenanceTask maintenanceTask, FlowchartSteps flowchartSteps);
 }

@@ -3,6 +3,7 @@ package org.craftsmen.ffmp.webclient.controllers;
 import com.jrtech.ffmp.data.entities.FlowchartSteps;
 import com.jrtech.ffmp.data.entities.HistoryTaskNode;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
+import com.jrtech.ffmp.data.entities.TaskDefinition;
 import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.HistoryTaskNodeVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +72,7 @@ public class TaskNodeController {
     public FlowchartSteps getSteps(@RequestParam("id") String id) {
         return getShtep(id);
 //        MaintenanceTask maintenanceTask = taskRuntimeService.findOne(id);
-//        HistoryTaskNode historyTaskNode = taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask).get(0);
+//        HistoryTaskNode historyTaskNode = taskHistoryService.findByMaintenanceTaskOrderByDueDateDesc(maintenanceTask).get(0);
 //        if (null != historyTaskNode) {
 //            FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric(historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
 //            return null == flowchartSteps ? null : flowchartSteps;
@@ -83,14 +84,18 @@ public class TaskNodeController {
 
     public FlowchartSteps getShtep(String id) {
         MaintenanceTask maintenanceTask = taskRuntimeService.findOne(id);
-        List<HistoryTaskNode> historyTaskNodes=taskHistoryService.findByMaintenanceTaskOrderByDueDateAsc(maintenanceTask);
+        List<HistoryTaskNode> historyTaskNodes=taskHistoryService.findByMaintenanceTaskOrderByDueDateDesc(maintenanceTask);
         if (historyTaskNodes.size() > 0) {
             HistoryTaskNode historyTaskNode = historyTaskNodes.get(0);
-            FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric(historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
+            FlowchartSteps flowchartSteps = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(),historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
             return null == flowchartSteps ? null : flowchartSteps;
         } else {
-            FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric("st");
+            FlowchartSteps flowchartSteps = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(),"st");
             return flowchartSteps;
         }
+    }
+    private FlowchartSteps findOneByTaskDefinitionAndParametric(TaskDefinition taskDefinition,String parametric){
+        FlowchartSteps flowchartSteps = flowchartStepsService.findOneByTaskDefinitionAndParametric(taskDefinition,parametric);
+        return flowchartSteps;
     }
 }
