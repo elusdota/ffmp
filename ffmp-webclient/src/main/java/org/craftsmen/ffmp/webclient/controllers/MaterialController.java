@@ -2,9 +2,7 @@ package org.craftsmen.ffmp.webclient.controllers;
 
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.entities.Material;
-import com.jrtech.templates.services.MaterialService;
-import com.jrtech.templates.services.PageableImpl;
-import com.jrtech.templates.services.TaskRuntimeService;
+import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.CommonSpecs;
 import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.TableGetDataParameters;
@@ -26,6 +24,10 @@ public class MaterialController {
     private MaterialService materialService;
     @Autowired
     private TaskRuntimeService runtimeService;
+    @Autowired
+    private AccountService accountService;
+    @Autowired
+    private UserDetailsUtils userDetailsUtils;
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody TableGetDataParameters parameters) {
@@ -40,7 +42,7 @@ public class MaterialController {
     @RequestMapping(value = "/findByMaintenanceTask", method = RequestMethod.POST)
     public JSONListData findByMaintenanceTask(@RequestBody TableGetDataParameters parameters) {
         PageableImpl pageable = new PageableImpl(parameters);
-        MaintenanceTask maintenanceTask=runtimeService.findOne(parameters.getSearch());
+        MaintenanceTask maintenanceTask = runtimeService.findOne(parameters.getSearch());
         Page<Material> mrrStandards = materialService.findByMaintenanceTask(maintenanceTask, pageable);
         JSONListData jld = new JSONListData();
         jld.setTotal(mrrStandards.getTotalElements());
@@ -49,7 +51,12 @@ public class MaterialController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public Material save(@RequestBody Material material){
+    public Material save(@RequestBody Material material) {
+        String userName = userDetailsUtils.getCurrent().getUsername();
+        material.setDelegate(accountService.findOneByName(userName));
+        System.out.println("-------------" + material.getMaintenanceTask().getId());
+        MaintenanceTask maintenanceTask = runtimeService.findOne(material.getMaintenanceTask().getId());
+        material.setMaintenanceTask(maintenanceTask);
         return materialService.save(material);
     }
 }

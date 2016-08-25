@@ -38,12 +38,12 @@
         <div class="form-group" hidden="true">
           <input type="text" class="form-control" id="id" name="id" value="${id}"/>
         </div>
-        <div class="form-group col-md-4">
-          <label for="name" class="col-lg-6 control-label">任务名称：</label>
-          <div class="col-lg-6">
-            <input type="text" class="form-control" readonly id="name" name="name" placeholder="任务名称">
-          </div>
-        </div>
+        <%--<div class="form-group col-md-4">--%>
+          <%--<label for="name" class="col-lg-6 control-label">任务名称：</label>--%>
+          <%--<div class="col-lg-6">--%>
+            <%--<input type="text" class="form-control" readonly id="name" name="name" placeholder="任务名称">--%>
+          <%--</div>--%>
+        <%--</div>--%>
       </form>
     </div>
     <div class="row">
@@ -152,7 +152,7 @@
 <script src="<c:url value='/bower_components/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js'/>"></script>
 <script src="<c:url value='/bower_components/tableExport.jquery.plugin/tableExport.min.js'/>"></script>
 <script src="<c:url value='/bower_components/jquery.base64.js/jquery.base64.js'/>"></script>
-<script src="<c:url value='/js/taskManagement/equipment.js'/>"></script>
+<script src="<c:url value='/js/taskManagement/material.js'/>"></script>
 
 
 

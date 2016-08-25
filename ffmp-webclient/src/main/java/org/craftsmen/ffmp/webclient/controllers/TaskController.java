@@ -94,20 +94,21 @@ public class TaskController {
     @RequestMapping(value = "/flowchart", method = RequestMethod.GET)
     public TaskDefinition getFlowchart(@RequestParam("id") String id) {
         MaintenanceTask maintenanceTask = service.findOne(id);
+        TaskDefinition taskDefinition=taskDefinitionService.findOneByName(maintenanceTask.getTaskDefinition().getName());
         List<HistoryTaskNode> historyTaskNodes = taskHistoryService.findByMaintenanceTaskOrderByDueDateDesc(maintenanceTask);
-        maintenanceTask.getTaskDefinition().getFlowchartStepses().forEach(flowchartSteps -> {
+        taskDefinition.getFlowchartStepses().forEach(flowchartSteps -> {
             HistoryTaskNode historyTaskNode=taskHistoryService.findOneByMaintenanceTaskAndFlowchartSteps(maintenanceTask, flowchartSteps);
             if (historyTaskNode==null) {
               flowchartSteps.setColor("without");
             }
             else{
-                if(historyTaskNode.getDescription()=="yes"){
+                if(historyTaskNode.getDescription().equals("yes")){
                     flowchartSteps.setColor("approved");
                 }else{
                     flowchartSteps.setColor("rejected");
                 }
             }
         });
-        return maintenanceTask.getTaskDefinition();
+        return taskDefinition;
     }
 }

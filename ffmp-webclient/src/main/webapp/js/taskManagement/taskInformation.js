@@ -68,8 +68,8 @@ $(document).ready(function () {
                     'future': {'fill': '#FFFF99'},
                     'request': {'fill': 'blue'},
                     'invalid': {'fill': '#444444'},
-                    'approved': {'fill': '#58C4A3', 'font-size': 12,'yes-text': '批准', 'no-text': ''},
-                    'rejected': {'fill': '#C45879', 'font-size': 12, 'yes-text': '', 'no-text': '拒绝'}
+                    'approved': {'fill': '#58C4A3', 'font-size': 12,'yes-text': '批准', 'no-text': '/'},
+                    'rejected': {'fill': '#C45879', 'font-size': 12, 'yes-text': '/', 'no-text': '拒绝'}
                 }
             });
             for (i = 0; i < data.length; i++) {

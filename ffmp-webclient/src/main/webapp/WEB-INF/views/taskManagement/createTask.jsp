@@ -45,11 +45,11 @@
           </div>
         </div>
         <div class="form-group col-md-6">
-          <label for="maintenanceProject" class="col-lg-6 control-label">所属项目：<span
+          <label for="maintenanceProject" class="col-lg-6 control-label">项目编号：<span
                   class="required">*</span></label>
 
           <div class="col-lg-6">
-            <input type="text" class="form-control" id="maintenanceProject" name="maintenanceProject" placeholder="所属项目"
+            <input type="text" class="form-control" id="maintenanceProject" name="maintenanceProject" placeholder="项目编号"
                    required="required">
           </div>
         </div>
