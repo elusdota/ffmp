@@ -69,12 +69,9 @@ public class Material extends AbstractDomainObject{
     }
 
     public double getTotal() {
-        return total;
+        return price * quantity;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
-    }
 
     public long getQuantity() {
         return quantity;
