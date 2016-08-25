@@ -72,7 +72,7 @@ $("#createInbounds").click(function () {
     $("#inboundsModel").modal("show");
 });
 $("#viewInbounds").click(function () {
-    var row = $('#inboundsTables').bootstrapTable('getSelections')[0];
+    var row = $('#inboundsTable').bootstrapTable('getSelections')[0];
     $("#submitData").addClass("hidden");
     $("#inboundsForm").addClass("hidden");
     $('#detailsTable').bootstrapTable('removeAll');

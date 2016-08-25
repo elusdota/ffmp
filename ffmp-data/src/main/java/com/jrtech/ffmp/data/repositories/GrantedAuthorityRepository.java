@@ -18,7 +18,7 @@ public interface GrantedAuthorityRepository extends CrudRepository<GrantedAuthor
      *
      * @return 权限列表
      */
-    @Query("SELECT p FROM GrantedAuthorityImpl p WHERE p.parent is null")
+    @Query("SELECT p FROM GrantedAuthorityImpl p WHERE p.parent is null order by p.id")
     List<GrantedAuthorityImpl> findRoot();
 
     /**

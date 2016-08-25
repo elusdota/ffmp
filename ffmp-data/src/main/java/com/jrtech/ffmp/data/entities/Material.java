@@ -12,8 +12,8 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "Material")
-@JsonIgnoreProperties(value = {"maintenanceTask"})
-public class Material extends AbstractDomainObject{
+@JsonIgnoreProperties(value = {"delegate"})
+public class Material extends AbstractNamedObject{
     //任务
     @NotNull
     @ManyToOne

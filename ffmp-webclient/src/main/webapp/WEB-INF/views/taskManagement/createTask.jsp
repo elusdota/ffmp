@@ -11,6 +11,13 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link rel="stylesheet" href="<c:url value='/bower_components/bootstrap-table/dist/bootstrap-table.min.css'/>">
 <link rel="stylesheet" href="<c:url value='/bower_components/AdminLTE/plugins/datepicker/datepicker3.css'/>">
+<style type="text/css">
+  *
+  label.error
+  {
+    color:Red;
+  }
+</style>
 <section class="content-header">
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -38,11 +45,11 @@
           </div>
         </div>
         <div class="form-group col-md-6">
-          <label for="maintenanceProject" class="col-lg-6 control-label">所属项目：<span
+          <label for="maintenanceProject" class="col-lg-6 control-label">项目编号：<span
                   class="required">*</span></label>
 
           <div class="col-lg-6">
-            <input type="text" class="form-control" id="maintenanceProject" name="maintenanceProject" placeholder="所属项目"
+            <input type="text" class="form-control" id="maintenanceProject" name="maintenanceProject" placeholder="项目编号"
                    required="required">
           </div>
         </div>

@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Table(name = "FlowchartSteps")
 @JsonIgnoreProperties(value = {"taskDefinition"})
 public class FlowchartSteps extends AbstractNamedObject {
-    protected FlowchartSteps() {
+    public FlowchartSteps() {
         super();
     }
 

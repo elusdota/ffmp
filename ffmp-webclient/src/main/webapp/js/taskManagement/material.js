@@ -38,7 +38,7 @@ $(document).ready(function () {
 });
 $("#insertTable").click(function () {
     if ($("#materialForm").valid()) {
-        $.ajax('rest/material', {
+        $.ajax('rest/material/create', {
             type: 'POST',
             data: JSON.stringify(getInsertData()),
             contentType: 'application/json',
@@ -70,13 +70,17 @@ $("#over").click(function () {
 });
 function getSaveData() {
     var data = {
-        id: $("#id").val().trim(),
-        rest:'yes'
+        maintenanceTaskId: $("#id").val().trim(),
+        stepResult:'yes'
     }
     return data;
 }
 function getInsertData() {
+    var maintenanceTask={
+        id:$("#id").val().trim()
+    }
     var data = {
+        maintenanceTask:maintenanceTask,
         name: $("#equipumentname").val().trim(),
         unite: $("#unite").val().trim(),
         price: $("#price").val().trim(),

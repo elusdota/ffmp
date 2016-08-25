@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "RepairForm")
-@JsonIgnoreProperties(value = {"maintenanceProject"})
+@JsonIgnoreProperties(value = {"maintenanceProject","account"})
 public class RepairForm extends AbstractDomainObject {
     @ManyToOne
     //创建人
