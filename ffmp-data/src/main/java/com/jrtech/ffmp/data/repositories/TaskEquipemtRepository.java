@@ -2,6 +2,8 @@ package com.jrtech.ffmp.data.repositories;
 
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.entities.TaskEquipemt;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -10,5 +12,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface TaskEquipemtRepository extends CrudRepository<TaskEquipemt, String> {
-    Iterable<TaskEquipemt> findByMaintenanceTask(MaintenanceTask maintenanceTask);
+    Page<TaskEquipemt> findByMaintenanceTask(MaintenanceTask maintenanceTask,Pageable pageable);
 }

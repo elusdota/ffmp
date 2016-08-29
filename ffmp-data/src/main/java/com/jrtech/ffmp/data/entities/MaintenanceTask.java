@@ -17,7 +17,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "MaintenanceTask")
-@JsonIgnoreProperties(value = {"delegate"})
+@JsonIgnoreProperties(value = {"delegate","taskDefinition","owner"})
 public class MaintenanceTask extends AbstractNamedObject {
     @NotNull
     @ManyToOne

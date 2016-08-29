@@ -47,49 +47,93 @@ $(document).ready(function () {
             , {title: "金额", field: "total", align: 'center', sortable: true}
         ]
     });
-    $.ajax('rest/taskEquipemt?id=' + id, {
-        type: 'GET',
-        contentType: 'application/json',
-        dataType: 'json',
-        success: function (data, XMLHttpRequest, jqXHR) {
-            $('#equipmentTable').bootstrapTable({
-                //height: 350,
-                data: data.equipments,
-                columns: [
-                    {title: "序号", formatter: runningFormatter}
-                    , {title: "设备名称", field: "name", align: 'center', sortable: true}
-                    , {title: "设备编码", field: "code", align: 'center', sortable: true}
-                    , {title: "大类", field: "typemax", align: 'center', sortable: true}
-                    , {title: "小类", field: "typemin", align: 'center', sortable: true}
-                    , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
-                    , {title: "型号", field: "model", align: 'center', sortable: true}
-                    , {title: "数量", field: "quantity", align: 'center', sortable: true}
-                    , {title: "位置", field: "location", align: 'center', sortable: true}
-                ],
-                striped: true
-            });
-        }, error: function (XMLHttpRequest) {
-            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
-            $("#message").modal("show");
-        }
+    $('#equipmentTable').bootstrapTable({
+        method: 'POST',
+        url: 'rest/taskEquipemt/findByMaintenanceTask',
+        sidePagination: 'server',
+        striped: true,
+        singleSelect: true,
+        checkbox: true,
+        clickToSelect: true,
+        queryParams: function (params) {
+            var fin = {
+                offset: params.offset,
+                limit: params.limit,
+                order: params.order,
+                sort: params.sort,
+                search: id
+            };
+            return JSON.stringify(fin);
+        },
+        columns: [{title: "序号", formatter: runningFormatter}
+            , {title: "设备名称", field: "equipment.name", align: 'center', sortable: true}
+            , {title: "设备编码", field: "equipment.code", align: 'center', sortable: true}
+            , {title: "大类", field: "equipment.typemax", align: 'center', sortable: true}
+            , {title: "小类", field: "equipment.typemin", align: 'center', sortable: true}
+            , {title: "厂家", field: "equipment.manufacturer", align: 'center', sortable: true}
+            , {title: "型号", field: "equipment.model", align: 'center', sortable: true}
+            , {title: "数量", field: "equipment.quantity", align: 'center', sortable: true}
+            , {title: "位置", field: "equipment.location", align: 'center', sortable: true}
+            , {title: "备注", field: "description", align: 'center', sortable: true}
+        ]
     });
     //序号加载
     function runningFormatter(value, row, index) {
         return index + 1;
     }
-});
-function getSubData(){
-    var maintenanceTask = {
-        name: $('#organization').val()
-    };
-    var flowchartSteps = {
-        name: $('#customer').val()
-    };
-    var data = {
-        maintenanceTask:maintenanceTask,
-        flowchartSteps:flowchartSteps,
-        suspended:"",
-        description: $("#name").val().trim()
+    $("#yes").click(function () {
+        $.ajax('rest/taskNode', {
+            type: 'POST',
+            data: JSON.stringify(getSaveData("yes")),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data, XMLHttpRequest, jqXHR) {
+                $("#main-content").load("taskManagement/runTask", function () {
+                    $("#main-content").fadeIn();
+                });
+            }, error: function (XMLHttpRequest) {
+                $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                $("#message").modal("show");
+            }
+        });
+    });
+    $("#approved").click(function () {
+        $.ajax('rest/taskNode', {
+            type: 'POST',
+            data: JSON.stringify(getSaveData("yes")),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data, XMLHttpRequest, jqXHR) {
+                $("#main-content").load("taskManagement/runTask", function () {
+                    $("#main-content").fadeIn();
+                });
+            }, error: function (XMLHttpRequest) {
+                $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                $("#message").modal("show");
+            }
+        });
+    });
+    $("#rejected").click(function () {
+        $.ajax('rest/taskNode', {
+            type: 'POST',
+            data: JSON.stringify(getSaveData("no")),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data, XMLHttpRequest, jqXHR) {
+                $("#main-content").load("taskManagement/runTask", function () {
+                    $("#main-content").fadeIn();
+                });
+            }, error: function (XMLHttpRequest) {
+                $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                $("#message").modal("show");
+            }
+        });
+    });
+    function getSaveData(tmper){
+        var data = {
+            maintenanceTaskId: $("#id").val().trim(),
+            stepResult:tmper
+        }
+        return data;
     }
-    return data;
-}
+});

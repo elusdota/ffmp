@@ -3,11 +3,15 @@ package org.craftsmen.ffmp.webclient.controllers;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.entities.TaskEquipemt;
 import com.jrtech.templates.services.EquipmentService;
+import com.jrtech.templates.services.PageableImpl;
 import com.jrtech.templates.services.TaskEquipemtService;
 import com.jrtech.templates.services.TaskRuntimeService;
+import com.jrtech.templates.vo.CommonSpecs;
 import com.jrtech.templates.vo.JSONListData;
+import com.jrtech.templates.vo.TableGetDataParameters;
 import com.jrtech.templates.vo.TaskEquipemtVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -26,16 +30,14 @@ public class TaskEquipemtController {
     @Autowired
     private EquipmentService equipmentService;
 
-    @RequestMapping(method = RequestMethod.GET)
-    public JSONListData get(@RequestParam("id") String id) {
+    @RequestMapping(value = "/findByMaintenanceTask",method = RequestMethod.POST)
+    public JSONListData findByMaintenanceTask(@RequestBody TableGetDataParameters parameters) {
+        MaintenanceTask maintenanceTask = taskRuntimeService.findOne(parameters.getSearch());
+        PageableImpl pageable = new PageableImpl(parameters);
+        Page<TaskEquipemt> taskEquipemts = service.findByMaintenanceTask(maintenanceTask,pageable);
         JSONListData jld = new JSONListData();
-        MaintenanceTask maintenanceTask = taskRuntimeService.findOne(id);
-        List<TaskEquipemt> taskEquipemts = new ArrayList<>();
-        service.findByMaintenanceTask(maintenanceTask).forEach(taskEquipemt -> {
-            taskEquipemts.add(taskEquipemt);
-        });
-        jld.setTotal((long) taskEquipemts.size());
-        jld.setRows(taskEquipemts);
+        jld.setTotal(taskEquipemts.getTotalElements());
+        jld.setRows(taskEquipemts.getContent());
         return jld;
     }
 

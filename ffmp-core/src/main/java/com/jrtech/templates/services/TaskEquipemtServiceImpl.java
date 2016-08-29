@@ -4,6 +4,8 @@ import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.entities.TaskEquipemt;
 import com.jrtech.ffmp.data.repositories.TaskEquipemtRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,8 +17,8 @@ public class TaskEquipemtServiceImpl implements TaskEquipemtService {
     private TaskEquipemtRepository repository;
 
     @Override
-    public Iterable<TaskEquipemt> findByMaintenanceTask(MaintenanceTask maintenanceTask) {
-        return repository.findByMaintenanceTask(maintenanceTask);
+    public Page<TaskEquipemt> findByMaintenanceTask(MaintenanceTask maintenanceTask,Pageable pageable) {
+        return repository.findByMaintenanceTask(maintenanceTask,pageable);
     }
 
     @Override

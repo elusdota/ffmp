@@ -45,19 +45,25 @@ public class TaskNodeController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public HistoryTaskNode create(@RequestBody HistoryTaskNodeVO historyTaskNodeVO) {
-        System.out.println("任务id---------"+historyTaskNodeVO.getMaintenanceTaskId());
-        System.out.println("步骤---------" + historyTaskNodeVO.getStepResult());
-        String userName =  userDetailsUtils.getCurrent().getUsername();
-        System.out.println("userName---------" +userName);
-        HistoryTaskNode historyTaskNode=new HistoryTaskNode();
+        HistoryTaskNode historyTaskNode = service.save(bulidHistoryTaskNode(historyTaskNodeVO));
+        if (getShtep(historyTaskNode.getMaintenanceTask().getId()).getParametric().equals("en")) {
+            MaintenanceTask maintenanceTask=taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId());
+            maintenanceTask.setSuspended(true);
+            taskRuntimeService.save(maintenanceTask);
+            return service.save(bulidHistoryTaskNode(historyTaskNodeVO));
+        }
+        return historyTaskNode;
+    }
+
+    public HistoryTaskNode bulidHistoryTaskNode(HistoryTaskNodeVO historyTaskNodeVO) {
+        String userName = userDetailsUtils.getCurrent().getUsername();
+        HistoryTaskNode historyTaskNode = new HistoryTaskNode();
         historyTaskNode.setMaintenanceTask(taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId()));
         historyTaskNode.setName(getShtep(historyTaskNodeVO.getMaintenanceTaskId()).getName());
         historyTaskNode.setDueDate(new Date());
         historyTaskNode.setDelegate(accountService.findOneByName(userName));
         historyTaskNode.setDescription(historyTaskNodeVO.getStepResult());
         historyTaskNode.setFlowchartSteps(getShtep(historyTaskNodeVO.getMaintenanceTaskId()));
-        historyTaskNode =  service.save(historyTaskNode);
-        System.out.println("historyTaskNode---------" + historyTaskNode.getId());
         return historyTaskNode;
     }
 
@@ -71,31 +77,23 @@ public class TaskNodeController {
     @ResponseStatus(HttpStatus.OK)
     public FlowchartSteps getSteps(@RequestParam("id") String id) {
         return getShtep(id);
-//        MaintenanceTask maintenanceTask = taskRuntimeService.findOne(id);
-//        HistoryTaskNode historyTaskNode = taskHistoryService.findByMaintenanceTaskOrderByDueDateDesc(maintenanceTask).get(0);
-//        if (null != historyTaskNode) {
-//            FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric(historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
-//            return null == flowchartSteps ? null : flowchartSteps;
-//        } else {
-//            FlowchartSteps flowchartSteps = flowchartStepsService.findOneByParametric("st");
-//            return flowchartSteps;
-//        }
     }
 
     public FlowchartSteps getShtep(String id) {
         MaintenanceTask maintenanceTask = taskRuntimeService.findOne(id);
-        List<HistoryTaskNode> historyTaskNodes=taskHistoryService.findByMaintenanceTaskOrderByDueDateDesc(maintenanceTask);
+        List<HistoryTaskNode> historyTaskNodes = taskHistoryService.findByMaintenanceTaskOrderByDueDateDesc(maintenanceTask);
         if (historyTaskNodes.size() > 0) {
             HistoryTaskNode historyTaskNode = historyTaskNodes.get(0);
-            FlowchartSteps flowchartSteps = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(),historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
+            FlowchartSteps flowchartSteps = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(), historyTaskNode.getFlowchartSteps().getCatch(historyTaskNode.getDescription()));
             return null == flowchartSteps ? null : flowchartSteps;
         } else {
-            FlowchartSteps flowchartSteps = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(),"st");
+            FlowchartSteps flowchartSteps = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(), "st");
             return flowchartSteps;
         }
     }
-    private FlowchartSteps findOneByTaskDefinitionAndParametric(TaskDefinition taskDefinition,String parametric){
-        FlowchartSteps flowchartSteps = flowchartStepsService.findOneByTaskDefinitionAndParametric(taskDefinition,parametric);
+
+    private FlowchartSteps findOneByTaskDefinitionAndParametric(TaskDefinition taskDefinition, String parametric) {
+        FlowchartSteps flowchartSteps = flowchartStepsService.findOneByTaskDefinitionAndParametric(taskDefinition, parametric);
         return flowchartSteps;
     }
 }
