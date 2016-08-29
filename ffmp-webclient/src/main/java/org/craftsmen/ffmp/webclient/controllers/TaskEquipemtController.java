@@ -1,11 +1,9 @@
 package org.craftsmen.ffmp.webclient.controllers;
 
+import com.jrtech.ffmp.data.entities.Equipment;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.entities.TaskEquipemt;
-import com.jrtech.templates.services.EquipmentService;
-import com.jrtech.templates.services.PageableImpl;
-import com.jrtech.templates.services.TaskEquipemtService;
-import com.jrtech.templates.services.TaskRuntimeService;
+import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.CommonSpecs;
 import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.TableGetDataParameters;
@@ -45,9 +43,16 @@ public class TaskEquipemtController {
     public TaskEquipemt save(@RequestBody TaskEquipemtVO taskEquipemtVO){
         TaskEquipemt taskEquipemt = new TaskEquipemt();
         taskEquipemt.setDescription(taskEquipemtVO.getDescription());
-        taskEquipemt.setEquipment(equipmentService.findOneByCode(taskEquipemtVO.getEquipmentCode()));
-        taskEquipemt.setMaintenanceTask(taskRuntimeService.findOne(taskEquipemtVO.getMaintenanceTaskId()));
-        return service.save(taskEquipemt);
+        Equipment equipment=equipmentService.findOneByCode(taskEquipemtVO.getEquipmentCode());
+        MaintenanceTask maintenanceTask=taskRuntimeService.findOne(taskEquipemtVO.getMaintenanceTaskId());
+       if( maintenanceTask.getMaintenanceProject().getEquipments().contains(equipment)){
+           taskEquipemt.setEquipment(equipment);
+           taskEquipemt.setMaintenanceTask(maintenanceTask);
+           return service.save(taskEquipemt);
+       }else {
+           throw new ServiceException("该设备不在此任务项目设备列表中！");
+       }
+
     }
 
 }
