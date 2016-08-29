@@ -64,7 +64,6 @@
                 <div class="modal-body">
                     <form class="form-horizontal" id="barcodeForm">
                         <div class="form-group" id="imgbarcode">
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-primary" id="closemodel">关闭</button>

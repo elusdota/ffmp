@@ -46,10 +46,10 @@ $(document).ready(function () {
 })
 $("#printCode").click(function () {
     var row = $('#equipmentTable').bootstrapTable('getSelections')[0];
-    //$("#imgbarcode").html("<img src="+"<%=request.getContextPath() %>/barcode?msg=12345678"+" height="+"50px"+" width=130px/> ");
-    $("#imgbarcode").load("/barcode?msg="+row.code, function () {
-        //$("#main-content").fadeIn();
-    });
+    $("#imgbarcode").html("<img src="+"barcode?fmt=JPEG&msg="+row.code+">");
+    //$("#imgbarcode").load("barcode?fmt=JPEG&msg="+row.code, function () {
+    //    //$("#main-content").fadeIn();
+    //});
     $('#barcodeModel').modal({
         backdrop: 'static',
         keyboard: false
