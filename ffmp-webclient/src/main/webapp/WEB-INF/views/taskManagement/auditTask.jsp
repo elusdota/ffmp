@@ -82,10 +82,10 @@
                 <div class="form-actions">
                     <div class="col-md-3">
                         <button id="approved" type="button"
-                                class="btn btn-danger btn-small">批准
+                                class="btn btn-primary btn-small">批准
                         </button>
                         <button id="rejected" type="button"
-                                class="btn btn-warning  btn-small">驳回
+                                class="btn btn-danger  btn-small">驳回
                         </button>
                     </div>
                 </div>
