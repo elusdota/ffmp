@@ -97,12 +97,12 @@ public class TaskController {
         TaskDefinition taskDefinition=taskDefinitionService.findOneByName(maintenanceTask.getTaskDefinition().getName());
         List<HistoryTaskNode> historyTaskNodes = taskHistoryService.findByMaintenanceTaskOrderByDueDateDesc(maintenanceTask);
         taskDefinition.getFlowchartStepses().forEach(flowchartSteps -> {
-            HistoryTaskNode historyTaskNode=taskHistoryService.findOneByMaintenanceTaskAndFlowchartSteps(maintenanceTask, flowchartSteps);
-            if (historyTaskNode==null) {
+            List<HistoryTaskNode> historyTaskNodes1=taskHistoryService.findByMaintenanceTaskAndFlowchartSteps(maintenanceTask, flowchartSteps);
+            if (historyTaskNodes1.size()<=0) {
               flowchartSteps.setColor("without");
             }
             else{
-                if(historyTaskNode.getDescription().equals("yes")){
+                if(historyTaskNodes1.get(historyTaskNodes1.size()-1).getDescription().equals("yes")){
                     flowchartSteps.setColor("approved");
                 }else{
                     flowchartSteps.setColor("rejected");

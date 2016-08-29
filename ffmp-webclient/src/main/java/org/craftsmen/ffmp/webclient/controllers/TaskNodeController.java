@@ -46,7 +46,8 @@ public class TaskNodeController {
     @RequestMapping(method = RequestMethod.POST)
     public HistoryTaskNode create(@RequestBody HistoryTaskNodeVO historyTaskNodeVO) {
         HistoryTaskNode historyTaskNode = service.save(bulidHistoryTaskNode(historyTaskNodeVO));
-        if (getShtep(historyTaskNode.getMaintenanceTask().getId()).getParametric().equals("en")) {
+        System.out.println(getShtep(historyTaskNode.getMaintenanceTask().getId()).getParametric()+"-------------------------");
+        if (getShtep(historyTaskNode.getMaintenanceTask().getId()).getParametric().equals("en")){
             MaintenanceTask maintenanceTask=taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId());
             maintenanceTask.setSuspended(true);
             taskRuntimeService.save(maintenanceTask);

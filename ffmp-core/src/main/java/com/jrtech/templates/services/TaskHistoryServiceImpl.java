@@ -37,7 +37,7 @@ public class TaskHistoryServiceImpl implements TaskHistoryService {
     }
 
     @Override
-    public HistoryTaskNode findOneByMaintenanceTaskAndFlowchartSteps(MaintenanceTask maintenanceTask, FlowchartSteps flowchartSteps) {
-        return repository.findOneByMaintenanceTaskAndFlowchartSteps(maintenanceTask,flowchartSteps);
+    public List<HistoryTaskNode> findByMaintenanceTaskAndFlowchartSteps(MaintenanceTask maintenanceTask, FlowchartSteps flowchartSteps) {
+        return repository.findByMaintenanceTaskAndFlowchartSteps(maintenanceTask, flowchartSteps);
     }
 }

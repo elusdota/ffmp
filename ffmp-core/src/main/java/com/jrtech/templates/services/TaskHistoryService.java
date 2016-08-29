@@ -21,5 +21,5 @@ public interface TaskHistoryService {
 
     List<HistoryTaskNode> findByMaintenanceTaskOrderByDueDateDesc(MaintenanceTask maintenanceTask);
 
-    HistoryTaskNode findOneByMaintenanceTaskAndFlowchartSteps(MaintenanceTask maintenanceTask, FlowchartSteps flowchartSteps);
+    List<HistoryTaskNode> findByMaintenanceTaskAndFlowchartSteps(MaintenanceTask maintenanceTask, FlowchartSteps flowchartSteps);
 }
