@@ -54,7 +54,6 @@ public class MaterialController {
     public Material save(@RequestBody Material material) {
         String userName = userDetailsUtils.getCurrent().getUsername();
         material.setDelegate(accountService.findOneByName(userName));
-        System.out.println("-------------" + material.getMaintenanceTask().getId());
         MaintenanceTask maintenanceTask = runtimeService.findOne(material.getMaintenanceTask().getId());
         material.setMaintenanceTask(maintenanceTask);
         return materialService.save(material);

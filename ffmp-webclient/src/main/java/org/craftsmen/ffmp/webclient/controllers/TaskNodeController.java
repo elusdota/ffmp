@@ -1,9 +1,6 @@
 package org.craftsmen.ffmp.webclient.controllers;
 
-import com.jrtech.ffmp.data.entities.FlowchartSteps;
-import com.jrtech.ffmp.data.entities.HistoryTaskNode;
-import com.jrtech.ffmp.data.entities.MaintenanceTask;
-import com.jrtech.ffmp.data.entities.TaskDefinition;
+import com.jrtech.ffmp.data.entities.*;
 import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.HistoryTaskNodeVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,23 +42,25 @@ public class TaskNodeController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public HistoryTaskNode create(@RequestBody HistoryTaskNodeVO historyTaskNodeVO) {
-        HistoryTaskNode historyTaskNode = service.save(bulidHistoryTaskNode(historyTaskNodeVO));
-        if (getShtep(historyTaskNode.getMaintenanceTask().getId()).getParametric().equals("en")||getShtep(historyTaskNode.getMaintenanceTask().getId()).getParametric().equals("en1")){
-            MaintenanceTask maintenanceTask=taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId());
+        String userName = userDetailsUtils.getCurrent().getUsername();
+        Account account=accountService.findOneByName(userName);
+        MaintenanceTask maintenanceTask=taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId());
+        HistoryTaskNode historyTaskNode = service.save(bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask,account));
+        if (getShtep(historyTaskNode.getMaintenanceTask().getId()).getParametric().equals("en") || getShtep(historyTaskNode.getMaintenanceTask().getId()).getParametric().equals("en1")) {
             maintenanceTask.setSuspended(true);
             taskRuntimeService.save(maintenanceTask);
-            return service.save(bulidHistoryTaskNode(historyTaskNodeVO));
+            return service.save(bulidHistoryTaskNode(historyTaskNodeVO,maintenanceTask,account));
+        } else {
+            return historyTaskNode;
         }
-        return historyTaskNode;
     }
 
-    public HistoryTaskNode bulidHistoryTaskNode(HistoryTaskNodeVO historyTaskNodeVO) {
-        String userName = userDetailsUtils.getCurrent().getUsername();
+    public HistoryTaskNode bulidHistoryTaskNode(HistoryTaskNodeVO historyTaskNodeVO,MaintenanceTask maintenanceTask,Account account) {
         HistoryTaskNode historyTaskNode = new HistoryTaskNode();
-        historyTaskNode.setMaintenanceTask(taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId()));
+        historyTaskNode.setMaintenanceTask(maintenanceTask);
         historyTaskNode.setName(getShtep(historyTaskNodeVO.getMaintenanceTaskId()).getName());
         historyTaskNode.setDueDate(new Date());
-        historyTaskNode.setDelegate(accountService.findOneByName(userName));
+        historyTaskNode.setDelegate(account);
         historyTaskNode.setDescription(historyTaskNodeVO.getStepResult());
         historyTaskNode.setFlowchartSteps(getShtep(historyTaskNodeVO.getMaintenanceTaskId()));
         return historyTaskNode;

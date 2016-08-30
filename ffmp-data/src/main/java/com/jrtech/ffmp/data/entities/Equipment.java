@@ -19,7 +19,7 @@ public class Equipment extends AbstractNamedObject {
     @ManyToOne
     private MaintenanceProject owner;
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.DETACH })
     //所属客户
     private Customer customer;
     //编码

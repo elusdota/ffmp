@@ -20,17 +20,17 @@ import java.util.Date;
 @JsonIgnoreProperties(value = {"delegate","taskDefinition","owner"})
 public class MaintenanceTask extends AbstractNamedObject {
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     private TaskDefinition taskDefinition;
     //任务创建者，所有者
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     private Account owner;
     //所属项目
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     private MaintenanceProject maintenanceProject;
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     //客户
     private Customer customer;
     //是否中止任务
@@ -38,7 +38,7 @@ public class MaintenanceTask extends AbstractNamedObject {
     //报修单编号
     private String repairnumber;
     //委托执行机构
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     private Organization delegate;
     //起始日期
     @Temporal(TemporalType.TIMESTAMP)

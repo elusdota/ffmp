@@ -2,10 +2,7 @@ package com.jrtech.ffmp.data.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -17,10 +14,10 @@ import javax.validation.constraints.NotNull;
 public class TaskEquipemt extends AbstractDomainObject {
     //任务
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     private MaintenanceTask maintenanceTask;
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = { CascadeType.REFRESH })
     private Equipment equipment;
     //说明
     private String description;

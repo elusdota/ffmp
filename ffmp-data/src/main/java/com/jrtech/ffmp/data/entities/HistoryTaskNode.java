@@ -14,14 +14,14 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "HistoryTaskNode")
-@JsonIgnoreProperties(value = {"maintenanceTask"})
+@JsonIgnoreProperties(value = {"maintenanceTask","delegate"})
 public class HistoryTaskNode extends AbstractNamedObject {
     //任务
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY,cascade = { CascadeType.REFRESH })
     private MaintenanceTask maintenanceTask;
     //任务节点执行者
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY,cascade = { CascadeType.REFRESH})
     private Account delegate;
     //是否中止任务
     private boolean suspended;
@@ -29,7 +29,7 @@ public class HistoryTaskNode extends AbstractNamedObject {
     private String description;
     //任务步骤
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     private FlowchartSteps flowchartSteps;
     //执行日期
     @Temporal(TemporalType.TIMESTAMP)

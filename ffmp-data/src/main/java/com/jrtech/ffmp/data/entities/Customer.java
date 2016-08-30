@@ -1,6 +1,7 @@
 package com.jrtech.ffmp.data.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "Customer")
+@JsonIgnoreProperties(value = {"account"})
 public class Customer extends AbstractDomainObject{
     //创建时间
     @Temporal(TemporalType.TIMESTAMP)
@@ -29,7 +31,7 @@ public class Customer extends AbstractDomainObject{
     private String email;
     // 税号
     private String taxId;
-    @OneToOne
+    @OneToOne(cascade = { CascadeType.REFRESH})
     private Account account;
 
     public Date getCreateTime() {

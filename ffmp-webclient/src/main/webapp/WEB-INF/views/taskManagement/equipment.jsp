@@ -67,8 +67,6 @@
                                 required="required"
                                 onchange="type_onChange()">
                         </select>
-                        <%--<input type="text" class="form-control" id="type" name="type" placeholder="类型"--%>
-                               <%--required="required">--%>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
@@ -78,8 +76,6 @@
                         <select class="form-control m-bot15 required" name="typemin" id="typemin"
                                 required="required">
                         </select>
-                        <%--<input type="text" class="form-control" id="type" name="type" placeholder="类型"--%>
-                        <%--required="required">--%>
                     </div>
                 </div>
                 <div class="form-group col-md-6">

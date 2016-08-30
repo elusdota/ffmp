@@ -4,27 +4,28 @@
 $(document).ready(function () {
     var id = $("#id").val().trim();
     getType();
+    $('#equipmentTable').bootstrapTable({
+        //height: 350,
+        columns: [
+            {title: "序号", formatter: runningFormatter}
+            , {title: "设备名称", field: "name", align: 'center', sortable: true}
+            , {title: "大类", field: "typemax", align: 'center', sortable: true}
+            , {title: "小类", field: "typemin", align: 'center', sortable: true}
+            , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
+            , {title: "型号", field: "model", align: 'center', sortable: true}
+            , {title: "数量", field: "quantity", align: 'center', sortable: true}
+        ],
+        striped: true
+    });
     $.ajax('rest/maintenanceProject?id=' + id, {
         type: 'GET',
         contentType: 'application/json',
         dataType: 'json',
         success: function (data, XMLHttpRequest, jqXHR) {
             $("#name").val(data.name);
-            $('#equipmentTable').bootstrapTable({
-                //height: 350,
-                columns: [
-                    {title: "序号", formatter: runningFormatter}
-                    , {title: "设备名称", field: "name", align: 'center', sortable: true}
-                    , {title: "大类", field: "typemax", align: 'center', sortable: true}
-                    , {title: "小类", field: "typemin", align: 'center', sortable: true}
-                    , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
-                    , {title: "型号", field: "model", align: 'center', sortable: true}
-                    , {title: "数量", field: "quantity", align: 'center', sortable: true}
-                ],
-                striped: true
-            });
         }, error: function (XMLHttpRequest) {
-            $.messager.alert(XMLHttpRequest.status + ': ' + XMLHttpRequest.responseText);
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
         }
     });
     //序号加载

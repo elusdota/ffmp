@@ -15,14 +15,14 @@ import java.util.Collection;
 @JsonIgnoreProperties(value = {"equipments",})
 public class MaintenanceProject extends AbstractNamedObject {
     //项目签约人
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY,cascade = { CascadeType.REFRESH })
     private Account owner;
     //负责部门
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     private Organization delegate;
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = { CascadeType.REFRESH })
     //使用单位
     private Customer customer;
     //设备表
