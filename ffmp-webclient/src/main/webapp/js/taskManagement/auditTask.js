@@ -81,22 +81,7 @@ $(document).ready(function () {
     function runningFormatter(value, row, index) {
         return index + 1;
     }
-    $("#yes").click(function () {
-        $.ajax('rest/taskNode', {
-            type: 'POST',
-            data: JSON.stringify(getSaveData("yes")),
-            contentType: 'application/json',
-            dataType: 'json',
-            success: function (data, XMLHttpRequest, jqXHR) {
-                $("#main-content").load("taskManagement/runTask", function () {
-                    $("#main-content").fadeIn();
-                });
-            }, error: function (XMLHttpRequest) {
-                $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
-                $("#message").modal("show");
-            }
-        });
-    });
+
     $("#approved").click(function () {
         $.ajax('rest/taskNode', {
             type: 'POST',
@@ -104,12 +89,17 @@ $(document).ready(function () {
             contentType: 'application/json',
             dataType: 'json',
             success: function (data, XMLHttpRequest, jqXHR) {
+                outLoading();
                 $("#main-content").load("taskManagement/runTask", function () {
                     $("#main-content").fadeIn();
                 });
             }, error: function (XMLHttpRequest) {
+                $("#loadingModel").modal("hide");
                 $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
                 $("#message").modal("show");
+            }
+            , beforeSend: function () {
+                loading();
             }
         });
     });
@@ -120,20 +110,34 @@ $(document).ready(function () {
             contentType: 'application/json',
             dataType: 'json',
             success: function (data, XMLHttpRequest, jqXHR) {
-                $("#main-content").load("taskManagement/runTask", function () {
-                    $("#main-content").fadeIn();
-                });
+                //$("#main-content").load("taskManagement/runTask", function () {
+                //    $("#main-content").fadeIn();
+                //});
             }, error: function (XMLHttpRequest) {
+                $("#loadingModel").modal("hide");
                 $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
                 $("#message").modal("show");
             }
+            , beforeSend: function () {
+                loading();
+            }
         });
     });
-    function getSaveData(tmper){
+    function getSaveData(tmper) {
         var data = {
             maintenanceTaskId: $("#id").val().trim(),
-            stepResult:tmper
+            stepResult: tmper
         }
         return data;
+    }
+
+    function loading() {
+        $("#requestLoading").addClass("modal-backdrop fade in");
+        $("#requestLoading").removeClass("hidden");
+    }
+
+    function outLoading() {
+        $("#requestLoading").removeClass("modal-backdrop fade in");
+        $("#requestLoading").addClass("hidden")
     }
 });

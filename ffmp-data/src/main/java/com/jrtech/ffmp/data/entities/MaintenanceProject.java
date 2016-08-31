@@ -14,7 +14,7 @@ import java.util.Collection;
 @Table(name = "MaintenanceProject")
 @JsonIgnoreProperties(value = {"equipments",})
 public class MaintenanceProject extends AbstractNamedObject {
-    //项目签约人
+    //项目创建人
     @ManyToOne(fetch = FetchType.LAZY,cascade = { CascadeType.REFRESH })
     private Account owner;
     //负责部门

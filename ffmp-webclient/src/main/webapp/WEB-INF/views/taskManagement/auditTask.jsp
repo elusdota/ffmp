@@ -13,9 +13,9 @@
 <link rel="stylesheet" href="<c:url value='/bower_components/AdminLTE/plugins/datepicker/datepicker3.css'/>">
 <style type="text/css">
     *
-    label.error
-    {
-        color:Red;
+    label.error {
+        color: Red;
+        font-size: 16px;
     }
 </style>
 <section class="content-header">
@@ -91,40 +91,48 @@
                 </div>
             </form>
         </div>
+        <div class="row">
+            <label for="name" class="col-lg-6 control-label">材料列表：</label>
+            <table id="materialTable"
+                   data-toolbar="#toolbar"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-show-columns="true"
+                   data-show-export="true"
+                   data-minimum-count-columns="2"
+                   data-show-pagination-switch="true"
+                   data-single-select="true"
+                   data-pagination="true"
+                   data-id-field="id"
+                   data-show-footer="true"
+                   data-page-list="[5,10, 25, 50, 100, ALL]">
+            </table>
+        </div>
+        <div class="row">
+            <label for="name" class="col-lg-6 control-label">设备列表：</label>
+            <table id="equipmentTable"
+                   data-toolbar="#toolbar"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-show-columns="true"
+                   data-show-export="true"
+                   data-minimum-count-columns="2"
+                   data-show-pagination-switch="true"
+                   data-single-select="true"
+                   data-pagination="true"
+                   data-id-field="id"
+                   data-show-footer="true"
+                   data-page-list="[5,10, 25, 50, 100, ALL]">
+            </table>
+        </div>
     </section>
-    <div class="row">
-        <label for="name" class="col-lg-6 control-label">材料列表：</label>
-        <table id="materialTable"
-               data-toolbar="#toolbar"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-show-export="true"
-               data-minimum-count-columns="2"
-               data-show-pagination-switch="true"
-               data-single-select="true"
-               data-pagination="true"
-               data-id-field="id"
-               data-show-footer="true"
-               data-page-list="[5,10, 25, 50, 100, ALL]">
-        </table>
-    </div>
-    <div class="row">
-        <label for="name" class="col-lg-6 control-label">设备列表：</label>
-        <table id="equipmentTable"
-               data-toolbar="#toolbar"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
-               data-show-export="true"
-               data-minimum-count-columns="2"
-               data-show-pagination-switch="true"
-               data-single-select="true"
-               data-pagination="true"
-               data-id-field="id"
-               data-show-footer="true"
-               data-page-list="[5,10, 25, 50, 100, ALL]">
-        </table>
+    <div id="requestLoading" class="hidden">
+        <div class="modal-dialog" style="background-color: yellow">
+            <div class="modal-body" id="load">
+                <label class="error"> 正在等待服务器响应...Waiting for server response......</label>
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
+        </div>
     </div>
 </section>
 <script src="<c:url value='/bower_components/bootstrap-table/dist/bootstrap-table.js'/>"></script>

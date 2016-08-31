@@ -43,26 +43,31 @@ public class TaskNodeController {
     @RequestMapping(method = RequestMethod.POST)
     public HistoryTaskNode create(@RequestBody HistoryTaskNodeVO historyTaskNodeVO) {
         String userName = userDetailsUtils.getCurrent().getUsername();
-        Account account=accountService.findOneByName(userName);
-        MaintenanceTask maintenanceTask=taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId());
-        HistoryTaskNode historyTaskNode = service.save(bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask,account));
-        if (getShtep(historyTaskNode.getMaintenanceTask().getId()).getParametric().equals("en") || getShtep(historyTaskNode.getMaintenanceTask().getId()).getParametric().equals("en1")) {
+        Account account = accountService.findOneByName(userName);
+        MaintenanceTask maintenanceTask = taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId());
+        //获取当前操作步骤
+        FlowchartSteps flowchartSteps = getShtep(historyTaskNodeVO.getMaintenanceTaskId());
+        HistoryTaskNode historyTaskNode = bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask, account, flowchartSteps);
+        if (flowchartSteps.getCatch(historyTaskNode.getDescription()).equals("en") || flowchartSteps.getCatch(historyTaskNode.getDescription()).equals("en1")) {
+            //执行结束任务步骤
+            service.save(historyTaskNode);
             maintenanceTask.setSuspended(true);
             taskRuntimeService.save(maintenanceTask);
-            return service.save(bulidHistoryTaskNode(historyTaskNodeVO,maintenanceTask,account));
+            FlowchartSteps flowchartSteps1 = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(), flowchartSteps.getCatch(historyTaskNode.getDescription()));
+            return service.save(bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask, account, flowchartSteps1));
         } else {
-            return historyTaskNode;
+            return service.save(historyTaskNode);
         }
     }
 
-    public HistoryTaskNode bulidHistoryTaskNode(HistoryTaskNodeVO historyTaskNodeVO,MaintenanceTask maintenanceTask,Account account) {
+    public HistoryTaskNode bulidHistoryTaskNode(HistoryTaskNodeVO historyTaskNodeVO, MaintenanceTask maintenanceTask, Account account, FlowchartSteps flowchartSteps) {
         HistoryTaskNode historyTaskNode = new HistoryTaskNode();
         historyTaskNode.setMaintenanceTask(maintenanceTask);
         historyTaskNode.setName(getShtep(historyTaskNodeVO.getMaintenanceTaskId()).getName());
         historyTaskNode.setDueDate(new Date());
         historyTaskNode.setDelegate(account);
         historyTaskNode.setDescription(historyTaskNodeVO.getStepResult());
-        historyTaskNode.setFlowchartSteps(getShtep(historyTaskNodeVO.getMaintenanceTaskId()));
+        historyTaskNode.setFlowchartSteps(flowchartSteps);
         return historyTaskNode;
     }
 
