@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.ModelAndView;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PageController {
     @Autowired
     private UserDetailsUtils userDetailsUtils;
+    static final Logger logger = LogManager.getLogger(PageController.class.getName());
 
     //登陆
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
@@ -30,6 +33,7 @@ public class PageController {
         ModelAndView model = new ModelAndView();
         if (error != null) {
 //            model.addObject("serviceException", "用户名或密码错误!");
+            logger.error( userDetailsUtils.getCurrent().getUsername()+":登录失败");
             throw new ServiceException("用户名或密码错误!","login");
         }
         model.setViewName("login");
@@ -45,6 +49,7 @@ public class PageController {
             model.addObject("username", username);
         }
         model.setViewName("index");
+        logger.info(username+":登录成功");
         return model;
     }
 

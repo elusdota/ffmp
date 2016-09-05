@@ -94,7 +94,6 @@ $(document).ready(function () {
                     $("#main-content").fadeIn();
                 });
             }, error: function (XMLHttpRequest) {
-                $("#loadingModel").modal("hide");
                 $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
                 $("#message").modal("show");
             }
@@ -110,11 +109,11 @@ $(document).ready(function () {
             contentType: 'application/json',
             dataType: 'json',
             success: function (data, XMLHttpRequest, jqXHR) {
-                //$("#main-content").load("taskManagement/runTask", function () {
-                //    $("#main-content").fadeIn();
-                //});
+                outLoading();
+                $("#main-content").load("taskManagement/runTask", function () {
+                    $("#main-content").fadeIn();
+                });
             }, error: function (XMLHttpRequest) {
-                $("#loadingModel").modal("hide");
                 $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
                 $("#message").modal("show");
             }

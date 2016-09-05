@@ -49,7 +49,7 @@ public class Config {
                 setProperty("hibernate.hbm2ddl.auto", "update");
                 setProperty("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
                 setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-                setProperty("hibernate.show_sql", "true");
+//                setProperty("hibernate.show_sql", "true");
                 setProperty("hibernate.format_sql", "true");
             }
         };

@@ -2,6 +2,7 @@ package org.craftsmen.ffmp.webclient.config;
 
 import org.krysalis.barcode4j.servlet.BarcodeServlet;
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.util.WebAppRootListener;
 
 import javax.servlet.*;
 
