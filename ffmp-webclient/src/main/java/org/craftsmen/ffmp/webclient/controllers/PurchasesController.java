@@ -3,6 +3,8 @@ package org.craftsmen.ffmp.webclient.controllers;
 import java.util.Date;
 
 import com.jrtech.ffmp.data.entities.Purchases;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -30,6 +32,7 @@ public class PurchasesController {
     private CodeService codeService;
     @Autowired
     private UserDetailsUtils userDetailsUtils;
+    static final Logger logger = LogManager.getLogger(PurchasesController.class.getName());
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody InventorySearch parameters) {
@@ -38,6 +41,7 @@ public class PurchasesController {
         JSONListData jld = new JSONListData();
         jld.setTotal(purchases.getTotalElements());
         jld.setRows(purchases.getContent());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载采购单列表");
         return jld;
     }
 
@@ -51,6 +55,7 @@ public class PurchasesController {
         purchases.setExecutor(userDetailsUtils.getCurrent().getUsername());
         purchases.setDate(new Date());
         purchases.setStateTime(new Date());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建采购单，编号--" + purchases.getNumber());
         return service.save(purchases);
     }
 }

@@ -15,6 +15,8 @@ import com.jrtech.templates.vo.RoleAndAuthority;
 import com.jrtech.templates.vo.RoleAndOrganization;
 import com.jrtech.templates.vo.RoleNode;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -42,6 +44,7 @@ public class RoleController {
     private UserDetailsUtils userDetailsUtils;
     @Autowired
     private GrantedAuthorityService gaService;
+    static final Logger logger = LogManager.getLogger(RoleController.class.getName());
 
     /**
      * 加载组织机构下的角色
@@ -54,6 +57,7 @@ public class RoleController {
         List<Nodes> roleNodes = new ArrayList<Nodes>();
         RoleNode roleNode = new RoleNode(organizationService.findRoot(), account);
         roleNodes.add(roleNode.getNodes());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载角色列表");
         return roleNodes;
     }
 
@@ -69,6 +73,7 @@ public class RoleController {
         Role role1 = new Role(roleAndOrganization.getRole().getName());
         role1.setOrganization(organization);
         if (!service.isDuplicateNameOnSameLevel(role1)) {
+            logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建角色，名称--"+role1.getName());
             return service.save(role1);
         } else {
             throw new ServiceException("角色已经存在");
@@ -94,6 +99,7 @@ public class RoleController {
     public Role updateRole(@RequestBody Role role) {
         Role role1 = service.findOne(role.getId());
         role1.setName(role.getName());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":修改角色，名称--" + role1.getName());
         return service.save(role1);
     }
 
@@ -132,6 +138,7 @@ public class RoleController {
 //            role.getAuthorities().add(grantedAuthority);
         }
         role.getAuthorities().addAll(authorities);
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":角色权限绑定，名称--"+role.getName());
         return service.save(role);
     }
 }

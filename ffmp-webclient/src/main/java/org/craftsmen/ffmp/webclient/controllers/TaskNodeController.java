@@ -3,6 +3,8 @@ package org.craftsmen.ffmp.webclient.controllers;
 import com.jrtech.ffmp.data.entities.*;
 import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.HistoryTaskNodeVO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +30,7 @@ public class TaskNodeController {
     private AccountService accountService;
     @Autowired
     private UserDetailsUtils userDetailsUtils;
+    static final Logger logger = LogManager.getLogger(TaskNodeController.class.getName());
 
     @RequestMapping(method = RequestMethod.GET)
     public HistoryTaskNode get(@RequestParam("id") String id) {
@@ -48,12 +51,16 @@ public class TaskNodeController {
         //获取当前操作步骤
         FlowchartSteps flowchartSteps = getShtep(historyTaskNodeVO.getMaintenanceTaskId());
         HistoryTaskNode historyTaskNode = bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask, account, flowchartSteps);
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建任务执行节点，名称--" + flowchartSteps.getName() + "。任务名称：" +
+                maintenanceTask.getName());
         if (flowchartSteps.getCatch(historyTaskNode.getDescription()).equals("en") || flowchartSteps.getCatch(historyTaskNode.getDescription()).equals("en1")) {
             //执行结束任务步骤
             service.save(historyTaskNode);
             maintenanceTask.setSuspended(true);
             taskRuntimeService.save(maintenanceTask);
             FlowchartSteps flowchartSteps1 = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(), flowchartSteps.getCatch(historyTaskNode.getDescription()));
+            logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建任务执行节点，名称--" + flowchartSteps1.getName() + "。任务名称：" +
+                    maintenanceTask.getName());
             return service.save(bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask, account, flowchartSteps1));
         } else {
             return service.save(historyTaskNode);

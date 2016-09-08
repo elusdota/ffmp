@@ -9,6 +9,8 @@ import com.jrtech.templates.vo.MaintenanceProjectEquipmentVo;
 import com.jrtech.templates.vo.MaintenanceProjectSpecs;
 import com.jrtech.templates.vo.TableGetDataParameters;
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -36,6 +38,8 @@ public class MaintenanceProjectController {
     @Autowired
     private MrrStandardService mrrStandardService;
 
+    static final Logger logger = LogManager.getLogger(MaintenanceProjectController.class.getName());
+
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody TableGetDataParameters parameters) {
         PageableImpl pageable = new PageableImpl(parameters);
@@ -45,6 +49,7 @@ public class MaintenanceProjectController {
         JSONListData jld = new JSONListData();
         jld.setTotal(maintenanceProjects.getTotalElements());
         jld.setRows(maintenanceProjects.getContent());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载项目列表");
         return jld;
     }
 
@@ -61,6 +66,7 @@ public class MaintenanceProjectController {
             throw new ServiceException("客户不存在，请重新输入！");
         }
         maintenanceProject.setCustomer(customer);
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建项目，项目编号---"+maintenanceProject.getCode());
         return service.save(maintenanceProject);
     }
 
@@ -80,6 +86,7 @@ public class MaintenanceProjectController {
             equipment1.setCustomer(maintenanceProject1.getCustomer());
         });
         maintenanceProject1.getEquipments().addAll(maintenanceProject.getEquipments());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":绑定项目设备，项目编号---" + maintenanceProject1.getCode());
         return service.save(maintenanceProject1);
     }
 

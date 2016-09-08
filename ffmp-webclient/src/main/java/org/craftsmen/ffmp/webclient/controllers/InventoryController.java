@@ -1,6 +1,9 @@
 package org.craftsmen.ffmp.webclient.controllers;
 
 import com.jrtech.ffmp.data.entities.Inventory;
+import com.jrtech.templates.services.UserDetailsUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -28,6 +31,9 @@ import java.util.List;
 public class InventoryController {
     @Autowired
     private InventoryService service;
+    @Autowired
+    private UserDetailsUtils userDetailsUtils;
+    static final Logger logger = LogManager.getLogger(InventoryController.class.getName());
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody InventorySearch parameters) {
@@ -36,6 +42,7 @@ public class InventoryController {
         JSONListData jld = new JSONListData();
         jld.setTotal(inventoryPage.getTotalElements());
         jld.setRows(inventoryPage.getContent());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载库存列表");
         return jld;
     }
 
@@ -49,6 +56,7 @@ public class InventoryController {
         JSONListData jld = new JSONListData();
         jld.setTotal(inventoryPage.getTotalElements());
         jld.setRows(inventoryPage.getContent());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":查询库存，关键字--" + parameters.getSearch());
         return jld;
     }
 }

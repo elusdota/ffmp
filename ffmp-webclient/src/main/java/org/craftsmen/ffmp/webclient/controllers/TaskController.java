@@ -6,6 +6,8 @@ import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.entities.TaskDefinition;
 import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -35,6 +37,7 @@ public class TaskController {
     private RepairFormService repairFormService;
     @Autowired
     private MaintenanceProjectService maintenanceProjectService;
+    static final Logger logger = LogManager.getLogger(TaskController.class.getName());
 
     @RequestMapping(value = "/findRunTask", method = RequestMethod.POST)
     public JSONListData findRunTask(@RequestBody TableGetDataParameters parameters) {
@@ -43,6 +46,7 @@ public class TaskController {
         JSONListData jld = new JSONListData();
         jld.setTotal(maintenanceTasks.getTotalElements());
         jld.setRows(maintenanceTasks.getContent());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":获取正在运行的任务列表");
         return jld;
     }
 
@@ -55,6 +59,7 @@ public class TaskController {
         JSONListData jld = new JSONListData();
         jld.setTotal(maintenanceTasks.getTotalElements());
         jld.setRows(maintenanceTasks.getContent());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":获取历史任务列表");
         return jld;
     }
 
@@ -72,6 +77,7 @@ public class TaskController {
         maintenanceTask.setCustomer(maintenanceProject.getCustomer());
         maintenanceTask.setDelegate(maintenanceProject.getDelegate());
         maintenanceTask.setOwner(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername()));
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建任务，名称--" + maintenanceTask.getName());
         return service.save(maintenanceTask);
     }
 
@@ -83,6 +89,7 @@ public class TaskController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public MaintenanceTask get(@RequestParam("id") String id) {
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":获取任务，id--"+id);
         return service.findOne(id);
     }
 

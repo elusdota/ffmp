@@ -1,6 +1,8 @@
 package org.craftsmen.ffmp.webclient.controllers;
 
 import com.jrtech.ffmp.data.entities.Dispatch;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -32,6 +34,7 @@ public class DispatchController {
     private CodeService codeService;
     @Autowired
     private UserDetailsUtils userDetailsUtils;
+    static final Logger logger = LogManager.getLogger(DispatchController.class.getName());
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody InventorySearch parameters) {
@@ -40,6 +43,7 @@ public class DispatchController {
         JSONListData jld = new JSONListData();
         jld.setTotal(dispatches.getTotalElements());
         jld.setRows(dispatches.getContent());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载出库单列表");
         return jld;
     }
 
@@ -53,6 +57,7 @@ public class DispatchController {
         dispatch.setExecutor(userDetailsUtils.getCurrent().getUsername());
         dispatch.setDate(new Date());
         dispatch.setStateTime(new Date());
+        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建出库单，出库单号--"+dispatch.getNumber());
         return service.save(dispatch);
     }
 }
