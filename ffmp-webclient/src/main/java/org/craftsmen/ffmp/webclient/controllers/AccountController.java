@@ -46,7 +46,7 @@ public class AccountController {
             parameters.setSearch("");
         }
         PageableImpl pageable = new PageableImpl(parameters);
-        Page<Account> accounts = service.findByNameContaining(parameters.getSearch(), pageable);
+        Page<Account> accounts = service.findByNameContaining(parameters.getSearch()+"%", pageable);
         JSONListData jld = new JSONListData();
         jld.setTotal(accounts.getTotalElements());
         jld.setRows(accounts.getContent());

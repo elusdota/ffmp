@@ -549,18 +549,22 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
     }
     private void createTaskDefinition() {
         TaskDefinition taskDefinition=new TaskDefinition("维修任务");
-        String value="st->cond1(right)\n"+"cond1(yes)->cond2\n"+"cond1(no)->op2->cond3\n"+"cond2(yes,right)->op1(right)->op2\n"+"cond2(no)->en1\n"
-                +"cond3(yes)->cond4(right)\n"+"cond3(no,right)->op2\n"+"cond4(yes)->en\n"+"cond4(no)->op2\n";
+        String value="st->op3->cond1(right)\n"+"cond1(yes)->op4->cond2\n"+"cond1(no)->op2->cond5\n"+"cond2(yes,right)->op1(right)->op2\n"
+                +"cond2(no)->en1\n"+"cond5(yes)->cond3\n"+"cond3(yes)->cond4(right)\n"+"cond3(no,right)->op2\n"+"cond5(no,right)->op2\n"
+                +"cond4(yes)->en\n"+"cond4(no)->op2\n";
         taskDefinition.setValue(value);
         List<FlowchartSteps> flowchartStepses=new ArrayList<>();
-        flowchartStepses.add(new FlowchartSteps("开始", "st", "start","cond1",""));
-        flowchartStepses.add(new FlowchartSteps("是否需要更换材料", "cond1", "condition","cond2","op2"));
-        flowchartStepses.add(new FlowchartSteps("客户是否批准更换材料", "cond2", "condition","op1","en1"));
-        flowchartStepses.add(new FlowchartSteps("申请材料", "op1", "operation","op2",""));
-        flowchartStepses.add(new FlowchartSteps("维修", "op2", "operation","cond3",""));
+        flowchartStepses.add(new FlowchartSteps("开始", "st", "start","op3",""));
+        flowchartStepses.add(new FlowchartSteps("检查", "op3", "operation","cond1",""));
+        flowchartStepses.add(new FlowchartSteps("是否需要更换零部件", "cond1", "condition","op4","op2"));
+        flowchartStepses.add(new FlowchartSteps("录入零部件", "op4", "operation","cond2",""));
+        flowchartStepses.add(new FlowchartSteps("客户是否批准更换零部件", "cond2", "condition","op1","en1"));
+        flowchartStepses.add(new FlowchartSteps("申请零部件", "op1", "operation","op2",""));
+        flowchartStepses.add(new FlowchartSteps("维修", "op2", "operation","cond5",""));
         flowchartStepses.add(new FlowchartSteps("客户审核", "cond3", "condition","cond4","op2"));
         flowchartStepses.add(new FlowchartSteps("维保总监审核", "cond4", "condition","en","op2"));
-        flowchartStepses.add(new FlowchartSteps("终止","en1","end","",""));
+        flowchartStepses.add(new FlowchartSteps("维保负责人审核", "cond5", "condition","cond3","op2"));
+        flowchartStepses.add(new FlowchartSteps("挂起","en1","end","",""));
         flowchartStepses.add(new FlowchartSteps("结束","en","end","",""));
         taskDefinition.getFlowchartStepses().addAll(flowchartStepses);
         taskDefinition.getFlowchartStepses().forEach(flowchartSteps -> {
@@ -568,12 +572,13 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         });
         taskDefinitionRepository.save(taskDefinition);
         TaskDefinition taskDefinition1=new TaskDefinition("巡检任务");
-        String value1="st->op(right)->cond1\n"+"cond1(yes)->cond2\n"+"cond1(no)->op\n"
+        String value1="st->op(right)->cond3\n"+"cond3(yes)->cond1\n"+"cond3(no)->op\n"+"cond1(yes)->cond2\n"+"cond1(no)->op\n"
                 +"cond2(yes)->en\n"+"cond2(no)->op\n";
         taskDefinition1.setValue(value1);
         List<FlowchartSteps> flowchartStepses1=new ArrayList<>();
         flowchartStepses1.add(new FlowchartSteps("开始", "st", "start","op",""));
-        flowchartStepses1.add(new FlowchartSteps("巡检", "op", "operation","cond1",""));
+        flowchartStepses1.add(new FlowchartSteps("巡检", "op", "operation","cond3",""));
+        flowchartStepses.add(new FlowchartSteps("维保负责人审核", "cond3", "condition","cond1","op"));
         flowchartStepses1.add(new FlowchartSteps("客户审核", "cond1", "condition","cond2","op"));
         flowchartStepses1.add(new FlowchartSteps("维保总监审核", "cond2", "condition","en","op"));
         flowchartStepses1.add(new FlowchartSteps("结束","en","end","",""));

@@ -52,7 +52,7 @@ public class InventoryController {
             parameters.setSearch("");
         }
         PageableImpl pageable = new PageableImpl(parameters);
-        Page<Inventory> inventoryPage = service.findByNameLike(parameters.getSearch(), pageable);
+        Page<Inventory> inventoryPage = service.findByNameLike("%"+parameters.getSearch()+"%", pageable);
         JSONListData jld = new JSONListData();
         jld.setTotal(inventoryPage.getTotalElements());
         jld.setRows(inventoryPage.getContent());
