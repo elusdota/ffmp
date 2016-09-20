@@ -30,9 +30,7 @@ public class InboundsController {
     private InboundsService service;
     @Autowired
     private CodeService codeService;
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
-    static final Logger logger = LogManager.getLogger(InboundsController.class.getName());
+    private Logger logger = LogManager.getLogger(InboundsController.class.getName());
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody InventorySearch parameters) {
@@ -41,7 +39,7 @@ public class InboundsController {
         JSONListData jld = new JSONListData();
         jld.setTotal(inboundses.getTotalElements());
         jld.setRows(inboundses.getContent());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载入库单列表");
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载入库单列表");
         return jld;
     }
 
@@ -51,11 +49,11 @@ public class InboundsController {
             inboundsDetail.setInbounds(inbounds);
         });
         inbounds.setNumber(codeService.getInboundsNum());
-        inbounds.setAudit(userDetailsUtils.getCurrent().getUsername());
-        inbounds.setExecutor(userDetailsUtils.getCurrent().getUsername());
+        inbounds.setAudit(UserDetailsUtils.getCurrent().getUsername());
+        inbounds.setExecutor(UserDetailsUtils.getCurrent().getUsername());
         inbounds.setDate(new Date());
         inbounds.setStateTime(new Date());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建入库单，入库单编号--"+inbounds.getNumber());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建入库单，入库单编号--"+inbounds.getNumber());
         return service.save(inbounds);
     }
 }

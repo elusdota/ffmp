@@ -112,6 +112,13 @@
           </div>
         </div>
         <div class="form-group col-md-4">
+          <label for="type" class="col-lg-6 control-label">证书类型：</label>
+
+          <div class="col-lg-6">
+            <input type="text" class="form-control" id="type" name="type" placeholder="证书类型">
+          </div>
+        </div>
+        <div class="form-group col-md-4">
           <label for="professional" class="col-lg-6 control-label">职称：</label>
 
           <div class="col-lg-6">

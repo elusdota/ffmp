@@ -2,6 +2,9 @@
  * Created by jiangliang on 2016/8/11.
  */
 $(document).ready(function () {
+    $('.datepicker').datepicker({
+        language: 'zh-CN'
+    });
     $("#updateEmployee").attr("disabled", "true");
     $("#deleteEmployee").attr("disabled", "true");
     $('#employeeTable').bootstrapTable({
@@ -42,6 +45,7 @@ $(document).ready(function () {
             , {title: "邮箱", field: "email", sortable: true}
             , {title: "职务", field: "role", sortable: true}
             , {title: "证书", field: "certificate", sortable: true}
+            , {title: "证书类型", field: "type", sortable: true}
             , {title: "职称", field: "professional", sortable: true}
             , {title: "入职时间", field: "date", sortable: true}
             , {

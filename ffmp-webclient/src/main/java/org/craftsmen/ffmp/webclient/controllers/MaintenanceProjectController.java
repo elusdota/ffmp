@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by jiangliang on 2016/7/15.项目控制器，elus
  */
@@ -34,22 +36,20 @@ public class MaintenanceProjectController {
     @Autowired
     private CodeService codeService;
     @Autowired
-    private UserDetailsUtils userDetailsUtils;
-    @Autowired
     private MrrStandardService mrrStandardService;
 
-    static final Logger logger = LogManager.getLogger(MaintenanceProjectController.class.getName());
+    private Logger logger = LogManager.getLogger(MaintenanceProjectController.class.getName());
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody TableGetDataParameters parameters) {
         PageableImpl pageable = new PageableImpl(parameters);
         MaintenanceProjectSpecs<MaintenanceProject> maintenanceProjectSpecs = new MaintenanceProjectSpecs<MaintenanceProject>();
-        maintenanceProjectSpecs.setCustomer(customerService.findOneByAccount(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername())));
+        maintenanceProjectSpecs.setCustomer(customerService.findOneByAccount(accountService.findOneByName(UserDetailsUtils.getCurrent().getUsername())));
         Page<MaintenanceProject> maintenanceProjects = service.findAll(maintenanceProjectSpecs.spec(parameters), pageable);
         JSONListData jld = new JSONListData();
         jld.setTotal(maintenanceProjects.getTotalElements());
         jld.setRows(maintenanceProjects.getContent());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载项目列表");
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载项目列表");
         return jld;
     }
 
@@ -61,12 +61,12 @@ public class MaintenanceProjectController {
             throw new ServiceException("维保小组不存在，请重新输入！");
         }
         maintenanceProject.setDelegate(organization);
-        Customer customer = customerService.findOneByName(maintenanceProject.getCustomer().getName());
+        Customer customer = customerService.findOne(maintenanceProject.getCustomer().getName());
         if(customer==null){
             throw new ServiceException("客户不存在，请重新输入！");
         }
         maintenanceProject.setCustomer(customer);
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建项目，项目编号---"+maintenanceProject.getCode());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建项目，项目编号---"+maintenanceProject.getCode());
         return service.save(maintenanceProject);
     }
 
@@ -86,7 +86,7 @@ public class MaintenanceProjectController {
             equipment1.setCustomer(maintenanceProject1.getCustomer());
         });
         maintenanceProject1.getEquipments().addAll(maintenanceProject.getEquipments());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":绑定项目设备，项目编号---" + maintenanceProject1.getCode());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":绑定项目设备，项目编号---" + maintenanceProject1.getCode());
         return service.save(maintenanceProject1);
     }
 
@@ -116,5 +116,10 @@ public class MaintenanceProjectController {
             rs = StringUtils.leftPad(rs, j, "0");
         }
         return rs;
+    }
+    @RequestMapping(value = "/findByNameLike", method = RequestMethod.GET)
+    public List<MaintenanceProject> findByNameLike(@RequestParam("name") String name) {
+        logger.info(UserDetailsUtils.getCurrent().getUsername()+":查询项目，项目关键字--"+name);
+        return service.findByNameLike("%" + name + "%");
     }
 }

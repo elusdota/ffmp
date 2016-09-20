@@ -29,9 +29,7 @@ public class TaskEquipemtController {
     private TaskRuntimeService taskRuntimeService;
     @Autowired
     private EquipmentService equipmentService;
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
-    static final Logger logger = LogManager.getLogger(TaskEquipemtController.class.getName());
+    private Logger logger = LogManager.getLogger(TaskEquipemtController.class.getName());
 
     @RequestMapping(value = "/findByMaintenanceTask",method = RequestMethod.POST)
     public JSONListData findByMaintenanceTask(@RequestBody TableGetDataParameters parameters) {
@@ -53,7 +51,7 @@ public class TaskEquipemtController {
        if( maintenanceTask.getMaintenanceProject().getEquipments().contains(equipment)){
            taskEquipemt.setEquipment(equipment);
            taskEquipemt.setMaintenanceTask(maintenanceTask);
-           logger.info(userDetailsUtils.getCurrent().getUsername() +
+           logger.info(UserDetailsUtils.getCurrent().getUsername() +
                    ":创建任务设备，设备编号--"+taskEquipemt.getEquipment().getName()+"。任务名称--"+maintenanceTask.getName());
            return service.save(taskEquipemt);
        }else {

@@ -30,14 +30,12 @@ public class TaskController {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private UserDetailsUtils userDetailsUtils;
-    @Autowired
     private CustomerService customerService;
     @Autowired
     private RepairFormService repairFormService;
     @Autowired
     private MaintenanceProjectService maintenanceProjectService;
-    static final Logger logger = LogManager.getLogger(TaskController.class.getName());
+    private Logger logger = LogManager.getLogger(TaskController.class.getName());
 
     @RequestMapping(value = "/findRunTask", method = RequestMethod.POST)
     public JSONListData findRunTask(@RequestBody TableGetDataParameters parameters) {
@@ -46,20 +44,20 @@ public class TaskController {
         JSONListData jld = new JSONListData();
         jld.setTotal(maintenanceTasks.getTotalElements());
         jld.setRows(maintenanceTasks.getContent());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":获取正在运行的任务列表");
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":获取正在运行的任务列表");
         return jld;
     }
 
     @RequestMapping(value = "/findHistoryTask", method = RequestMethod.POST)
     public JSONListData findHistoryTask(@RequestBody TableGetDataParameters parameters) {
         HistoryTaskSpecs<MaintenanceTask> historyTaskSpecs = new HistoryTaskSpecs<MaintenanceTask>();
-        historyTaskSpecs.setCustomer(customerService.findOneByAccount(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername())));
+        historyTaskSpecs.setCustomer(customerService.findOneByAccount(accountService.findOneByName(UserDetailsUtils.getCurrent().getUsername())));
         PageableImpl pageable = new PageableImpl(parameters);
         Page<MaintenanceTask> maintenanceTasks = service.findAll(historyTaskSpecs.spec(parameters), pageable);
         JSONListData jld = new JSONListData();
         jld.setTotal(maintenanceTasks.getTotalElements());
         jld.setRows(maintenanceTasks.getContent());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":获取历史任务列表");
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":获取历史任务列表");
         return jld;
     }
 
@@ -71,13 +69,16 @@ public class TaskController {
             }
         }
         TaskDefinition taskDefinition = taskDefinitionService.findOneByName("维修任务");
-        MaintenanceProject maintenanceProject = maintenanceProjectService.findOneByCode(maintenanceTask.getMaintenanceProject().getCode());
+        MaintenanceProject maintenanceProject = maintenanceProjectService.findOne(maintenanceTask.getMaintenanceProject().getCode());
+        if(maintenanceProject==null){
+            throw new ServiceException("项目不存在，请重新输入！");
+        }
         maintenanceTask.setMaintenanceProject(maintenanceProject);
         maintenanceTask.setTaskDefinition(taskDefinition);
         maintenanceTask.setCustomer(maintenanceProject.getCustomer());
         maintenanceTask.setDelegate(maintenanceProject.getDelegate());
-        maintenanceTask.setOwner(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername()));
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建任务，名称--" + maintenanceTask.getName());
+        maintenanceTask.setOwner(accountService.findOneByName(UserDetailsUtils.getCurrent().getUsername()));
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建任务，名称--" + maintenanceTask.getName());
         return service.save(maintenanceTask);
     }
 
@@ -89,7 +90,7 @@ public class TaskController {
     @RequestMapping(method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public MaintenanceTask get(@RequestParam("id") String id) {
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":获取任务，id--"+id);
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":获取任务，id--"+id);
         return service.findOne(id);
     }
 

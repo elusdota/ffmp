@@ -131,6 +131,36 @@
                          placeholder="税号">
                 </div>
               </div>
+                <div class="form-group col-md-6">
+                    <label for="type" class="col-lg-4 control-label">纳税类型：<span
+                            class="required">*</span></label>
+
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control required" id="type"
+                               name="type"
+                               placeholder="纳税类型">
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="bank" class="col-lg-4 control-label">开户行：<span
+                            class="required">*</span></label>
+
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control required" id="bank"
+                               name="bank"
+                               placeholder="开户行">
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="bankAccount" class="col-lg-4 control-label">银行账户：<span
+                            class="required">*</span></label>
+
+                    <div class="col-lg-8">
+                        <input type="text" class="form-control required" id="bankAccount"
+                               name="bankAccount"
+                               placeholder="银行账户">
+                    </div>
+                </div>
             </form>
           </div>
           <div class="modal-footer">

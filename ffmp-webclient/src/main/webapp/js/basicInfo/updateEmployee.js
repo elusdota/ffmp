@@ -16,6 +16,7 @@ $(document).ready(function () {
             $("#email").val(data.email);
             $("#role").val(data.role);
             $("#certificate").val(data.certificate);
+            $("#type").val(data.type);
             $("#professional").val(data.professional);
             $("#date").val(data.date);
             //$("#work").val(data.work);

@@ -21,9 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class EmployeeController {
     @Autowired
     private EmployeeService service;
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
-    static final Logger logger = LogManager.getLogger(EmployeeController.class.getName());
+    private Logger logger = LogManager.getLogger(EmployeeController.class.getName());
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody TableGetDataParameters parameters) {
@@ -32,12 +30,12 @@ public class EmployeeController {
         JSONListData jld = new JSONListData();
         jld.setTotal(employees.getTotalElements());
         jld.setRows(employees.getContent());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载职工列表");
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载职工列表");
         return jld;
     }
     @RequestMapping(method = RequestMethod.POST)
     public Employee create(@RequestBody Employee employee) {
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建职工，职工名称--"+employee.getName());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建职工，职工名称--"+employee.getName());
         return service.save(employee);
     }
     @RequestMapping(method = RequestMethod.PUT)
@@ -53,7 +51,7 @@ public class EmployeeController {
         employee1.setCertificate(employee.getCertificate());
         employee1.setProfessional(employee.getProfessional());
         employee1.setDate(employee.getDate());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":修改职工，职工名称--"+employee.getName());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":修改职工，职工名称--"+employee.getName());
         return service.save(employee1);
     }
     @RequestMapping(method = RequestMethod.DELETE)

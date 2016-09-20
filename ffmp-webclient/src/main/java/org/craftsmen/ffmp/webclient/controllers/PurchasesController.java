@@ -30,9 +30,7 @@ public class PurchasesController {
     private PurchasesService service;
     @Autowired
     private CodeService codeService;
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
-    static final Logger logger = LogManager.getLogger(PurchasesController.class.getName());
+    private Logger logger = LogManager.getLogger(PurchasesController.class.getName());
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody InventorySearch parameters) {
@@ -41,7 +39,7 @@ public class PurchasesController {
         JSONListData jld = new JSONListData();
         jld.setTotal(purchases.getTotalElements());
         jld.setRows(purchases.getContent());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载采购单列表");
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载采购单列表");
         return jld;
     }
 
@@ -51,11 +49,11 @@ public class PurchasesController {
             purchasesDetail.setPurchases(purchases);
         });
         purchases.setNumber(codeService.getPurchNum());
-        purchases.setAudit(userDetailsUtils.getCurrent().getUsername());
-        purchases.setExecutor(userDetailsUtils.getCurrent().getUsername());
+        purchases.setAudit(UserDetailsUtils.getCurrent().getUsername());
+        purchases.setExecutor(UserDetailsUtils.getCurrent().getUsername());
         purchases.setDate(new Date());
         purchases.setStateTime(new Date());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建采购单，编号--" + purchases.getNumber());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建采购单，编号--" + purchases.getNumber());
         return service.save(purchases);
     }
 }

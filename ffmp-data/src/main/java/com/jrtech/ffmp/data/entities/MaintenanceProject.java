@@ -1,11 +1,13 @@
 package com.jrtech.ffmp.data.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * Created by jiangliang on 2016/7/14.维保项目elus
@@ -25,6 +27,10 @@ public class MaintenanceProject extends AbstractNamedObject {
     @ManyToOne(cascade = { CascadeType.REFRESH })
     //使用单位
     private Customer customer;
+    //建筑投入使用日期
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "zh", timezone = "GMT+8")
+    private Date inputDate;
     //设备表
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "owner", cascade = { CascadeType.ALL }, orphanRemoval = true)
     private Collection<Equipment> equipments=new ArrayList<Equipment>();
@@ -153,5 +159,13 @@ public class MaintenanceProject extends AbstractNamedObject {
 
     public void setEquipmentCase(String equipmentCase) {
         this.equipmentCase = equipmentCase;
+    }
+
+    public Date getInputDate() {
+        return inputDate;
+    }
+
+    public void setInputDate(Date inputDate) {
+        this.inputDate = inputDate;
     }
 }

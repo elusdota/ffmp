@@ -26,25 +26,23 @@ public class RepairFormController {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private UserDetailsUtils userDetailsUtils;
-    @Autowired
     private CustomerService customerService;
     @Autowired
     private MaintenanceProjectService maintenanceProjectService;
-    static final Logger logger = LogManager.getLogger(RepairFormController.class.getName());
+    private Logger logger = LogManager.getLogger(RepairFormController.class.getName());
     @Autowired
     private CodeService codeService;
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findHistoryTask(@RequestBody TableGetDataParameters parameters) {
         RepairFormSpecs<RepairForm> repairFormSpecs = new RepairFormSpecs<RepairForm>();
-        repairFormSpecs.setCustomer(customerService.findOneByAccount(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername())));
+        repairFormSpecs.setCustomer(customerService.findOneByAccount(accountService.findOneByName(UserDetailsUtils.getCurrent().getUsername())));
         PageableImpl pageable = new PageableImpl(parameters);
         Page<RepairForm> repairForms = service.findAll(repairFormSpecs.spec(parameters), pageable);
         JSONListData jld = new JSONListData();
         jld.setTotal(repairForms.getTotalElements());
         jld.setRows(repairForms.getContent());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载报修单列表");
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载报修单列表");
         return jld;
     }
 
@@ -55,8 +53,8 @@ public class RepairFormController {
         }
         repairForm.setCode(codeService.getRepairFormNum());
         repairForm.setDate(new Date());
-        repairForm.setAccount(accountService.findOneByName(userDetailsUtils.getCurrent().getUsername()));
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建报修单，编号--" + repairForm.getCode());
+        repairForm.setAccount(accountService.findOneByName(UserDetailsUtils.getCurrent().getUsername()));
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建报修单，编号--" + repairForm.getCode());
         return service.save(repairForm);
     }
 }

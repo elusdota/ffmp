@@ -25,9 +25,7 @@ public class EquipmentController {
     private EquipmentService service;
     @Autowired
     private MaintenanceProjectService maintenanceProjectService;
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
-    static final Logger logger = LogManager.getLogger(EquipmentController.class.getName());
+    private Logger logger = LogManager.getLogger(EquipmentController.class.getName());
 
     @RequestMapping(value = "/findProject", method = RequestMethod.POST)
     public JSONListData findProject(@RequestBody TableGetDataParameters parameters) {
@@ -37,7 +35,7 @@ public class EquipmentController {
         JSONListData jld = new JSONListData();
         jld.setTotal(equipments.getTotalElements());
         jld.setRows(equipments.getContent());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载项目设备列表");
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载项目设备列表");
         return jld;
     }
 
@@ -48,7 +46,7 @@ public class EquipmentController {
         JSONListData jld = new JSONListData();
         jld.setTotal(equipments.getTotalElements());
         jld.setRows(equipments.getContent());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载设备列表");
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载设备列表");
         return jld;
     }
 
@@ -59,7 +57,7 @@ public class EquipmentController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public Equipment get(@RequestParam("code") String code) {
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":扫码获取设备信息，编码--"+code);
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":扫码获取设备信息，编码--"+code);
         return service.findOneByCode(code);
     }
 }

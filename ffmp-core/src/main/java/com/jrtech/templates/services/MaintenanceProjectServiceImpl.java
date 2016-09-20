@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by jiangliang on 2016/7/14.
  */
@@ -43,5 +45,10 @@ public class MaintenanceProjectServiceImpl implements  MaintenanceProjectService
     @Override
     public MaintenanceProject save(MaintenanceProject maintenanceProject) {
         return repository.save(maintenanceProject);
+    }
+
+    @Override
+    public List<MaintenanceProject> findByNameLike(String name) {
+        return repository.findByNameLike(name);
     }
 }

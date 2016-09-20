@@ -36,6 +36,8 @@ public class Employee extends AbstractNamedObject {
     private Date date;
     //是否在职 true:在职
     private boolean work;
+    //证书类型
+    private String type;
 
     public String getSex() {
         return sex;
@@ -115,5 +117,13 @@ public class Employee extends AbstractNamedObject {
 
     public void setWork(boolean work) {
         this.work = work;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

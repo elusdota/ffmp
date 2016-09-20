@@ -28,9 +28,7 @@ public class TaskNodeController {
     private FlowchartStepsService flowchartStepsService;
     @Autowired
     private AccountService accountService;
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
-    static final Logger logger = LogManager.getLogger(TaskNodeController.class.getName());
+    private Logger logger = LogManager.getLogger(TaskNodeController.class.getName());
 
     @RequestMapping(method = RequestMethod.GET)
     public HistoryTaskNode get(@RequestParam("id") String id) {
@@ -45,13 +43,13 @@ public class TaskNodeController {
      */
     @RequestMapping(method = RequestMethod.POST)
     public HistoryTaskNode create(@RequestBody HistoryTaskNodeVO historyTaskNodeVO) {
-        String userName = userDetailsUtils.getCurrent().getUsername();
+        String userName = UserDetailsUtils.getCurrent().getUsername();
         Account account = accountService.findOneByName(userName);
         MaintenanceTask maintenanceTask = taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId());
         //获取当前操作步骤
         FlowchartSteps flowchartSteps = getShtep(historyTaskNodeVO.getMaintenanceTaskId());
         HistoryTaskNode historyTaskNode = bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask, account, flowchartSteps);
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建任务执行节点，名称--" + flowchartSteps.getName() + "。任务名称：" +
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建任务执行节点，名称--" + flowchartSteps.getName() + "。任务名称：" +
                 maintenanceTask.getName());
         if (flowchartSteps.getCatch(historyTaskNode.getDescription()).equals("en") || flowchartSteps.getCatch(historyTaskNode.getDescription()).equals("en1")) {
             //执行结束任务步骤
@@ -59,7 +57,7 @@ public class TaskNodeController {
             maintenanceTask.setSuspended(true);
             taskRuntimeService.save(maintenanceTask);
             FlowchartSteps flowchartSteps1 = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(), flowchartSteps.getCatch(historyTaskNode.getDescription()));
-            logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建任务执行节点，名称--" + flowchartSteps1.getName() + "。任务名称：" +
+            logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建任务执行节点，名称--" + flowchartSteps1.getName() + "。任务名称：" +
                     maintenanceTask.getName());
             return service.save(bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask, account, flowchartSteps1));
         } else {

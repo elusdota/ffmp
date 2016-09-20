@@ -11,6 +11,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link rel="stylesheet" href="<c:url value='/bower_components/bootstrap-table/dist/bootstrap-table.min.css'/>">
 <link rel="stylesheet" href="<c:url value='/bower_components/AdminLTE/plugins/datepicker/datepicker3.css'/>">
+<link rel="stylesheet" href="<c:url value='/bower_components/select2/dist/css/select2.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/bower_components/select2-bootstrap-theme/dist/select2-bootstrap.min.css'/>">
 <style type="text/css">
     *
     label.error
@@ -54,13 +56,22 @@
                                required="required">
                     </div>
                 </div>
+                <%--<div class="form-group col-md-4">--%>
+                    <%--<label for="customer" class="col-lg-6 control-label">所属客户：<span--%>
+                            <%--class="required">*</span></label>--%>
+
+                    <%--<div class="col-lg-6">--%>
+                        <%--<input type="text" class="form-control" id="customer" name="customer" placeholder="所属客户"--%>
+                               <%--required="required">--%>
+                    <%--</div>--%>
+                <%--</div>--%>
                 <div class="form-group col-md-4">
-                    <label for="customer" class="col-lg-6 control-label">所属客户：<span
+                    <label for="customer" class="col-md-6 control-label">所属客户：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
-                        <input type="text" class="form-control" id="customer" name="customer" placeholder="所属客户"
-                               required="required">
+                    <div class="col-md-6">
+                        <select class="form-control select2"  id="customer" data-placeholder="选择客户名称">
+                        </select>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
@@ -139,6 +150,14 @@
                                required="required">
                     </div>
                 </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-lg-5">建筑投入使用日期：<span
+                            class="required">*</span></label>
+                    <div class="input-group input-daterange col-lg-7">
+                        <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker"
+                               data-provide="datepicker" id="inputDate">
+                    </div>
+                </div>
             </form>
             <div class="modal-footer">
                 <button type="button" id="save" class="btn btn-default pull-right">保存</button>
@@ -158,6 +177,8 @@
 <script src="<c:url value='/bower_components/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js'/>"></script>
 <script src="<c:url value='/bower_components/tableExport.jquery.plugin/tableExport.min.js'/>"></script>
 <script src="<c:url value='/bower_components/jquery.base64.js/jquery.base64.js'/>"></script>
+<script src="<c:url value='/bower_components/select2/dist/js/i18n/zh-CN.js'/>"></script>
+<script src="<c:url value='/bower_components/select2/dist/js/select2.full.min.js'/>"></script>
 <script src="<c:url value='/js/taskManagement/createProject.js'/>"></script>
 
 

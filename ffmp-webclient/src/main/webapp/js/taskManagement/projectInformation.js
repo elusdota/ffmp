@@ -2,6 +2,9 @@
  * Created by jiangliang on 2016/7/15.
  */
 $(document).ready(function () {
+    $('.datepicker').datepicker({
+        language: 'zh-CN'
+    });
     var id = $("#id").val().trim();
     $.ajax('rest/maintenanceProject?id=' + id, {
         type: 'GET',
@@ -17,6 +20,7 @@ $(document).ready(function () {
             $("#floors").val(data.floors);
             $("#nature").val(data.nature);
             $("#manager").val(data.manager);
+            $("#inputDate").val(data.inputDate);
             $("#managerTelephone").val(data.managerTelephone);
             $("#equipmentCase").val(data.equipmentCase);
             getEquiment(data.id);
@@ -55,6 +59,8 @@ $(document).ready(function () {
                 , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
                 , {title: "型号", field: "model", align: 'center', sortable: true}
                 , {title: "数量", field: "quantity", align: 'center', sortable: true}
+                , {title: "生产日期", field: "productionDate", align: 'center', sortable: true}
+                , {title: "投入使用日期", field: "inputDate", align: 'center', sortable: true}
                 , {title: "位置", field: "location", align: 'center', sortable: true}
             ]
         });

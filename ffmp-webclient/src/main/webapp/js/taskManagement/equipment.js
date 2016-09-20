@@ -2,6 +2,9 @@
  * Created by jiangliang on 2016/7/15.
  */
 $(document).ready(function () {
+    $('.datepicker').datepicker({
+        language: 'zh-CN'
+    });
     var id = $("#id").val().trim();
     getType();
     $('#equipmentTable').bootstrapTable({
@@ -14,6 +17,8 @@ $(document).ready(function () {
             , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
             , {title: "型号", field: "model", align: 'center', sortable: true}
             , {title: "数量", field: "quantity", align: 'center', sortable: true}
+            , {title: "生产日期", field: "productionDate", align: 'center', sortable: true}
+            , {title: "投入使用日期", field: "inputDate", align: 'center', sortable: true}
         ],
         striped: true
     });
@@ -68,7 +73,9 @@ function getInsertData() {
         typemin: $("#typemin").val().trim(),
         manufacturer: $("#manufacturer").val().trim(),
         model: $("#model").val().trim(),
-        quantity: $("#quantity").val().trim()
+        quantity: $("#quantity").val().trim(),
+        productionDate: $("#productionDate").val().trim(),
+        inputDate: $("#inputDate").val().trim()
     }
     return data;
 }

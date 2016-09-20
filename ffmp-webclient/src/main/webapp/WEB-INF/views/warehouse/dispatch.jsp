@@ -105,6 +105,14 @@
                 <div class="modal-body">
                     <div class="row">
                         <form class="form-horizontal" id="dispatchForm">
+                            <div class="form-group col-md-6">
+                                <label for="description" class="col-lg-4 control-label">流向：</label>
+
+                                <div class="col-lg-8">
+                                    <input type="text" class="form-control " id="description" name="description"
+                                           placeholder="流向">
+                                </div>
+                            </div>
                             <table id="inventoryTable"
                                    data-toolbar="#toolbar"
                                    data-show-refresh="true"

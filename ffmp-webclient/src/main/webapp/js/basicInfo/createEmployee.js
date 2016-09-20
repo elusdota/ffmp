@@ -30,6 +30,7 @@ $(document).ready(function () {
             email:$("#email").val().trim(),
             role:$("#role").val().trim(),
             certificate:$("#certificate").val().trim(),
+            type:$("#type").val().trim(),
             professional:$("#professional").val().trim(),
             date:$("#date").val().trim(),
             work:$("#work").val().trim()

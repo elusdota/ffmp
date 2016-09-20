@@ -32,9 +32,7 @@ public class DispatchController {
     private DispatchService service;
     @Autowired
     private CodeService codeService;
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
-    static final Logger logger = LogManager.getLogger(DispatchController.class.getName());
+   private Logger logger = LogManager.getLogger(DispatchController.class.getName());
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody InventorySearch parameters) {
@@ -43,7 +41,7 @@ public class DispatchController {
         JSONListData jld = new JSONListData();
         jld.setTotal(dispatches.getTotalElements());
         jld.setRows(dispatches.getContent());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":加载出库单列表");
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载出库单列表");
         return jld;
     }
 
@@ -53,11 +51,11 @@ public class DispatchController {
             dispatchDetail.setDispatch(dispatch);
         });
         dispatch.setNumber(codeService.getDispatchNum());
-        dispatch.setAudit(userDetailsUtils.getCurrent().getUsername());
-        dispatch.setExecutor(userDetailsUtils.getCurrent().getUsername());
+        dispatch.setAudit(UserDetailsUtils.getCurrent().getUsername());
+        dispatch.setExecutor(UserDetailsUtils.getCurrent().getUsername());
         dispatch.setDate(new Date());
         dispatch.setStateTime(new Date());
-        logger.info(userDetailsUtils.getCurrent().getUsername() + ":创建出库单，出库单号--"+dispatch.getNumber());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建出库单，出库单号--"+dispatch.getNumber());
         return service.save(dispatch);
     }
 }

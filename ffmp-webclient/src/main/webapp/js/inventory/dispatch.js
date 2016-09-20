@@ -40,6 +40,7 @@ $(document).ready(function () {
             , {title: "单据编号", field: "number", sortable: true}
             , {title: "操作人", field: "executor", sortable: true}
             , {title: "创建日期", field: "date", sortable: true}
+            , {title: "备注", field: "description", sortable: true}
         ]
     });
     $('#inventoryTable').bootstrapTable({
@@ -142,6 +143,7 @@ $("#submitData").click(function () {
 function getSaveData() {
     var data = {
         number: "",
+        description:$("#description").val().trim(),
         dispatchdetails: $("#detailsTable").bootstrapTable("getData")
     }
     return data;

@@ -38,7 +38,14 @@ public class Equipment extends AbstractNamedObject {
     private long quantity;
     //设备位置，设备的具体位置
     private String location;
-
+    //生产日期
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "zh", timezone = "GMT+8")
+    private Date productionDate;
+    //投入使用日期
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "zh", timezone = "GMT+8")
+    private Date inputDate;
     public MaintenanceProject getOwner() {
         return owner;
     }
@@ -117,5 +124,21 @@ public class Equipment extends AbstractNamedObject {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Date getProductionDate() {
+        return productionDate;
+    }
+
+    public void setProductionDate(Date productionDate) {
+        this.productionDate = productionDate;
+    }
+
+    public Date getInputDate() {
+        return inputDate;
+    }
+
+    public void setInputDate(Date inputDate) {
+        this.inputDate = inputDate;
     }
 }

@@ -42,6 +42,7 @@ $(document).ready(function () {
             , {title: "楼层", field: "floors", sortable: true}
             , {title: "使用性质", field: "nature", sortable: true}
             , {title: "消防安全管理人", field: "manager", sortable: true}
+            ,{title: "建筑投入使用时间", field: "inputDate", sortable: true}
             , {title: "联系电话", field: "managerTelephone", sortable: true}
         ]
     });
