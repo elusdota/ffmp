@@ -26,8 +26,6 @@ public class MaterialController {
     private TaskRuntimeService runtimeService;
     @Autowired
     private AccountService accountService;
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
 
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody TableGetDataParameters parameters) {
@@ -52,7 +50,7 @@ public class MaterialController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Material save(@RequestBody Material material) {
-        String userName = userDetailsUtils.getCurrent().getUsername();
+        String userName = UserDetailsUtils.getCurrent().getUsername();
         material.setDelegate(accountService.findOneByName(userName));
         MaintenanceTask maintenanceTask = runtimeService.findOne(material.getMaintenanceTask().getId());
         material.setMaintenanceTask(maintenanceTask);

@@ -22,9 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 public class PageController {
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
-    static final Logger logger = LogManager.getLogger(PageController.class.getName());
+    private Logger logger = LogManager.getLogger(PageController.class.getName());
 
     //登陆
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
@@ -33,7 +31,9 @@ public class PageController {
         ModelAndView model = new ModelAndView();
         if (error != null) {
 //            model.addObject("serviceException", "用户名或密码错误!");
-            logger.error( userDetailsUtils.getCurrent().getUsername()+":登录失败");
+            if(null!=UserDetailsUtils.getCurrent()){
+            logger.error( UserDetailsUtils.getCurrent().getUsername()+":登录失败");
+            }
             throw new ServiceException("用户名或密码错误!","login");
         }
         model.setViewName("login");
@@ -44,7 +44,7 @@ public class PageController {
     @RequestMapping(value = {"/index"}, method = RequestMethod.GET)
     public ModelAndView index(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         ModelAndView model = new ModelAndView();
-        String username = userDetailsUtils.getCurrent().getUsername();
+        String username = UserDetailsUtils.getCurrent().getUsername();
         if (username != null) {
             model.addObject("username", username);
         }

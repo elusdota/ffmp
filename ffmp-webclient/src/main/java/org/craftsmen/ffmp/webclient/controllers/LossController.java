@@ -8,6 +8,8 @@ import com.jrtech.templates.services.UserDetailsUtils;
 import com.jrtech.templates.vo.InventorySearch;
 import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.WarehouseSpecs;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +29,7 @@ public class LossController {
     private LossService service;
     @Autowired
     private CodeService codeService;
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
+    private Logger logger = LogManager.getLogger(LossController.class.getName());
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody InventorySearch parameters) {
         PageableImpl pageable = new PageableImpl(parameters);
@@ -36,6 +37,7 @@ public class LossController {
         JSONListData jld = new JSONListData();
         jld.setTotal(losses.getTotalElements());
         jld.setRows(losses.getContent());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载报损单列表");
         return jld;
     }
 
@@ -45,10 +47,11 @@ public class LossController {
             dispatchDetail.setLoss(loss);
         });
         loss.setNumber(codeService.getLossNum());
-        loss.setAudit(userDetailsUtils.getCurrent().getUsername());
-        loss.setExecutor(userDetailsUtils.getCurrent().getUsername());
+        loss.setAudit(UserDetailsUtils.getCurrent().getUsername());
+        loss.setExecutor(UserDetailsUtils.getCurrent().getUsername());
         loss.setDate(new Date());
         loss.setStateTime(new Date());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建报损单，单号---"+loss.getNumber());
         return service.save(loss);
     }
 }

@@ -8,6 +8,8 @@ import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.PasswordVo;
 import com.jrtech.templates.vo.TableGetDataParameters;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Page;
@@ -29,8 +31,7 @@ public class AccountController {
     private AccountService service;
     @Autowired
     private RoleService roleService;
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
+   private Logger logger = LogManager.getLogger(AccountController.class.getName());
 
     /**
      * 加载账户列表
@@ -43,10 +44,11 @@ public class AccountController {
             parameters.setSearch("");
         }
         PageableImpl pageable = new PageableImpl(parameters);
-        Page<Account> accounts = service.findByNameContaining(parameters.getSearch(), pageable);
+        Page<Account> accounts = service.findByNameContaining(parameters.getSearch()+"%", pageable);
         JSONListData jld = new JSONListData();
         jld.setTotal(accounts.getTotalElements());
         jld.setRows(accounts.getContent());
+        logger.info(UserDetailsUtils.getCurrent().getUsername()+":加载账户列表");
         return jld;
     }
 
@@ -61,8 +63,10 @@ public class AccountController {
         if (service.findOneByName(account.getName()) == null) {
             String password = new BCryptPasswordEncoder().encode("123456");
             account.setPassword(password);
+            logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建账户，账户名称--" + account.getName());
             return service.save(account);
         } else {
+            logger.error( UserDetailsUtils.getCurrent().getUsername()+":创建账户失败，账户名称--"+account.getName());
             throw new ServiceException("创建账户失败，账户已经存在！");
         }
     }
@@ -74,6 +78,7 @@ public class AccountController {
      */
     @RequestMapping(method = RequestMethod.DELETE)
     public void deleteAccount(@RequestParam("id") String id) {
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":删除账户，账户id--" + id);
         service.delete(id);
     }
 
@@ -84,7 +89,7 @@ public class AccountController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public Account getLoginAccount() {
-        return service.findOneByName(userDetailsUtils.getCurrent().getUsername());
+        return service.findOneByName(UserDetailsUtils.getCurrent().getUsername());
     }
 
     /**
@@ -98,8 +103,10 @@ public class AccountController {
         String password1 = new BCryptPasswordEncoder().encode(passwordVo.getAccount().getPassword());
         if (new BCryptPasswordEncoder().matches(passwordVo.getRawpassword(), account1.getPassword())) {
             account1.setPassword(password1);
+            logger.info(UserDetailsUtils.getCurrent().getUsername() + ":修改账户，账户名称--" + account1.getName());
             return service.save(account1);
         } else {
+            logger.error(UserDetailsUtils.getCurrent().getUsername() + ":修改账户失败，账户名称--" + account1.getName());
             throw new ServiceException("原密码输入错误！请重新输入。");
         }
     }
@@ -117,6 +124,7 @@ public class AccountController {
         } else {
             roles.add(role);
         }
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":修改账户角色，账户名称--" + account.getName());
         account.getRoles().addAll(roles);
         return service.save(account);
     }

@@ -7,6 +7,8 @@ import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.CommonSpecs;
 import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.TableGetDataParameters;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,7 +35,7 @@ public class CustomerController {
     private OrganizationService organizationService;
     @Autowired
     private CodeService codeService;
-
+    private Logger logger = LogManager.getLogger(CustomerController.class.getName());
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody TableGetDataParameters parameters) {
         PageableImpl pageable = new PageableImpl(parameters);
@@ -41,6 +43,7 @@ public class CustomerController {
         JSONListData jld = new JSONListData();
         jld.setTotal(customers.getTotalElements());
         jld.setRows(customers.getContent());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载客户列表");
         return jld;
     }
 
@@ -65,8 +68,10 @@ public class CustomerController {
         customer.setCode(codeService.getCustomerNum());
         customer.setCreateTime(new Date());
         if (service.isDuplicateNameOnSameLevel(customer)) {
+            logger.error( UserDetailsUtils.getCurrent().getUsername()+":创建客户失败,客户名称--"+customer.getName());
             throw new ServiceException("该客户已经存在！");
         }
+        logger.info(UserDetailsUtils.getCurrent().getUsername()+":创建客户，客户名称--"+customer.getName());
         return service.save(customer);
     }
 
@@ -79,6 +84,10 @@ public class CustomerController {
         customer1.setEmail(customer.getEmail());
         customer1.setTaxId(customer.getTaxId());
         customer1.setTelephone(customer.getTelephone());
+        customer1.setType(customer.getType());
+        customer1.setBank(customer.getBank());
+        customer1.setBankAccount(customer.getBankAccount());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":修改客户，客户名称--" + customer.getName());
         return service.save(customer1);
     }
 
@@ -89,6 +98,7 @@ public class CustomerController {
 
     @RequestMapping(value = "/findByNameLike", method = RequestMethod.GET)
     public List<Customer> findByNameLike(@RequestParam("name") String name) {
+        logger.info(UserDetailsUtils.getCurrent().getUsername()+":查询客户，客户关键字--"+name);
         return service.findByNameLike("%" + name + "%");
     }
 }

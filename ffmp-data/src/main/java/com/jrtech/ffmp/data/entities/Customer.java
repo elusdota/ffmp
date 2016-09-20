@@ -31,6 +31,12 @@ public class Customer extends AbstractDomainObject{
     private String email;
     // 税号
     private String taxId;
+    //开户银行
+    private String bank;
+    //银行账户
+    private String bankAccount;
+    //纳税类型
+    private String type;
     @OneToOne(cascade = { CascadeType.REFRESH})
     private Account account;
 
@@ -106,4 +112,27 @@ public class Customer extends AbstractDomainObject{
         this.account = account;
     }
 
+    public String getBank() {
+        return bank;
+    }
+
+    public void setBank(String bank) {
+        this.bank = bank;
+    }
+
+    public String getBankAccount() {
+        return bankAccount;
+    }
+
+    public void setBankAccount(String bankAccount) {
+        this.bankAccount = bankAccount;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 }

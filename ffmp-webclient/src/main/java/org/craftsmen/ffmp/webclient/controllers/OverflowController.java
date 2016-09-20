@@ -8,6 +8,8 @@ import com.jrtech.templates.services.UserDetailsUtils;
 import com.jrtech.templates.vo.InventorySearch;
 import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.WarehouseSpecs;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +29,7 @@ public class OverflowController {
     private OverflowService service;
     @Autowired
     private CodeService codeService;
-    @Autowired
-    private UserDetailsUtils userDetailsUtils;
+    private Logger logger = LogManager.getLogger(OverflowController.class.getName());
     @RequestMapping(value = "/findAll", method = RequestMethod.POST)
     public JSONListData findAll(@RequestBody InventorySearch parameters) {
         PageableImpl pageable = new PageableImpl(parameters);
@@ -36,6 +37,7 @@ public class OverflowController {
         JSONListData jld = new JSONListData();
         jld.setTotal(overflows.getTotalElements());
         jld.setRows(overflows.getContent());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载报溢单列表");
         return jld;
     }
 
@@ -45,10 +47,11 @@ public class OverflowController {
             inboundsDetail.setOverflow(overflow);
         });
         overflow.setNumber(codeService.getOverflowNum());
-        overflow.setAudit(userDetailsUtils.getCurrent().getUsername());
-        overflow.setExecutor(userDetailsUtils.getCurrent().getUsername());
+        overflow.setAudit(UserDetailsUtils.getCurrent().getUsername());
+        overflow.setExecutor(UserDetailsUtils.getCurrent().getUsername());
         overflow.setDate(new Date());
         overflow.setStateTime(new Date());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建报溢单，编号--"+overflow.getNumber());
         return service.save(overflow);
     }
 }

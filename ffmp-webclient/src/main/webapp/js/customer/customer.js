@@ -37,6 +37,9 @@ $(document).ready(function () {
             , {title: "地址", field: "address", sortable: true}
             , {title: "邮箱", field: "email", sortable: true}
             , {title: "税号", field: "taxId", sortable: true}
+            , {title: "纳税类型", field: "type", sortable: true}
+            , {title: "开户行", field: "bank", sortable: true}
+            , {title: "银行账户", field: "bankAccount", sortable: true}
             , {title: "创建时间", field: "createTime", sortable: true}
         ]
     });
@@ -63,6 +66,9 @@ $("#updateCustomer").click(function () {
     $("#address").val(data[0].address);
     $("#taxId").val(data[0].taxId);
     $("#email").val(data[0].email);
+    $("#bank").val(data[0].bank);
+    $("#bankAccount").val(data[0].bankAccount);
+    $("#type").val(data[0].type);
     $('#customerModel').modal({
         backdrop: 'static',
         keyboard: false
@@ -118,7 +124,10 @@ function getSaveData() {
         telephone: $("#telephone").val().trim(),
         address: $("#address").val().trim(),
         taxId: $("#taxId").val().trim(),
-        email: $("#email").val().trim()
+        email: $("#email").val().trim(),
+        bank: $("#bank").val().trim(),
+        bankAccount: $("#bankAccount").val().trim(),
+        type: $("#type").val().trim()
     }
     return data;
 }

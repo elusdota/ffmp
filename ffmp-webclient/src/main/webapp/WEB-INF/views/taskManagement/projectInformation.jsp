@@ -133,6 +133,14 @@
                                required="required">
                     </div>
                 </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-lg-5">建筑投入使用日期：<span
+                            class="required">*</span></label>
+                    <div class="input-group input-daterange col-lg-7">
+                        <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker"
+                               data-provide="datepicker" id="inputDate">
+                    </div>
+                </div>
             </form>
         </div>
         <div class="row">

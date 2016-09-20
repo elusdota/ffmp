@@ -8,6 +8,8 @@ import com.jrtech.templates.vo.CommonSpecs;
 import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.TableGetDataParameters;
 import com.jrtech.templates.vo.TaskEquipemtVO;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,7 @@ public class TaskEquipemtController {
     private TaskRuntimeService taskRuntimeService;
     @Autowired
     private EquipmentService equipmentService;
+    private Logger logger = LogManager.getLogger(TaskEquipemtController.class.getName());
 
     @RequestMapping(value = "/findByMaintenanceTask",method = RequestMethod.POST)
     public JSONListData findByMaintenanceTask(@RequestBody TableGetDataParameters parameters) {
@@ -48,6 +51,8 @@ public class TaskEquipemtController {
        if( maintenanceTask.getMaintenanceProject().getEquipments().contains(equipment)){
            taskEquipemt.setEquipment(equipment);
            taskEquipemt.setMaintenanceTask(maintenanceTask);
+           logger.info(UserDetailsUtils.getCurrent().getUsername() +
+                   ":创建任务设备，设备编号--"+taskEquipemt.getEquipment().getName()+"。任务名称--"+maintenanceTask.getName());
            return service.save(taskEquipemt);
        }else {
            throw new ServiceException("该设备不在此任务项目设备列表中！");

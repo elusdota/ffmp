@@ -5,9 +5,12 @@ import com.jrtech.ffmp.data.entities.MaintenanceProject;
 import com.jrtech.templates.services.EquipmentService;
 import com.jrtech.templates.services.MaintenanceProjectService;
 import com.jrtech.templates.services.PageableImpl;
+import com.jrtech.templates.services.UserDetailsUtils;
 import com.jrtech.templates.vo.CommonSpecs;
 import com.jrtech.templates.vo.JSONListData;
 import com.jrtech.templates.vo.TableGetDataParameters;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +25,7 @@ public class EquipmentController {
     private EquipmentService service;
     @Autowired
     private MaintenanceProjectService maintenanceProjectService;
+    private Logger logger = LogManager.getLogger(EquipmentController.class.getName());
 
     @RequestMapping(value = "/findProject", method = RequestMethod.POST)
     public JSONListData findProject(@RequestBody TableGetDataParameters parameters) {
@@ -31,6 +35,7 @@ public class EquipmentController {
         JSONListData jld = new JSONListData();
         jld.setTotal(equipments.getTotalElements());
         jld.setRows(equipments.getContent());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载项目设备列表");
         return jld;
     }
 
@@ -41,6 +46,7 @@ public class EquipmentController {
         JSONListData jld = new JSONListData();
         jld.setTotal(equipments.getTotalElements());
         jld.setRows(equipments.getContent());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载设备列表");
         return jld;
     }
 
@@ -51,6 +57,7 @@ public class EquipmentController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public Equipment get(@RequestParam("code") String code) {
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":扫码获取设备信息，编码--"+code);
         return service.findOneByCode(code);
     }
 }

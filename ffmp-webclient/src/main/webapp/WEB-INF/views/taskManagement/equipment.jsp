@@ -50,12 +50,12 @@
         <div class="row">
             <form class="form-horizontal" id="equipumentForm">
                 <div class="form-group col-md-6">
-                    <label for="equipumentname" class="col-lg-6 control-label">材料名称：<span
+                    <label for="equipumentname" class="col-lg-6 control-label">设备名称：<span
                             class="required">*</span></label>
 
                     <div class="col-lg-6">
                         <input type="text" class="form-control" id="equipumentname" name="equipumentname"
-                               placeholder="材料名称"
+                               placeholder="设备名称"
                                required="required">
                     </div>
                 </div>
@@ -104,6 +104,22 @@
                         <input type="text" class="form-control required digits" id="quantity"
                                name="quantity"
                                placeholder="数量">
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-lg-4">生产日期：<span
+                            class="required">*</span></label>
+                    <div class="input-group input-daterange col-lg-8">
+                        <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker"
+                               data-provide="datepicker" id="productionDate">
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
+                    <label class="control-label col-lg-4">投入使用日期：<span
+                            class="required">*</span></label>
+                    <div class="input-group input-daterange col-lg-8">
+                        <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker"
+                               data-provide="datepicker" id="inputDate">
                     </div>
                 </div>
                 <div class="form-actions">
