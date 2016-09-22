@@ -638,7 +638,7 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         List<FlowchartSteps> flowchartStepses1=new ArrayList<>();
         flowchartStepses1.add(new FlowchartSteps("开始", "st", "start","op",""));
         flowchartStepses1.add(new FlowchartSteps("巡检", "op", "operation","cond3",""));
-        flowchartStepses.add(new FlowchartSteps("维保负责人审核", "cond3", "condition","cond1","op"));
+        flowchartStepses1.add(new FlowchartSteps("维保负责人审核", "cond3", "condition","cond1","op"));
         flowchartStepses1.add(new FlowchartSteps("客户审核", "cond1", "condition","cond2","op"));
         flowchartStepses1.add(new FlowchartSteps("维保总监审核", "cond2", "condition","en","op"));
         flowchartStepses1.add(new FlowchartSteps("结束","en","end","",""));

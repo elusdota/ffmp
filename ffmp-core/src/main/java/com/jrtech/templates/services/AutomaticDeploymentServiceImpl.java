@@ -58,7 +58,8 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
     private String getName(String code) {
         LocalDate today = LocalDate.now();
         int year = today.getYear();
-        int month = today.getDayOfMonth();
+        int month = today.getMonthValue();
+        System.out.println(month+"-------------------------------");
         String name = "";
         switch (month) {
             case 3:
