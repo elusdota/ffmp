@@ -19,7 +19,7 @@ public class Equipment extends AbstractNamedObject {
     @ManyToOne
     private MaintenanceProject owner;
     @NotNull
-    @ManyToOne(cascade = { CascadeType.DETACH })
+    @ManyToOne(cascade = {CascadeType.DETACH})
     //所属客户
     private Customer customer;
     //编码
@@ -46,6 +46,9 @@ public class Equipment extends AbstractNamedObject {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", locale = "zh", timezone = "GMT+8")
     private Date inputDate;
+    //设备状态，功能是否正常，组件是否齐全，是否有障碍阻挡使用，外观是否完好，标识是否可见
+    private String nowstate;
+
     public MaintenanceProject getOwner() {
         return owner;
     }
@@ -140,5 +143,13 @@ public class Equipment extends AbstractNamedObject {
 
     public void setInputDate(Date inputDate) {
         this.inputDate = inputDate;
+    }
+
+    public String getNowstate() {
+        return nowstate;
+    }
+
+    public void setNowstate(String nowstate) {
+        this.nowstate = nowstate;
     }
 }

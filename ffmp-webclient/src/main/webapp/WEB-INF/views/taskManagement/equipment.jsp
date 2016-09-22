@@ -97,6 +97,19 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
+                    <label for="nowstate" class="col-lg-4 control-label">状态：</label>
+
+                    <div class="col-lg-8">
+                        <select class="form-control m-bot15" id="nowstate" name="nowstate" required="required">
+                            <option value="功能正常">功能正常</option>
+                            <option value="外观不完好">外观不完好</option>
+                            <option value="组件不齐全">组件不齐全</option>
+                            <option value="有障碍阻挡使用">有障碍阻挡使用</option>
+                            <option value="标识不可见">标识不可见</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group col-md-6">
                     <label for="quantity" class="col-lg-4 control-label">数量：<span
                             class="required">*</span></label>
 

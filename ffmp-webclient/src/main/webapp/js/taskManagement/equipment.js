@@ -19,6 +19,7 @@ $(document).ready(function () {
             , {title: "数量", field: "quantity", align: 'center', sortable: true}
             , {title: "生产日期", field: "productionDate", align: 'center', sortable: true}
             , {title: "投入使用日期", field: "inputDate", align: 'center', sortable: true}
+            , {title: "状态", field: "nowstate", align: 'center', sortable: true}
         ],
         striped: true
     });
@@ -75,6 +76,7 @@ function getInsertData() {
         model: $("#model").val().trim(),
         quantity: $("#quantity").val().trim(),
         productionDate: $("#productionDate").val().trim(),
+        nowstate: $("#nowstate").val().trim(),
         inputDate: $("#inputDate").val().trim()
     }
     return data;
