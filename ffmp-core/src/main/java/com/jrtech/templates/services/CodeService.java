@@ -29,6 +29,10 @@ public class CodeService {
     private OverflowService overflowService;
     @Autowired
     private LossService lossService;
+    @Autowired
+    private LendingService lendingService;
+    @Autowired
+    private RepaidService repaidService;
     private static String STATNUM = "000001";
 
     /**
@@ -155,6 +159,37 @@ public class CodeService {
         }
         return code;
     }
+    /**
+     * 产生工具借出不重复的号码 加锁
+     */
+    public synchronized String getLendingNum() {
+        String code = "";
+        PageableImpl pageable = new PageableImpl(buildInventorySearch());
+        long last6Num = lendingService.findAll(new WarehouseSpecs<Lending>().spec(buildInventorySearch()), pageable).getTotalElements();
+        ;
+        if (last6Num == 0) {
+            code = STATNUM;
+        } else {
+            code = getLastSixNum(String.valueOf(last6Num));
+        }
+        return code;
+    }
+    /**
+     * 产生工具归还不重复的号码 加锁
+     */
+    public synchronized String getRepaidNum() {
+        String code = "";
+        PageableImpl pageable = new PageableImpl(buildInventorySearch());
+        long last6Num = repaidService.findAll(new WarehouseSpecs<Repaid>().spec(buildInventorySearch()), pageable).getTotalElements();
+        ;
+        if (last6Num == 0) {
+            code = STATNUM;
+        } else {
+            code = getLastSixNum(String.valueOf(last6Num));
+        }
+        return code;
+    }
+
 
     /**
      * 产生客户不重复的号码 加锁

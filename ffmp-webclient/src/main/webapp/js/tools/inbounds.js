@@ -8,7 +8,7 @@ $(document).ready(function () {
     $("#viewDispatch").attr("disabled", "true");
     $('#dispatchTable').bootstrapTable({
         method: 'POST',
-        url: 'rest/dispatch/findAll',
+        url: 'rest/repaid/findAll',
         sidePagination: 'server',
         striped: true,
         singleSelect: true,
@@ -57,7 +57,8 @@ $(document).ready(function () {
                 limit: params.limit,
                 order: params.order,
                 sort: params.sort,
-                search: params.search
+                search: params.search,
+                description: "工具"
             };
             return JSON.stringify(fin);
         },
@@ -66,7 +67,6 @@ $(document).ready(function () {
         }
             , {title: "序号", formatter: runningFormatter}
             , {title: "名称", field: "name", align: 'center', sortable: true}
-            , {title: "入库类型", field: "inventoryType", align: 'center', sortable: true}
             , {title: "类型", field: "type", align: 'center', sortable: true}
             , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
             , {title: "型号", field: "model", align: 'center', sortable: true}
@@ -80,14 +80,12 @@ $(document).ready(function () {
         //height: 350,
         columns: [
             {title: "序号", formatter: runningFormatter}
-            , {title: "名称", field: "name", align: 'center', sortable: true}
-            , {title: "入库类型", field: "inventoryType", align: 'center', sortable: true}
-            , {title: "类型", field: "type", align: 'center', sortable: true}
-            , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
-            , {title: "型号", field: "model", align: 'center', sortable: true}
+            , {title: "名称", field: "inventory.name", align: 'center', sortable: true}
+            , {title: "类型", field: "inventory.type", align: 'center', sortable: true}
+            , {title: "厂家", field: "inventory.manufacturer", align: 'center', sortable: true}
+            , {title: "型号", field: "inventory.model", align: 'center', sortable: true}
             , {title: "数量", field: "quantity", align: 'center', sortable: true}
-            , {title: "单价", field: "price", align: 'center', sortable: true}
-            , {title: "金额", field: "amount", align: 'center', sortable: true}
+            , {title: "单价", field: "inventory.price", align: 'center', sortable: true}
         ],
         striped: true
     });
@@ -112,7 +110,7 @@ $("#viewDispatch").click(function () {
     $("#submitData").addClass("hidden");
     $("#dispatchForm").addClass("hidden");
     $('#detailsTable').bootstrapTable('removeAll');
-    $('#detailsTable').bootstrapTable("append", row.dispatchdetails);
+    $('#detailsTable').bootstrapTable("append", row.repaidDetails);
     $('#dispatchModel').modal({
         backdrop: 'static',
         keyboard: false
@@ -127,7 +125,7 @@ $("#createDispatch").click(function () {
     $("#dispatchModel").modal("show");
 });
 $("#submitData").click(function () {
-    $.ajax('rest/dispatch', {
+    $.ajax('rest/repaid', {
         type: 'POST',
         data: JSON.stringify(getSaveData()),
         contentType: 'application/json',
@@ -145,32 +143,21 @@ $("#submitData").click(function () {
 function getSaveData() {
     var data = {
         number: "",
-        description:$("#description").val().trim(),
-        dispatchdetails: $("#detailsTable").bootstrapTable("getData")
+        description: $("#description").val().trim(),
+        repaidDetails: $("#detailsTable").bootstrapTable("getData")
     }
     return data;
 }
 function getInsertData(org) {
+    var inventory = org;
     var data = {
-        inventory_id: org.id,
-        name: org.name,
-        type: org.type,
-        manufacturer: org.manufacturer,
-        inventoryType: org.inventoryType,
-        model: org.model,
-        price: $("#price").val().trim(),
-        amount: org.quantity * org.price,
+        inventory: inventory,
         quantity: getQuantity(org)
     }
     return data;
 }
 function getQuantity(org) {
-    if ($("#quantity").val().trim() > org.quantity) {
-        return org.quantity;
-    }
-    else {
-        return $("#quantity").val().trim();
-    }
+    return $("#quantity").val().trim();
 }
 $("#giveupData").click(function () {
     $("#dispatchForm").removeClass("hidden");

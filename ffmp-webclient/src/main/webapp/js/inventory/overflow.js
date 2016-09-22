@@ -46,7 +46,8 @@ $(document).ready(function () {
         //height: 350,
         columns: [
             {title: "序号", formatter: runningFormatter}
-            , {title: "材料名称", field: "name", align: 'center', sortable: true}
+            , {title: "名称", field: "name", align: 'center', sortable: true}
+            , {title: "入库类型", field: "inventoryType", align: 'center', sortable: true}
             , {title: "类型", field: "type", align: 'center', sortable: true}
             , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
             , {title: "型号", field: "model", align: 'center', sortable: true}
@@ -127,6 +128,7 @@ function getInsertData() {
         name: $("#name").val().trim(),
         type: $("#type").val().trim(),
         manufacturer: $("#manufacturer").val().trim(),
+        inventoryType:$("#inventoryType").val().trim(),
         model: $("#model").val().trim(),
         price: $("#price").val().trim(),
         amount: $("#price").val().trim() * $("#quantity").val().trim(),

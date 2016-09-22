@@ -54,6 +54,7 @@ public class OverflowServiceImpl implements OverflowService {
         inventory.setManufacturer(overflowDetail.getManufacturer());
         inventory.setModel(overflowDetail.getModel());
         inventory.setPrice(overflowDetail.getPrice());
+        inventory.setInventoryType(overflowDetail.getInventoryType());
         inventory.setQuantity(overflowDetail.getQuantity());
         inventory.setType(overflowDetail.getType());
         inventory.setTime(new Date());

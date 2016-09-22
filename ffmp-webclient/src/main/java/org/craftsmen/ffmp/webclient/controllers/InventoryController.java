@@ -46,15 +46,24 @@ public class InventoryController {
 
     @RequestMapping(value = "/searchByName", method = RequestMethod.POST)
     public JSONListData searchByName(@RequestBody TableGetDataParameters parameters) {
-        if (parameters.getSearch() == null) {
-            parameters.setSearch("");
-        }
         PageableImpl pageable = new PageableImpl(parameters);
-        Page<Inventory> inventoryPage = service.findByNameLike("%"+parameters.getSearch()+"%", pageable);
-        JSONListData jld = new JSONListData();
-        jld.setTotal(inventoryPage.getTotalElements());
-        jld.setRows(inventoryPage.getContent());
-        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":查询库存，关键字--" + parameters.getSearch());
-        return jld;
+        if (parameters.getSearch() == null) {
+            parameters.setSearch("不为空");
+        }
+        if (parameters.getDescription() != null) {
+            Page<Inventory> inventoryPage = service.findByInventoryTypeAndNameLike(parameters.getDescription(),"%"+parameters.getSearch()+"%", pageable);
+            JSONListData jld = new JSONListData();
+            jld.setTotal(inventoryPage.getTotalElements());
+            jld.setRows(inventoryPage.getContent());
+            logger.info(UserDetailsUtils.getCurrent().getUsername() + ":查询库存，关键字--" + parameters.getSearch());
+            return jld;
+        }else {
+            Page<Inventory> inventoryPage = service.findByInventoryTypeNotAndNameLike("工具","%"+parameters.getSearch()+"%", pageable);
+            JSONListData jld = new JSONListData();
+            jld.setTotal(inventoryPage.getTotalElements());
+            jld.setRows(inventoryPage.getContent());
+            logger.info(UserDetailsUtils.getCurrent().getUsername() + ":查询库存，关键字--" + parameters.getSearch());
+            return jld;
+        }
     }
 }

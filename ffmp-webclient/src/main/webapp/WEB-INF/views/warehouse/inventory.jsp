@@ -15,25 +15,25 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            库存管理
+            备件库存管理
             <small>s</small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-bank"></i> 仓库管理</a></li>
-            <li class="active">库存管理</li>
+            <li class="active">备件库存管理</li>
         </ol>
     </section>
     <!-- Main content -->
     <section class="content">
         <div class="row">
             <div class="box-footer">
-                <sec:authorize access="@userDetailsUtils.isAuthorized('/仓库管理/库存管理/库存查询')">
+                <sec:authorize access="@userDetailsUtils.isAuthorized('/仓库管理/备件库存管理/备件库存查询')">
                     <form class="form-horizontal" id="inboundsForm">
                         <div class="form-group col-md-6">
-                            <label for="name" class="col-lg-6 control-label">材料名称：</label>
+                            <label for="name" class="col-lg-6 control-label">备件名称：</label>
 
                             <div class="col-lg-6">
-                                <input type="text" class="form-control" id="name" name="name" placeholder="材料名称"
+                                <input type="text" class="form-control" id="name" name="name" placeholder="备件名称"
                                        required="required">
                             </div>
                         </div>

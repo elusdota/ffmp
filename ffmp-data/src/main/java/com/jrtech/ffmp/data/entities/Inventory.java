@@ -13,6 +13,8 @@ import java.util.Date;
  */
 @Entity
 public class Inventory extends AbstractNamedObject {
+    //入库类型
+    private String inventoryType;
     //类型
     private String type;
     //生产厂家
@@ -33,6 +35,14 @@ public class Inventory extends AbstractNamedObject {
     private Date time;
     //入库操作人
     private String executor;
+
+    public String getInventoryType() {
+        return inventoryType;
+    }
+
+    public void setInventoryType(String inventoryType) {
+        this.inventoryType = inventoryType;
+    }
 
     public String getType() {
         return type;

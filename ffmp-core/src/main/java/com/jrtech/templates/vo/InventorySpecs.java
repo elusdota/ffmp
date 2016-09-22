@@ -20,6 +20,7 @@ public class InventorySpecs {
                 Path<String> typePath = root.get("type");
                 Path<String> manufacturerPath = root.get("manufacturer");
                 Path<String> modelPath = root.get("model");
+                Path<String> inventoryType = root.get("inventoryType");
                 List<Predicate> list = new ArrayList<Predicate>();
                 if (inventorySearch.getName() != null) {
                     list.add(builder.like(namePath, "%" + inventorySearch.getName() + "%"));
@@ -32,6 +33,9 @@ public class InventorySpecs {
                 }
                 if (inventorySearch.getModel() != null) {
                     list.add(builder.like(modelPath, "%" + inventorySearch.getModel() + "%"));
+                }
+                if (inventorySearch.getInventoryType() != null) {
+                    list.add(builder.like(inventoryType, inventorySearch.getInventoryType()));
                 }
                 Predicate[] p = new Predicate[list.size()];
                 return builder.and(list.toArray(p));

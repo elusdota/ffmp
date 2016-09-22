@@ -105,11 +105,11 @@
                         <div class="row">
                             <form class="form-horizontal" id="purchasesForm">
                                 <div class="form-group col-md-6">
-                                    <label for="name" class="col-lg-6 control-label">材料名称：<span
+                                    <label for="name" class="col-lg-6 control-label">名称：<span
                                             class="required">*</span></label>
 
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="材料名称"
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="名称"
                                                required="required">
                                     </div>
                                 </div>
