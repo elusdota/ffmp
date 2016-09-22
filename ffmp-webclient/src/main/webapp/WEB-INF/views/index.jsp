@@ -37,7 +37,7 @@
 
                 </div>
                 <div class="box-body">
-                    <div id="map" style="width:960px;height:768px"></div>
+                    <div id="map" style="width:100%;height:768px"></div>
                 </div>
                 <div class="box-footer clearfix">
 
@@ -57,7 +57,6 @@
 <script src="<c:url value='/js/common/index.js'/>"></script>
 <script src="http://api.map.baidu.com/api?v=2.0&ak=3E99E522ecb83ad1cbf7844fd84c6062" type="text/javascript"></script>
 <script type="text/javascript">
-    var data_info = {};
     var para = {
         offset: 0,
         limit: 100,
@@ -72,7 +71,7 @@
         contentType: 'application/json',
         dataType: 'json',
         success: function (data, XMLHttpRequest, jqXHR) {
-            data_info = data;
+            overlay(data);
         }, error: function (XMLHttpRequest) {
             $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
             $("#message").modal("show");
@@ -80,32 +79,34 @@
     });
 
     var map = new BMap.Map('map');
-    map.centerAndZoom(new BMap.Point(102.73, 25.04), 14);
-    map.enableScrollWheelZoom();
+    map.centerAndZoom(new BMap.Point(102.73, 25.04), 13);
+    map.enableScrollWheelZoom(true);
     map.addControl(new BMap.NavigationControl());
     map.addControl(new BMap.ScaleControl());
     map.addControl(new BMap.OverviewMapControl());
     map.addControl(new BMap.MapTypeControl());
     // 创建地址解析器实例
     var myGeo = new BMap.Geocoder();
-    bdGEO();
-    function bdGEO() {
-        for (var index = 0; index < data_info.total; index++) {
-            var add = data_info.rows[index].address;
-            geocodeSearch(add, data_info.rows[index].name);
-        }
 
+    function overlay(data_info){
+        for(var i=0;i<data_info.total;i++){
+            (function(e) {
+                setTimeout(function() {
+                    var addr = data_info.rows[e].address;
+                    var content = "项目名称："+data_info.rows[e].name+"<br>"+
+                            "项目地址："+addr;
+                    myGeo.getPoint(addr, function(point){
+                        if (point) {
+                            var marker = new BMap.Marker(new BMap.Point(point.lng, point.lat));  // 创建标注
+                            map.addOverlay(marker); // 将标注添加到地图中
+                            addClickHandler(content,marker);
+                        }
+                    }, "昆明市");
+                }, 400);
+            })(i);
+        }
     }
-    function geocodeSearch(add, name) {
-        myGeo.getPoint(add, function (point) {
-            if (point) {
-                var pointMap = new BMap.Point(point.lng, point.lat);
-                var marker = new BMap.Marker(pointMap);  // 创建标注
-                map.addOverlay(marker);               // 将标注添加到地图中
-                addClickHandler(name, marker);
-            }
-        }, "昆明市");
-    }
+
     var opts = {
         width: 250,     // 信息窗口宽度
         height: 80,     // 信息窗口高度

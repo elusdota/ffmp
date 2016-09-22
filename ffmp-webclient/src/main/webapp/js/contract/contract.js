@@ -29,7 +29,6 @@
             {title: "客户名称", field: "customer.name", align: 'center', sortable: true},
             {title: "负责人", field: "manager", align: 'center', sortable: true},
             {title: "负责人电话", field: "managerTel", align: 'center', sortable: true},
-            {title: "付款方式", field: "payment", align: 'center', sortable: true},
             {title: "经办人", field: "agent", align: 'center', sortable: true},
             {title: "合同地址", field: "address", align: 'center', sortable: true},
             {title: "合同金额", field: "amount", align: 'center', sortable: true},

@@ -8,8 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * Created by suelmer on 2016/7/16.
  */
@@ -52,4 +50,10 @@ public class MrrStandardServiceImpl implements MrrStandardService {
     public MrrStandard findOneByParent(MrrStandard parent) {
         return mrrStandardRepository.findOneByParent(parent);
     }
+
+    @Override
+    public MrrStandard findOneByCode(String code) {
+        return mrrStandardRepository.findOneByCode(code);
+    }
+
 }

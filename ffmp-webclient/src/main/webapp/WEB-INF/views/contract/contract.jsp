@@ -137,8 +137,8 @@
                                 <div class="col-md-8">
 
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="amount" name="amount"
-                                               placeholder="合同金额"  required="required">
+                                        <input type="text" class="form-control required number" id="amount" name="amount"
+                                               placeholder="合同金额">
                                         <div class="input-group-addon">元</div>
                                     </div>
                                 </div>

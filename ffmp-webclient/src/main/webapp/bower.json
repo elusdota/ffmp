@@ -31,6 +31,7 @@
     "flowchart": "^1.6.3",
     "raphael": "2.2.1",
     "select2": "^4.0.3",
-    "select2-bootstrap-theme": "^0.1.0-beta.8"
+    "select2-bootstrap-theme": "^0.1.0-beta.8",
+    "jquery.inputmask": "^3.3.3"
   }
 }

@@ -46,6 +46,12 @@
             <version>8.0.32</version>
             <scope>provided</scope>
         </dependency>
+        <!--验证码-->
+        <dependency>
+            <groupId>com.github.bingoohuang</groupId>
+            <artifactId>patchca</artifactId>
+            <version>0.0.1</version>
+        </dependency>
 
         <!--日志-->
         <dependency>

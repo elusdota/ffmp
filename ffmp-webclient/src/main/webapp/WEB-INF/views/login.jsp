@@ -41,21 +41,21 @@
             <input type="text" class="form-control" placeholder="验证码">
           </div>
           <div class="col-md-6">
-             <%--<img src="./captcha"  id="kaptchaImage" style="cursor:pointer" />--%>
-             <a href="javascript:void(0)">看不清?换一张</a>
+             <img src="patchca.png" id="patchcaImage" style="cursor:pointer"  onclick="verifyCode();"/>
+             <%--<a href="javascript:void(0)" onclick="verifyCode();">看不清?换一张</a>--%>
           </div>
       </div>
       </div>
       <div class="row">
-        <div class="col-xs-8">
-          <div class="checkbox icheck">
-            <label>
-              <input type="checkbox"> 记住我
-            </label>
-          </div>
-        </div>
+        <%--<div class="col-xs-8">--%>
+          <%--<div class="checkbox icheck">--%>
+            <%--<label>--%>
+              <%--<input type="checkbox"> 记住我--%>
+            <%--</label>--%>
+          <%--</div>--%>
+        <%--</div>--%>
         <!-- /.col -->
-        <div class="col-xs-4">
+        <div class="col-xs-12">
           <button name="submit" type="submit" class="btn btn-primary btn-block btn-flat">登录</button>
         </div>
         <!-- /.col -->
@@ -81,12 +81,17 @@
 <script src="<c:url value='/bower_components/AdminLTE/plugins/iCheck/icheck.min.js'/>"></script>
 <script>
   $(function () {
-    $('input').iCheck({
-      checkboxClass: 'icheckbox_square-blue',
-      radioClass: 'iradio_square-blue',
-      increaseArea: '20%' // optional
-    });
+//    $('input').iCheck({
+//      checkboxClass: 'icheckbox_square-blue',
+//      radioClass: 'iradio_square-blue',
+//      increaseArea: '20%' // optional
+//    });
   });
+  /* 验证码更换 */
+  function verifyCode() {
+    var code = document.getElementById("patchcaImage");
+    code.src = "patchca.png?nocache='" + new Date().getTime();
+  }
 </script>
 </body>
 </html>

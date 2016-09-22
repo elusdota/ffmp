@@ -5,8 +5,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
-import java.util.List;
-
 /**
  * Created by suelmer on 2016/7/16.
  */
@@ -37,4 +35,6 @@ public interface MrrStandardService {
     MrrStandard findOneByName(String name);
 
     MrrStandard findOneByParent(MrrStandard parent);
+
+    MrrStandard findOneByCode(String code);
 }
