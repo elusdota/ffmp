@@ -181,8 +181,8 @@
                                 <div class="col-md-8">
                                     <select class="form-control" name="maturity" id="maturity">
                                         <option disabled="disabled" selected="selected">--请选择期限类型--</option>
-                                        <option value="使用年限">使用年限</option>
-                                        <option value="更换年限">更换年限</option>
+                                        <option value="生产日期">生产日期</option>
+                                        <option value="投入使用日期">投入使用日期</option>
                                     </select>
                                 </div>
                             </div>
