@@ -105,7 +105,7 @@
                 <div class="modal-body">
                     <div class="row">
                         <form class="form-horizontal" id="dispatchForm">
-                            <div class="form-group col-md-6">
+                            <div class="form-group col-md-12">
                                 <label for="description" class="col-lg-4 control-label">归还人：</label>
 
                                 <div class="col-lg-8">

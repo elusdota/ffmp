@@ -80,7 +80,7 @@ public class MaintenanceProjectController {
             int t = i[0] - 1;
             String code = getLastSixNum("" + t, 3);
             equipment1.setCode(getCodeNum(maintenanceProject1.getCode(), 4) +
-                    mrrStandardService.findOneByName(equipment1.getTypemax()).getCode() +
+//                    mrrStandardService.findOneByName(equipment1.getTypemax()).getCode() +
                     mrrStandardService.findOneByName(equipment1.getTypemin()).getCode() + code);
             equipment1.setOwner(maintenanceProject1);
             equipment1.setCustomer(maintenanceProject1.getCustomer());
