@@ -22,4 +22,5 @@ public interface MrrStandardRepository extends PagingAndSortingRepository<MrrSta
     @Query("SELECT o FROM MrrStandard o WHERE o.parent is null")
     Iterable<MrrStandard> findRoot();
 
+    MrrStandard findOneByCode(String code);
 }

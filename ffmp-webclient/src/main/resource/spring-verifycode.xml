@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:u="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+    <bean id="captchaService" class="com.github.bingoohuang.patchca.custom.ConfigurableCaptchaService"
+          p:fontFactory-ref="randomFontFactory"
+          p:wordFactory-ref="randomWordFactory"
+          p:colorFactory-ref="singleColorFactory"
+          p:width="135" p:height="33"
+          p:textRenderer-ref="bestFitTextRenderer"
+          p:backgroundFactory-ref="myCustomBackgroundFactory"
+          p:filterFactory-ref=".wobbleRippleFilterFactory"/>
+
+    <bean id=".wobbleRippleFilterFactory"
+          class="com.github.bingoohuang.patchca.filter.predefined.WobbleRippleFilterFactory"/>
+
+    <bean id="randomFontFactory" class="com.github.bingoohuang.patchca.font.RandomFontFactory"
+          p:families-ref="familieList" p:minSize="20"
+          p:maxSize="32" p:randomStyle="true"/>
+
+    <bean id="bestFitTextRenderer" class="com.github.bingoohuang.patchca.text.renderer.BestFitTextRenderer"/>
+
+    <bean id="myCustomBackgroundFactory" class="com.github.bingoohuang.patchca.background.MyCustomBackgroundFactory"/>
+
+    <u:list id="familieList" list-class="java.util.ArrayList">
+        <value>Arial</value>
+        <value>Verdana</value>
+        <value>Tahoma</value>
+    </u:list>
+<!--
+   p:characters="23456789abcdefghigkmnpqrstuvwxyzABCDEFGHIGKLMNPQRSTUVWXYZ"
+-->
+    <bean id="randomWordFactory" class="com.github.bingoohuang.patchca.word.RandomWordFactory"
+          p:characters="23456789"
+          p:minLength="5"
+          p:maxLength="5"/>
+    <!--abcdefhkmnpstvwxyz23456789-->
+    <bean id="singleColorFactory" class="com.github.bingoohuang.patchca.color.SingleColorFactory" c:color-ref="color"/>
+    <bean id="color" class="java.awt.Color">
+        <constructor-arg index="0" type="int" value="25"/>
+        <constructor-arg index="1" type="int" value="60"/>
+        <constructor-arg index="2" type="int" value="170"/>
+    </bean>
+
+</beans>

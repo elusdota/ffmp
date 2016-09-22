@@ -5,14 +5,15 @@
 
 ;
 $(function () {
-    var $mrrstandardTable=$('#mrrstandardTable');
-    var $techniqueTable= $('#techniqueTable');
+    //$("[data-mask]").inputmask();
+    var $mrrstandardTable = $('#mrrstandardTable');
+    var $techniqueTable = $('#techniqueTable');
     $mrrstandardTable.bootstrapTable({
         method: 'POST',
         url: 'rest/mrrstandard/findAll',
         striped: true,
         singleSelect: true,
-      //  clickToSelect: true,
+        //  clickToSelect: true,
         queryParams: function (params) {
             var fin = {
                 offset: params.offset,
@@ -33,6 +34,7 @@ $(function () {
             {title: "维管方式", field: "mrrMethod", sortable: true},
             {title: "工作内容", field: "jobContent", sortable: true},
             {title: "抽查比例", field: "proportion", sortable: true},
+            {title: "使用年限", field: "lifetime", sortable: true},
             {title: "备注", field: "remark", sortable: true},
             {
                 title: '查看技术要求',
@@ -83,13 +85,46 @@ $(function () {
         $("#resetMrrStandard").trigger("click");
         $techniqueTable.bootstrapTable("removeAll");
         var selectRow = $mrrstandardTable.bootstrapTable('getSelections');
-        if(selectRow.length){
+        if (selectRow.length) {
             $("#parent_code").val(selectRow[0].code);
+            $("#pcode").text(selectRow[0].code + "-");
             $("#parent_name").val(selectRow[0].name);
         }
-        $("#createMrrStandardModal").modal("show");
+        $("#createMrrStandardModal").modal({
+            backdrop: 'static',
+            keyboard: false,
+            show: true
+        });
     });
+    $("#code").blur(function () {
+        var $pcode = $("#pcode");
+        var code = $pcode.text() == "" ? $("#code").val().trim() : $pcode.text()+  $("#code").val().trim();
+        if (code !="" && code !=null) {
+            $.ajax('rest/mrrstandard/findOneByCode', {
+                type: 'get',
+                data: {code: code},
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (data, XMLHttpRequest, jqXHR) {
+                    var html = '<div class="alert alert-warning alert-dismissible" id="codeWarning">' +
+                        ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+                        '<h5><i class="icon fa fa-warning"></i>编码重复</h5>' +
+                        '</div>';
+                    console.log("-----------"+data);
+                    if (data != null) {
+                        $("#codeDiv").after(html);
+                    } else {
+                        $("#codeWarning").hide();
+                    }
 
+
+                }, error: function (XMLHttpRequest) {
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
+                }
+            });
+        }
+    });
     $techniqueTable.bootstrapTable({
         columns: [
             {title: "序号", formatter: runningFormatter},
@@ -113,6 +148,7 @@ $(function () {
             '</a>'
         ].join('');
     }
+
     window.techniqueOperateEvents = {
         'click .remove': function (e, value, row, index) {
             $techniqueTable.bootstrapTable('remove', {
@@ -140,10 +176,12 @@ $(function () {
         var selectRow = $mrrstandardTable.bootstrapTable('getSelections');
         if ($("#mrrStandardForm").valid()) {
             var techniqueVal = $techniqueTable.bootstrapTable("getData");
+            var $pcode = $("#pcode");
             var mrrStandardVal = {
-                code: $("#code").val().trim(),
+                code: $pcode.text() == "" ?  $("#code").val().trim() : $pcode.text() +  $("#code").val().trim(),
                 name: $("#name").val().trim(),
                 mrrMethod: $("#mrrMethod").val().trim(),
+                lifetime:$("#lifetime").val().trim(),
                 jobContent: $("#jobContent").val().trim(),
                 proportion: $("#proportion").val().trim(),
                 remark: $("#remark").val().trim(),
@@ -153,6 +191,7 @@ $(function () {
                 parent: selectRow[0],
                 mrrStandard: mrrStandardVal
             };
+            console.log(mrrStandardVal.code);
             $.ajax('rest/mrrstandard/create', {
                 type: 'POST',
                 data: JSON.stringify(mrrStandardInfo),
@@ -160,6 +199,7 @@ $(function () {
                 dataType: 'json',
                 success: function (data, XMLHttpRequest, jqXHR) {
                     $mrrstandardTable.bootstrapTable('refresh');
+                    $("#pcode").text("");
                     $("#resetMrrStandard").trigger("click");
                     $("#createMrrStandardModal").modal("hide");
                 }, error: function (XMLHttpRequest) {

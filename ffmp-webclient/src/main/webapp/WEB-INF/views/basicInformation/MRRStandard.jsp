@@ -13,9 +13,8 @@
 <link rel="stylesheet" href="<c:url value='/bower_components/bootstrap-table/dist/bootstrap-table.min.css'/>">
 <style type="text/css">
     *
-    label.error
-    {
-        color:Red;
+    label.error {
+        color: Red;
     }
 </style>
 <section class="content-header">
@@ -70,7 +69,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <%--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span--%>
-                            <%--aria-hidden="true">&times;</span></button>--%>
+                    <%--aria-hidden="true">&times;</span></button>--%>
                     <h4 class="modal-title">创建设施维管标准</h4>
                 </div>
                 <div class="modal-body">
@@ -102,8 +101,11 @@
                                         class="required">*</span></label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="code" name="code" placeholder="编码"
-                                           required="required">
+                                    <div class="input-group" id="codeDiv">
+                                        <span class="input-group-addon" id="pcode"></span>
+                                        <input type="text" class="form-control" id="code" name="code" placeholder="编码"
+                                               required="required">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -144,9 +146,20 @@
                                         class="required">*</span></label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="proportion" name="proportion"
-                                           placeholder="抽查比例"
-                                           required="required">
+                                    <input type="text" class="form-control required number" id="proportion" name="proportion"
+                                           placeholder="抽查比例" >
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="lifetime" class="col-md-4 control-label">使用年限：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                    <input type="text" class="form-control required digits" id="lifetime" name="lifetime"
+                                           placeholder="使用年限">
+                                        <span class="input-group-addon">年</span>
+                                </div>
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -195,9 +208,10 @@
                                     </div>
                                     <div class="form-group col-md-12">
                                         <div class="col-md-offset-10 col-md-2">
-                                        <button type="reset" class="btn btn-warning" id="resetTechnique">重置</button>
-                                        <button type="button" class="btn btn-primary" id="addTechnique">添加</button>
-                                    </div></div>
+                                            <button type="reset" class="btn btn-warning" id="resetTechnique">重置</button>
+                                            <button type="button" class="btn btn-primary" id="addTechnique">添加</button>
+                                        </div>
+                                    </div>
                                 </form>
                             </div>
                             <div class="box-footer">
@@ -247,4 +261,7 @@
 <script src="<c:url value='/bower_components/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js'/>"></script>
 <script src="<c:url value='/bower_components/tableExport.jquery.plugin/tableExport.min.js'/>"></script>
 <script src="<c:url value='/bower_components/jquery.base64.js/jquery.base64.js'/>"></script>
+<%--<script src="<c:url value='/bower_components/jquery.inputmask/dist/min/inputmask/inputmask.min.js'/>"></script>--%>
+<%--<script src="<c:url value='/bower_components/jquery.inputmask/dist/min/inputmask/jquery.inputmask.min.js'/>"></script>--%>
+<%--<script src="<c:url value='/bower_components/jquery.inputmask/dist/min/inputmask/inputmask.extensions.min.js'/>"></script>--%>
 <script src="<c:url value='/js/basicInfo/mrrStandard.js'/>"></script>

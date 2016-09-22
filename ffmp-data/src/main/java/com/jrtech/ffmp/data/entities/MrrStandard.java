@@ -24,6 +24,8 @@ public class MrrStandard extends AbstractTreeNode<MrrStandard>{
     private String mrrMethod;
     //抽查比例
     private double proportion;
+    //使用年限
+    private int lifetime;
     //备注
     private String remark;
 
@@ -78,5 +80,13 @@ public class MrrStandard extends AbstractTreeNode<MrrStandard>{
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public int getLifetime() {
+        return lifetime;
+    }
+
+    public void setLifetime(int lifetime) {
+        this.lifetime = lifetime;
     }
 }

@@ -10,7 +10,7 @@ public class WebClientInitializer extends AbstractAnnotationConfigDispatcherServ
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[]{DataConfig.class, RootConfig.class, SecurityConfig.class, WebConfig.class};
+        return new Class<?>[]{DataConfig.class, RootConfig.class,PatchcaConfig.class, SecurityConfig.class, WebConfig.class};
     }
 
     @Override
