@@ -26,6 +26,10 @@ public class MrrStandard extends AbstractTreeNode<MrrStandard>{
     private double proportion;
     //使用年限
     private int lifetime;
+    //更换年限
+    private int changetime;
+    //根据使用年限还是更换年限计算设备到期时间
+    private String maturity;
     //备注
     private String remark;
 
@@ -88,5 +92,21 @@ public class MrrStandard extends AbstractTreeNode<MrrStandard>{
 
     public void setLifetime(int lifetime) {
         this.lifetime = lifetime;
+    }
+
+    public int getChangetime() {
+        return changetime;
+    }
+
+    public void setChangetime(int changetime) {
+        this.changetime = changetime;
+    }
+
+    public String getMaturity() {
+        return maturity;
+    }
+
+    public void setMaturity(String maturity) {
+        this.maturity = maturity;
     }
 }
