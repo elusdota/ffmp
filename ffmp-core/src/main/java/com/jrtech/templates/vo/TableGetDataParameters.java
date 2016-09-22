@@ -10,6 +10,7 @@ public class TableGetDataParameters {
     private int offset;//偏移
     private String sort;//排序字段
     private String search;
+    private String description;
 
     public int getPageNumber() {
         return pageNumber;
@@ -57,5 +58,13 @@ public class TableGetDataParameters {
 
     public void setSearch(String search) {
         this.search = search;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

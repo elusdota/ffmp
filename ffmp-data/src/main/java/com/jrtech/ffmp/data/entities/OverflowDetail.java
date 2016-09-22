@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @JsonIgnoreProperties(value = {"overflow"})
 public class OverflowDetail extends AbstractNamedObject {
+    //入库类型
+    private String inventoryType;
     //类型
     private String type;
     //生产厂家
@@ -29,6 +31,14 @@ public class OverflowDetail extends AbstractNamedObject {
     @NotNull
     @ManyToOne
     private Overflow overflow;
+
+    public String getInventoryType() {
+        return inventoryType;
+    }
+
+    public void setInventoryType(String inventoryType) {
+        this.inventoryType = inventoryType;
+    }
 
     public String getType() {
         return type;

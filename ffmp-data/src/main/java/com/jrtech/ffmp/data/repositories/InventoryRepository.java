@@ -20,5 +20,12 @@ public interface InventoryRepository extends PagingAndSortingRepository<Inventor
 	 * @param pageable 分页对象
 	 * @return 库存列表
 	 */
-	Page<Inventory> findByNameLike(String name, Pageable pageable);
+	Page<Inventory> findByInventoryTypeAndNameLike(String inventoryType,String name, Pageable pageable);
+	/**
+	 * 通过材料名称查询 库存
+	 * @param name 材料名称
+	 * @param pageable 分页对象
+	 * @return 库存列表
+	 */
+	Page<Inventory> findByInventoryTypeNotAndNameLike(String inventoryType,String name, Pageable pageable);
 }

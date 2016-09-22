@@ -64,7 +64,8 @@ $(document).ready(function () {
             field: 'state', checkbox: true
         }
             , {title: "序号", formatter: runningFormatter}
-            , {title: "材料名称", field: "name", align: 'center', sortable: true}
+            , {title: "名称", field: "name", align: 'center', sortable: true}
+            , {title: "入库类型", field: "inventoryType", align: 'center', sortable: true}
             , {title: "类型", field: "type", align: 'center', sortable: true}
             , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
             , {title: "型号", field: "model", align: 'center', sortable: true}
@@ -78,7 +79,8 @@ $(document).ready(function () {
         //height: 350,
         columns: [
             {title: "序号", formatter: runningFormatter}
-            , {title: "材料名称", field: "name", align: 'center', sortable: true}
+            , {title: "名称", field: "name", align: 'center', sortable: true}
+            , {title: "入库类型", field: "inventoryType", align: 'center', sortable: true}
             , {title: "类型", field: "type", align: 'center', sortable: true}
             , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
             , {title: "型号", field: "model", align: 'center', sortable: true}
@@ -152,6 +154,7 @@ function getInsertData(org) {
         name: org.name,
         type: org.type,
         manufacturer: org.manufacturer,
+        inventoryType: org.inventoryType,
         model: org.model,
         price: $("#price").val().trim(),
         amount: org.quantity * org.price,

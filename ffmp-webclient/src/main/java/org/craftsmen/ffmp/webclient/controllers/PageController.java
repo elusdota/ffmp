@@ -49,7 +49,7 @@ public class PageController {
             model.addObject("username", username);
         }
         model.setViewName("index");
-        logger.info(username+":登录成功");
+        logger.info(username + ":登录成功");
         return model;
     }
 
@@ -83,18 +83,36 @@ public class PageController {
         return "/warehouse/inbounds";
     }
 
-    //库存
+    //备件库存
     @RequestMapping("/warehouse/inventory")
     public String inventory(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/warehouse/inventory";
     }
-
+    //设备库存
+    @RequestMapping("/warehouse/equipmentInventory")
+    public String equipmentInventory(HttpServletRequest rq, HttpServletResponse response) throws Exception {
+        return "/warehouse/equipmentInventory";
+    }
+    //工具库存
+    @RequestMapping("/tools/toolsInventory")
+    public String toolsInventory(HttpServletRequest rq, HttpServletResponse response) throws Exception {
+        return "/tools/toolsInventory";
+    }
     //出库
     @RequestMapping("/warehouse/dispatch")
     public String dispatch(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/warehouse/dispatch";
     }
-
+    //工具借出
+    @RequestMapping("/tools/dispatch")
+    public String toolsdispatch(HttpServletRequest rq, HttpServletResponse response) throws Exception {
+        return "/tools/dispatch";
+    }
+    //工具归还
+    @RequestMapping("/tools/inbounds")
+    public String toolsinbounds(HttpServletRequest rq, HttpServletResponse response) throws Exception {
+        return "/tools/inbounds";
+    }
     //报损
     @RequestMapping("/warehouse/loss")
     public String loss(HttpServletRequest rq, HttpServletResponse response) throws Exception {

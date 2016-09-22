@@ -56,6 +56,7 @@ public class InboundsServiceImpl implements InboundsService {
         inventory.setModel(inboundsDetail.getModel());
         inventory.setPrice(inboundsDetail.getPrice());
         inventory.setQuantity(inboundsDetail.getQuantity());
+        inventory.setInventoryType(inboundsDetail.getInventoryType());
         inventory.setType(inboundsDetail.getType());
         inventory.setTime(new Date());
         return inventoryRepository.save(inventory);

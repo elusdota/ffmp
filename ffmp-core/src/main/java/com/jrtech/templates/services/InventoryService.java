@@ -13,5 +13,6 @@ public interface InventoryService {
     Page<Inventory> findAll(Specification<Inventory> spec, Pageable pageable);
 
     //通过材料名称查询
-    Page<Inventory> findByNameLike(String name, Pageable pageable);
+    Page<Inventory> findByInventoryTypeAndNameLike(String inventoryType,String name, Pageable pageable);
+    Page<Inventory> findByInventoryTypeNotAndNameLike(String inventoryType,String name, Pageable pageable);
 }

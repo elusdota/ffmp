@@ -15,7 +15,7 @@ $(document).ready(function () {
                 name: $("#name").val(),
                 type: $("#type").val(),
                 model: $("#model").val(),
-                inventoryType:'备件',
+                inventoryType:'工具',
                 manufacturer: $("#manufacturer").val(),
                 offset: params.offset,
                 limit: params.limit,
@@ -29,7 +29,7 @@ $(document).ready(function () {
             field: 'state', checkbox: true
         }
             , {title: "序号", formatter: runningFormatter}
-            , {title: "备件名称", field: "name", align: 'center', sortable: true}
+            , {title: "工具名称", field: "name", align: 'center', sortable: true}
             , {title: "类型", field: "type", align: 'center', sortable: true}
             , {title: "厂家", field: "manufacturer", align: 'center', sortable: true}
             , {title: "型号", field: "model", align: 'center', sortable: true}

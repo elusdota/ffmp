@@ -22,7 +22,12 @@ public class InventoryServiceImpl implements InventoryService {
     }
 
     @Override
-    public Page<Inventory> findByNameLike(String name, Pageable pageable) {
-        return repository.findByNameLike(name, pageable);
+    public Page<Inventory> findByInventoryTypeAndNameLike(String inventoryType,String name, Pageable pageable) {
+        return repository.findByInventoryTypeAndNameLike(inventoryType, name, pageable);
+    }
+
+    @Override
+    public Page<Inventory> findByInventoryTypeNotAndNameLike(String inventoryType, String name, Pageable pageable) {
+        return repository.findByInventoryTypeNotAndNameLike(inventoryType,name,pageable);
     }
 }

@@ -38,7 +38,6 @@ public class InitDataListener implements ApplicationListener<ContextRefreshedEve
         logupdate();
 //        initService.clearData();
 //        initService.createData();
-//        fileLog();
     }
 
     public void logupdate() {

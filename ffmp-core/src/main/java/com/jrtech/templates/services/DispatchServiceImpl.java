@@ -33,7 +33,12 @@ public class DispatchServiceImpl implements DispatchService {
                 inventory.setQuantity(inventory.getQuantity() - dispatchDetail.getQuantity());
                 inventoryRepository.save(inventory);
             } else {
-                inventoryRepository.delete(dispatchDetail.getInventory_id());
+                if(inventory.getInventoryType()=="工具"){
+                    inventory.setQuantity(inventory.getQuantity() - dispatchDetail.getQuantity());
+                    inventoryRepository.save(inventory);
+                }else {
+                    inventoryRepository.delete(dispatchDetail.getInventory_id());
+                }
             }
         });
         return repository.save(dispatch);

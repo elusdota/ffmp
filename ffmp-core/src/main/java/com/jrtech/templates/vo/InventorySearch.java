@@ -6,6 +6,8 @@ import java.util.Date;
  * Created by jiangliang on 2016/6/29.bootstrap-table采购，出库，入库查询虚拟实体对象，elus
  */
 public class InventorySearch extends TableGetDataParameters {
+    //入库类型
+    private String inventoryType;
     //名称
     private String name;
     //类型
@@ -22,6 +24,14 @@ public class InventorySearch extends TableGetDataParameters {
     private Date enddate;
     //执行人
     private String executor;
+
+    public String getInventoryType() {
+        return inventoryType;
+    }
+
+    public void setInventoryType(String inventoryType) {
+        this.inventoryType = inventoryType;
+    }
 
     public String getName() {
         return name;

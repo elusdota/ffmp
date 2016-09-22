@@ -12,6 +12,8 @@ import javax.validation.constraints.NotNull;
 @Entity
 @JsonIgnoreProperties(value = {"loss"})
 public class LossDetail extends AbstractNamedObject {
+    //入库类型
+    private String inventoryType;
     //库存id
     private String inventory_id;
     //类型
@@ -31,6 +33,14 @@ public class LossDetail extends AbstractNamedObject {
     @NotNull
     @ManyToOne
     private Loss loss;
+
+    public String getInventoryType() {
+        return inventoryType;
+    }
+
+    public void setInventoryType(String inventoryType) {
+        this.inventoryType = inventoryType;
+    }
 
     public String getInventory_id() {
         return inventory_id;
