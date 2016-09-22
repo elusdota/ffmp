@@ -35,6 +35,8 @@ $(function () {
             {title: "工作内容", field: "jobContent", sortable: true},
             {title: "抽查比例", field: "proportion", sortable: true},
             {title: "使用年限", field: "lifetime", sortable: true},
+            {title: "更换年限", field: "changetime", sortable: true},
+            {title: "期限类型", field: "maturity", sortable: true},
             {title: "备注", field: "remark", sortable: true},
             {
                 title: '查看技术要求',
@@ -182,6 +184,8 @@ $(function () {
                 name: $("#name").val().trim(),
                 mrrMethod: $("#mrrMethod").val().trim(),
                 lifetime:$("#lifetime").val().trim(),
+                changetime:$("#changetime").val().trim(),
+                maturity:$("#maturity").val().trim(),
                 jobContent: $("#jobContent").val().trim(),
                 proportion: $("#proportion").val().trim(),
                 remark: $("#remark").val().trim(),

@@ -163,6 +163,30 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
+                                <label for="changetime" class="col-md-4 control-label">更换年限：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control required digits" id="changetime" name="changetime"
+                                               placeholder="更换年限">
+                                        <span class="input-group-addon">年</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="maturity" class="col-md-4 control-label">期限类型：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <select class="form-control" name="maturity" id="maturity">
+                                        <option disabled="disabled" selected="selected">--请选择期限类型--</option>
+                                        <option value="使用年限">使用年限</option>
+                                        <option value="更换年限">更换年限</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label for="remark" class="col-md-4 control-label">备注：</label>
 
                                 <div class="col-md-8">

@@ -25,6 +25,7 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
     @Override
     @Scheduled(cron = "0 0 22 * * ?")
     public void buildScheduledTask() {
+        System.out.println("自动任务生成---------"+new Date());
         maintenanceProjectService.findAll().forEach(maintenanceProject -> {
             MaintenanceTask maintenanceTask = taskRuntimeService.findOneByName(getName(maintenanceProject.getCode()));
             if (maintenanceTask == null) {
