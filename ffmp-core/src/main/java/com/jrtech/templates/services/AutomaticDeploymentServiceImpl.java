@@ -2,6 +2,9 @@ package com.jrtech.templates.services;
 
 import com.jrtech.ffmp.data.entities.MaintenanceProject;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
+import com.jrtech.ffmp.data.entities.MrrStandard;
+import com.jrtech.ffmp.data.entities.TaskDefinition;
+import com.jrtech.ffmp.data.repositories.EquipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -22,44 +25,92 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
     private MaintenanceProjectService maintenanceProjectService;
     @Autowired
     private TaskDefinitionService taskDefinitionService;
+    @Autowired
+    private EquipmentRepository equipmentRepository;
+    @Autowired
+    private MrrStandardService mrrStandardService;
 
     @Override
     @Scheduled(cron = "0 0 22 * * ?")
     public void buildScheduledTask() {
-        System.out.println("自动任务生成---------"+new Date());
         maintenanceProjectService.findAll().forEach(maintenanceProject -> {
             MaintenanceTask maintenanceTask = taskRuntimeService.findOneByName(getName(maintenanceProject.getCode()));
             if (maintenanceTask == null) {
-                taskRuntimeService.save(buildMaintenanceTask(maintenanceProject));
+                taskRuntimeService.save(buildMaintenanceTask(maintenanceProject, "巡检任务", getName(maintenanceProject.getCode()), "系统指定的巡检任务,请按标准执行巡检任务！"));
             }
         });
     }
 
     @Override
+    @Scheduled(cron = "0 1 0 1 1-12 ?")
     public void replacementEquipmentTask() {
+        maintenanceProjectService.findAll().forEach(maintenanceProject -> {
+            MaintenanceTask maintenanceTask=buildEquipmentTask(maintenanceProject);
+            if(null!=maintenanceTask){
+                taskRuntimeService.save(maintenanceTask);
+            }
+        });
     }
 
-    private MaintenanceTask buildMaintenanceTask(MaintenanceProject maintenanceProject) {
+    private MaintenanceTask buildMaintenanceTask(MaintenanceProject maintenanceProject,String taskDefinition,String name,String description) {
         MaintenanceTask maintenanceTask = new MaintenanceTask();
         maintenanceTask.setMaintenanceProject(maintenanceProject);
-        maintenanceTask.setTaskDefinition(taskDefinitionService.findOneByName("巡检任务"));
+        maintenanceTask.setTaskDefinition(taskDefinitionService.findOneByName(taskDefinition));
         maintenanceTask.setCustomer(maintenanceProject.getCustomer());
         maintenanceTask.setDelegate(maintenanceProject.getDelegate());
-        maintenanceTask.setName(getName(maintenanceProject.getCode()));
+        maintenanceTask.setName(name);
         maintenanceTask.setStartdate(new Date());
         Calendar calender = Calendar.getInstance();
         calender.setTime(new Date());
         calender.add(Calendar.DATE, 5);
         maintenanceTask.setEnddate(calender.getTime());
-        maintenanceTask.setDescription("系统指定的巡检任务,请按标准执行巡检任务！");
+        if(null!=description){
+            maintenanceTask.setDescription(description);
+        }
         return maintenanceTask;
+    }
+
+    private MaintenanceTask buildEquipmentTask(MaintenanceProject maintenanceProject) {
+        MaintenanceTask maintenanceTask = buildMaintenanceTask(maintenanceProject,"维修任务","定期检修",null);
+        final String[] description = {};
+        maintenanceProject.getEquipments().forEach(equipment -> {
+            MrrStandard mrrStandard = mrrStandardService.findOneByName(equipment.getTypemin());
+            Date date1 = new Date();
+            Date date2 = new Date();
+            if (mrrStandard.getMaturity() == "生产日期") {
+                date1 = getDate(equipment.getProductionDate(), mrrStandard.getChangetime(), -1);
+                date2 = getDate(equipment.getProductionDate(), mrrStandard.getLifetime(), -1);
+            } else {
+                date1 = getDate(equipment.getInputDate(), mrrStandard.getChangetime(), -1);
+                date2 = getDate(equipment.getInputDate(), mrrStandard.getLifetime(), -1);
+            }
+            if (mrrStandard.getChangetime() > 0 && date1.after(new Date()) && date1.before(getDate(new Date(), 0, 1))) {
+                description[0] = description[0] + equipment.getCode() + ",到期维修。";
+            }
+            if (mrrStandard.getLifetime() > 0 && date2.after(new Date()) && date2.before(getDate(new Date(), 0, 1))) {
+                description[0] = description[0] + equipment.getCode() + ",到期报废。";
+            }
+        });
+        if(null!=description[0]){
+            maintenanceTask.setDescription(description[0]);
+            return maintenanceTask;
+        }else {
+            return null;
+        }
+    }
+
+    private Date getDate(Date date1, int year,int month) {
+        Calendar calender = Calendar.getInstance();
+        calender.setTime(date1);
+        calender.add(Calendar.YEAR, year);
+        calender.add(Calendar.MONTH, month);
+        return calender.getTime();
     }
 
     private String getName(String code) {
         LocalDate today = LocalDate.now();
         int year = today.getYear();
         int month = today.getMonthValue();
-        System.out.println(month+"-------------------------------");
         String name = "";
         switch (month) {
             case 3:

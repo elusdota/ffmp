@@ -3,6 +3,7 @@
  */
 $(document).ready(function () {
     $("#viewTask").attr("disabled", "true");
+    $("#repairAuditTask").attr("disabled", "true");
     $("#auditTask").attr("disabled", "true");
     $("#materialsTask").attr("disabled", "true");
     $('#taskTable').bootstrapTable({
@@ -20,17 +21,23 @@ $(document).ready(function () {
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function (data, XMLHttpRequest, jqXHR) {
+                    if (data.name == '维保负责人审核') {
+                        $("#repairAuditTask").removeAttr("disabled");
+                    }
+                    else {
+                        $("#repairAuditTask").attr("disabled", "true");
+                    }
+                    if (data.name == '维保总监审核') {
+                        $("#auditTask").removeAttr("disabled");
+                    }
+                    else {
+                        $("#auditTask").attr("disabled", "true");
+                    }
                     if (data.name == '申请材料') {
                         $("#materialsTask").removeAttr("disabled");
                     }
                     else {
-                        if (data.name == '维保总监审核') {
-                            $("#auditTask").removeAttr("disabled");
-                        }
-                        else {
-                            $("#auditTask").attr("disabled", "true");
-                            $("#materialsTask").attr("disabled", "true");
-                        }
+                        $("#materialsTask").attr("disabled", "true");
                     }
                 }, error: function (XMLHttpRequest) {
                     $("#tips").html(XMLHttpRequest.responseText).appendTo("body");

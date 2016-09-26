@@ -36,8 +36,11 @@
           <sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/待完成任务/申请材料')">
               <button type="button" id="materialsTask" class="btn btn-default pull-left">申请材料</button>
           </sec:authorize>
+          <sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/待完成任务/维保负责人审核')">
+              <button type="button" id="repairAuditTask" class="btn btn-default pull-left">维保负责人审核</button>
+          </sec:authorize>
           <sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/待完成任务/任务审核')">
-              <button type="button" id="auditTask" class="btn btn-default pull-left">任务审核</button>
+              <button type="button" id="auditTask" class="btn btn-default pull-left">总监审核</button>
           </sec:authorize>
       </div>
       <table id="taskTable"
