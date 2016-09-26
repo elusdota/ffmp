@@ -26,12 +26,11 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
     @Autowired
     private TaskDefinitionService taskDefinitionService;
     @Autowired
-    private EquipmentRepository equipmentRepository;
-    @Autowired
     private MrrStandardService mrrStandardService;
 
     @Override
-    @Scheduled(cron = "0 0 22 * * ?")
+    @Scheduled(cron = "0 1 0 1 1-12 ?")
+//    @Scheduled(cron = "0 0 22 * * ?")
     public void buildScheduledTask() {
         maintenanceProjectService.findAll().forEach(maintenanceProject -> {
             MaintenanceTask maintenanceTask = taskRuntimeService.findOneByName(getName(maintenanceProject.getCode()));
@@ -42,7 +41,7 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
     }
 
     @Override
-    @Scheduled(cron = "0 1 0 1 1-12 ?")
+    @Scheduled(cron = "0 10 0 1 1-12 ?")
     public void replacementEquipmentTask() {
         maintenanceProjectService.findAll().forEach(maintenanceProject -> {
             MaintenanceTask maintenanceTask=buildEquipmentTask(maintenanceProject);

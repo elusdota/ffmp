@@ -18,4 +18,5 @@ public interface MaintenanceTaskRepository extends PagingAndSortingRepository<Ma
     Page<MaintenanceTask> findBySuspended(boolean suspended, Pageable pageable);
 
     MaintenanceTask findOneByRepairnumber(String repairnumber);
+    MaintenanceTask findOneByName(String name);
 }
