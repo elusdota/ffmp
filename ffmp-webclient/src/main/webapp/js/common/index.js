@@ -13,4 +13,7 @@ $(document).ready(function () {
             });
         });
     });
-})
+    $("[data-layout='fixed']").click();
+
+  //  $("#main-content").height($(document).height() -100);
+});

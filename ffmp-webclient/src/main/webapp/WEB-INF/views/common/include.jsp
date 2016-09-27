@@ -35,3 +35,5 @@ folder instead of downloading all of them to reduce the load. -->
 <script src="<c:url value='/bower_components/jquery/dist/jquery.min.js'/>"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="<c:url value='/bower_components/AdminLTE/bootstrap/js/bootstrap.min.js'/>"></script>
+<!-- jquery.bootstrap.js 0.0.4 -->
+<script src="<c:url value='/js/common/jquery.bootstrap.min.js'/>"></script>

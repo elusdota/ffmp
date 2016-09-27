@@ -65,135 +65,21 @@
         </div>
     </div>
 
+    <!-- 付款方式列表 -->
     <!-- 模态框（Model） -->
-    <div id="contractModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-lg">
+    <div id="paymentTableModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">创建合同</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="modal-title">付款方式</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <form class="form-horizontal" id="contractForm">
-                            <div class="form-group col-md-6">
-                                <label for="name" class="col-md-4 control-label">合同名称：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" id="name" name="name" placeholder="合同名称"
-                                           required="required">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="customer" class="col-md-4 control-label">客户名称：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" id="customer" name="customer" placeholder="客户名称"
-                                           required="required">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="manager" class="col-md-4 control-label">负责人：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" id="manager" name="manager" placeholder="负责人"
-                                           required="required">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="managerTel" class="col-md-4 control-label">负责人电话：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control"   id="managerTel" name="managerTel"
-                                              placeholder="负责人电话"  required="required">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="payment" class="col-md-4 control-label">付款方式：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" id="payment" name="payment"
-                                           placeholder="付款方式"
-                                           required="required">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="agent" class="col-md-4 control-label">经办人：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" id="agent" name="agent"
-                                           placeholder="经办人"  required="required">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="amount" class="col-md-4 control-label">合同金额：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-
-                                    <div class="input-group">
-                                        <input type="text" class="form-control required number" id="amount" name="amount"
-                                               placeholder="合同金额">
-                                        <div class="input-group-addon">元</div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="TaxNO" class="col-md-4 control-label">税号：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" id="TaxNO" name="TaxNO"
-                                           placeholder="税号"  required="required">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="expiry" class="col-md-4 control-label">合同效期：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <input type="text" data-date-format="yyyy-mm-dd" data-date-end-date="0d"  class="form-control datepicker"
-                                           data-provide="datepicker" id="expiry">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="contractType" class="col-md-4 control-label">合同类别：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <input  type="text" class="form-control"  id="contractType" name="contractType"
-                                           placeholder="合同类别"  required="required">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="address" class="col-md-4 control-label">项目地址：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <input  type="text" class="form-control"  id="address" name="address"
-                                            placeholder="项目地址"  required="required">
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="content" class="col-md-4 control-label">合同内容：</label>
-
-                                <div class="col-md-8">
-                                    <textarea type="text" class="form-control" rows="2"  id="content" name="content"
-                                           placeholder="合同内容"></textarea>
-                                </div>
-                            </div>
-                            <button type="reset" class="btn btn-warning hidden" id="resetContract">重置</button>
-                        </form>
+                        <table id="paymentTable" class="table table-striped"></table>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="createContractdBtn">创建</button>
                 </div>
             </div>
             <!-- /.modal-content -->

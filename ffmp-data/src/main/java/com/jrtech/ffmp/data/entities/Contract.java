@@ -1,12 +1,12 @@
 package com.jrtech.ffmp.data.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by suelmer on 2016/7/5.
@@ -39,21 +39,22 @@ public class Contract extends AbstractNamedObject {
     private Date expiry;
 
     //创建时间
-    @CreatedDate
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private Date createTime;
 
     //客户
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = true)
     private Customer customer;
 
     //付款方式
+    @NotNull
     @OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
     @JoinColumn(name="contract_id")
-    private Set<Payment> paymentSet;
+    private List<Payment> paymentList = new ArrayList<>();
 
     public String getAddress() {
         return address;
@@ -143,11 +144,11 @@ public class Contract extends AbstractNamedObject {
         this.contractType = contractType;
     }
 
-    public Set<Payment> getPaymentSet() {
-        return paymentSet;
+    public List<Payment> getPaymentList() {
+        return paymentList;
     }
 
-    public void setPaymentSet(Set<Payment> paymentSet) {
-        this.paymentSet = paymentSet;
+    public void setPaymentList(List<Payment> paymentList) {
+        this.paymentList = paymentList;
     }
 }

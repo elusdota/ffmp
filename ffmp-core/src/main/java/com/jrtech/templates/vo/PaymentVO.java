@@ -16,13 +16,15 @@ public class PaymentVO {
 
     //票据(普票，专票，收据)
     private String receipt;
-
+    //收款金额
+    private double paymentAmount;
     //是否确认收款
     private boolean confirmation;
 
     public PaymentVO(){}
 
-    public PaymentVO(boolean confirmation, String id, Date paymentDate, int period, String receipt) {
+    public PaymentVO(double paymentAmount,boolean confirmation, String id,Date paymentDate, int period, String receipt) {
+        this.paymentAmount = paymentAmount;
         this.confirmation = confirmation;
         this.id = id;
         this.paymentDate = paymentDate;
@@ -68,5 +70,13 @@ public class PaymentVO {
 
     public void setReceipt(String receipt) {
         this.receipt = receipt;
+    }
+
+    public double getPaymentAmount() {
+        return paymentAmount;
+    }
+
+    public void setPaymentAmount(double paymentAmount) {
+        this.paymentAmount = paymentAmount;
     }
 }

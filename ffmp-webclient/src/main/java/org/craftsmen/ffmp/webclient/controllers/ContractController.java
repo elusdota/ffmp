@@ -42,7 +42,7 @@ public class ContractController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public Contract save(@RequestBody ContractVO contractVO){
-        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建合同，合同名称--"+contractVO.getName());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建合同，合同名称--" + contractVO.getName());
         return contractService.save(contractVO);
     }
 }

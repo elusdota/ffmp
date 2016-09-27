@@ -27,7 +27,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="index"><i class="fa fa-dashboard"></i> 主页</a></li>
-        <li><a href="javascript :history.back(-1);"> 合同管理</a></li>
+        <li><a href="javascript:;" data-url="contract/contract"> 合同管理</a></li>
         <li class="active"> 创建合同信息</li>
     </ol>
 </section>
@@ -90,8 +90,8 @@
                         <div class="col-md-8">
 
                             <div class="input-group">
-                                <input type="text" class="form-control" id="amount" name="amount"
-                                       placeholder="合同金额" required="required">
+                                <input type="text" class="form-control required number" id="amount" name="amount"
+                                       placeholder="合同金额" >
 
                                 <div class="input-group-addon">元</div>
                             </div>
@@ -161,8 +161,20 @@
 
                         <div class="col-md-8">
                             <input type="text" data-date-format="yyyy-mm-dd"
-                                   class="form-control datepicker"
+                                   class="form-control required datepicker"
                                    data-provide="datepicker" id="paymentDate" name="paymentDate">
+                        </div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="paymentAmount" class="col-md-4 control-label">付款金额：<span
+                                class="required">*</span></label>
+
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control required number" id="paymentAmount" name="paymentAmount"
+                                       placeholder="付款金额" >
+                                <div class="input-group-addon">元</div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group col-md-6">
@@ -170,7 +182,7 @@
                                 class="required">*</span></label>
 
                         <div class="col-md-8">
-                            <select class="form-control" id="receipt">
+                            <select class="form-control required" id="receipt">
                                 <option disabled="disabled" selected="selected">--请选择票据类型--</option>
                                 <option value="普票">普票</option>
                                 <option value="专票">专票</option>

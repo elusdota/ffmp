@@ -27,8 +27,22 @@ public class Payment extends AbstractDomainObject {
     //票据(普票，专票，收据)
     private String receipt;
 
+    //收款金额
+    private double paymentAmount;
     //是否确认收款
     private boolean confirmation;
+
+
+    public Payment(){
+
+    }
+    public Payment(double paymentAmount,boolean confirmation, Date paymentDate, int period, String receipt) {
+        this.paymentAmount = paymentAmount;
+        this.confirmation = confirmation;
+        this.paymentDate = paymentDate;
+        this.period = period;
+        this.receipt = receipt;
+    }
 
     public String getReceipt() {
         return receipt;
@@ -52,6 +66,14 @@ public class Payment extends AbstractDomainObject {
 
     public void setPaymentDate(Date paymentDate) {
         this.paymentDate = paymentDate;
+    }
+
+    public double getPaymentAmount() {
+        return paymentAmount;
+    }
+
+    public void setPaymentAmount(double paymentAmount) {
+        this.paymentAmount = paymentAmount;
     }
 
     public boolean isConfirmation() {

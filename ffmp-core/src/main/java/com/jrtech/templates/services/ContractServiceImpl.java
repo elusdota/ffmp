@@ -1,6 +1,7 @@
 package com.jrtech.templates.services;
 
 import com.jrtech.ffmp.data.entities.Contract;
+import com.jrtech.ffmp.data.entities.Payment;
 import com.jrtech.ffmp.data.repositories.ContractRepository;
 import com.jrtech.ffmp.data.repositories.CustomerRepository;
 import com.jrtech.templates.vo.ContractVO;
@@ -10,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by suelmer on 2016/7/18.
@@ -37,7 +40,13 @@ public class ContractServiceImpl implements ContractService {
         contract.setName(contractVO.getName());
         contract.setTaxNO(contractVO.getTaxNO());
         contract.setCreateTime(new Date());
-        contract.setPaymentSet(contractVO.getPaymentSet());
+        List<Payment> payments = new ArrayList<>();
+        contractVO.getPaymentVOList().forEach(item -> {
+            Payment payment = new Payment(item.getPaymentAmount(),item.isConfirmation(), item.getPaymentDate(), item.getPeriod(), item.getReceipt());
+            payments.add(payment);
+
+        });
+        contract.setPaymentList(payments);
         return contractRepository.save(contract);
     }
 

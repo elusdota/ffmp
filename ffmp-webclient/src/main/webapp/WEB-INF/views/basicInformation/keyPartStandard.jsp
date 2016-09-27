@@ -110,8 +110,8 @@
                                         class="required">*</span></label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="proportion" name="proportion"
-                                           placeholder="抽查比例" required="required">
+                                    <input type="text" class="form-control  required number" id="proportion" name="proportion"
+                                           placeholder="抽查比例">
                                 </div>
                             </div>
                             <div class="form-group col-md-6">

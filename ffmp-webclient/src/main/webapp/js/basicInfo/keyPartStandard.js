@@ -87,7 +87,7 @@
             type: 'DELETE',
             success: function (data, XMLHttpRequest, jqXHR) {
                 $keyPartStandardTable.bootstrapTable('refresh');
-                alert("删除成功！");
+                $.messager.alert("删除成功！");
             }, error: function (XMLHttpRequest) {
                 $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
                 $("#message").modal("show");

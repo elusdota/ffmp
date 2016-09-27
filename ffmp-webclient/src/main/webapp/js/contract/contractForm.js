@@ -12,6 +12,7 @@ $(function () {
         columns: [
             {title: "期数", field: "period", align: 'center', formatter: runningFormatter},
             {title: "付款时间", field: "paymentDate", align: 'center', sortable: true},
+            {title: "付款金额(元)", field :"paymentAmount", align: 'center', sortable: true},
             {title: "票据", field: "receipt", align: 'center', sortable: true},
             {title: "确认收款", field: "confirmation", align: 'center', sortable: true, formatter: confirmFormatter},
             {
@@ -27,6 +28,7 @@ $(function () {
     //序号加载
     function runningFormatter(value, row, index) {
         value = index + 1;
+        row.period = value;
         return value;
     }
 
@@ -56,7 +58,9 @@ $(function () {
     $("#addPaymentMethod").click(function () {
         function getPaymentMethodData() {
             return {
+                period:1,
                 paymentDate: $("#paymentDate").val().trim(),
+                paymentAmount :$("#paymentAmount").val().trim(),
                 receipt: $("#receipt").val().trim(),
                 confirmation: $("input[name='confirmation']:checked").val().trim()
             };
@@ -74,7 +78,7 @@ $(function () {
         ajax: {
             url: "rest/customer/findByNameLike",
             dataType: 'json',
-            delay: 250,
+            delay: 1000,
             data: function (params) {
                 return {
                     name: params.term
@@ -134,9 +138,9 @@ $(function () {
                 contractType: $("#contractType").val().trim(),
                 address: $("#address").val().trim(),
                 content: $("#content").val().trim(),
-                paymentSet:paymentTableVal instanceof Array ? paymentTableVal : []
+                paymentVOList:paymentTableVal instanceof Array ? paymentTableVal : []
             };
-
+            console.log(contractVal);
             $.ajax('rest/contract/create', {
                 type: 'POST',
                 data: JSON.stringify(contractVal),

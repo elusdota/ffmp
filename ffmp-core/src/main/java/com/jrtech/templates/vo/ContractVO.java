@@ -1,10 +1,8 @@
 package com.jrtech.templates.vo;
 
 
-import com.jrtech.ffmp.data.entities.Payment;
-
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 /**
  * 合同vo对象
@@ -36,7 +34,7 @@ public class ContractVO {
     //客户
     private String customerId;
     //付款方式
-    private Set<Payment> paymentSet;
+    private List<PaymentVO> paymentVOList;
 
     public String getAddress() {
         return address;
@@ -134,12 +132,12 @@ public class ContractVO {
         this.name = name;
     }
 
-    public Set<Payment> getPaymentSet() {
-        return paymentSet;
+    public List<PaymentVO> getPaymentVOList() {
+        return paymentVOList;
     }
 
-    public void setPaymentSet(Set<Payment> paymentSet) {
-        this.paymentSet = paymentSet;
+    public void setPaymentVOList(List<PaymentVO> paymentVOList) {
+        this.paymentVOList = paymentVOList;
     }
 }
 
