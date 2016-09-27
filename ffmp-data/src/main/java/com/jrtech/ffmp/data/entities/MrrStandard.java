@@ -26,7 +26,7 @@ public class MrrStandard extends AbstractTreeNode<MrrStandard>{
     private double proportion;
     //使用年限
     private int lifetime;
-    //更换年限
+    //维修年限
     private int changetime;
     //根据使用年限还是更换年限计算设备到期时间
     private String maturity;

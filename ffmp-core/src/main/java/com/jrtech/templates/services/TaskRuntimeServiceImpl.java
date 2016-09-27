@@ -49,7 +49,7 @@ public class TaskRuntimeServiceImpl implements TaskRuntimeService {
 
     @Override
     public MaintenanceTask findOneByName(String name) {
-        return null;
+        return repository.findOneByName(name);
     }
 
     @Override

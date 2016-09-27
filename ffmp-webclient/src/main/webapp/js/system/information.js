@@ -26,7 +26,8 @@ $(document).ready(function () {
                 success: function (data, XMLHttpRequest, jqXHR) {
                    alert("密码已经修改请重新登录！");
                     $("#main-content").load("/j_spring_security_logout", function () {
-                        $("#main-content").fadeIn();
+                        //$("#main-content").fadeIn();
+                        window.location.reload();
                     });
                 }, error: function (XMLHttpRequest) {
                     $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
