@@ -116,7 +116,11 @@
 
     window.attachmentOperateEvents = {
         'click .upload': function (e, value, row, index) {
-alert("222")
+            $("#main-content").fadeOut(function () {
+                $("#main-content").load("contract/contractFileUpload",{id:row.id}, function () {
+                    $("#main-content").fadeIn();
+                });
+            });
         }
     };
 });

@@ -43,6 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .antMatchers("/css/**")
                 .permitAll()
+                .antMatchers("/images/**")
+                .permitAll()
                 .antMatchers("/bower_components/**")
                 .permitAll()
                 .antMatchers("/login/**").permitAll()
