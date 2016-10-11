@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by jiangliang on 2016/8/18.
  */
@@ -29,5 +31,10 @@ public class TaskEquipemtServiceImpl implements TaskEquipemtService {
     @Override
     public void delete(String id) {
         repository.delete(id);
+    }
+
+    @Override
+    public List<TaskEquipemt> findByMaintenanceTaskAndDescriptionNot(MaintenanceTask maintenanceTask, String description) {
+        return repository.findByMaintenanceTaskAndDescriptionNot(maintenanceTask, description);
     }
 }

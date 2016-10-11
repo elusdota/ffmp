@@ -136,6 +136,7 @@
                 <div class="form-group col-md-6">
                     <label class="control-label col-lg-5">建筑投入使用日期：<span
                             class="required">*</span></label>
+
                     <div class="input-group input-daterange col-lg-7">
                         <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker"
                                data-provide="datepicker" id="inputDate">
@@ -144,7 +145,10 @@
             </form>
         </div>
         <div class="row">
-            <label for="name" class="col-lg-6 control-label">设备列表：</label>
+            <div class="box-footer">
+                <label for="name" class="col-lg-6 control-label">设备列表：</label>
+                <button type="button" id="printAllCode" class="btn btn-default pull-right">打印所有设备条码</button>
+            </div>
         </div>
         <table id="equipmentTable"
                data-toolbar="#toolbar"

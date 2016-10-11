@@ -27,7 +27,11 @@ public class TaskNodeController {
     @Autowired
     private FlowchartStepsService flowchartStepsService;
     @Autowired
+    private TaskEquipemtService taskEquipemtService;
+    @Autowired
     private AccountService accountService;
+    @Autowired
+    private AutomaticDeploymentServiceImpl automaticDeploymentService;
     private Logger logger = LogManager.getLogger(TaskNodeController.class.getName());
 
     @RequestMapping(method = RequestMethod.GET)
@@ -59,6 +63,9 @@ public class TaskNodeController {
             FlowchartSteps flowchartSteps1 = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(), flowchartSteps.getCatch(historyTaskNode.getDescription()));
             logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建任务执行节点，名称--" + flowchartSteps1.getName() + "。任务名称：" +
                     maintenanceTask.getName());
+            if(maintenanceTask.getTaskDefinition().getName().equals("巡检任务")){
+                buildTask(maintenanceTask);
+            }
             return service.save(bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask, account, flowchartSteps1));
         } else {
             return service.save(historyTaskNode);
@@ -104,5 +111,13 @@ public class TaskNodeController {
     private FlowchartSteps findOneByTaskDefinitionAndParametric(TaskDefinition taskDefinition, String parametric) {
         FlowchartSteps flowchartSteps = flowchartStepsService.findOneByTaskDefinitionAndParametric(taskDefinition, parametric);
         return flowchartSteps;
+    }
+
+    private void buildTask(MaintenanceTask maintenanceTask) {
+        final String[] description = {"维修以下设备："};
+        taskEquipemtService.findByMaintenanceTaskAndDescriptionNot(maintenanceTask, "功能正常").forEach(taskEquipemt -> {
+            description[0] = description[0] + taskEquipemt.getEquipment().getCode()+";";
+        });
+        taskRuntimeService.save(automaticDeploymentService.buildMaintenanceTask(maintenanceTask.getMaintenanceProject(), "维修任务", maintenanceTask.getName() + "-维修", description[0]));
     }
 }

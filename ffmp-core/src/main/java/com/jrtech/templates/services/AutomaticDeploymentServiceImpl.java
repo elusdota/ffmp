@@ -50,7 +50,7 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
         });
     }
 
-    private MaintenanceTask buildMaintenanceTask(MaintenanceProject maintenanceProject,String taskDefinition,String name,String description) {
+    public MaintenanceTask buildMaintenanceTask(MaintenanceProject maintenanceProject,String taskDefinition,String name,String description) {
         MaintenanceTask maintenanceTask = new MaintenanceTask();
         maintenanceTask.setMaintenanceProject(maintenanceProject);
         maintenanceTask.setTaskDefinition(taskDefinitionService.findOneByName(taskDefinition));

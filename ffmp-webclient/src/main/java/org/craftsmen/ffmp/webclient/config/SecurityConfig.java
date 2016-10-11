@@ -3,6 +3,9 @@ package org.craftsmen.ffmp.webclient.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationDetailsSource;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,23 +14,32 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
+
+import javax.servlet.http.HttpServletRequest;
 
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public static final String LOGIN_PROCESSING_URL = "/j_spring_security_check";
+//    @Autowired
+//    private UserDetailsService userDetailsService;
     @Autowired
-    private UserDetailsService userDetailsService;
+    private AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> authenticationDetailsSource;
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())
+//                .and().authenticationProvider(authenticationProvider);
+        auth.authenticationProvider(authenticationProvider);
     }
 
     @Override
@@ -54,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl(LOGIN_PROCESSING_URL)
+                .authenticationDetailsSource(authenticationDetailsSource)
                 .usernameParameter("username") // default is username
                 .passwordParameter("password")
                 .failureUrl("/login?error")
@@ -70,18 +83,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //         .addHeaderWriter(new
 //         XFrameOptionsHeaderWriter(XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN));
     }
+
     /**
      * <b>Remember me</b> implementation.
      *
      * @return The {@link PersistentTokenRepository}.
      */
+
     @Bean
     public PersistentTokenRepository tokenRepository() {
         return new InMemoryTokenRepositoryImpl();
     }
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         PasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder;
     }
+//    @Bean
+//    public AuthenticationProvider authenticationProvider() {
+//        final DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+//        authenticationProvider
+//                .setPasswordEncoder(passwordEncoder());
+//        authenticationProvider.setUserDetailsService(userDetailsService);
+//        return authenticationProvider;
+//    }
 }

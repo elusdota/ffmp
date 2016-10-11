@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by jiangliang on 2016/7/27.
  */
@@ -25,6 +27,11 @@ public class EquipmentServiceImpl implements EquipmentService {
     @Override
     public Page<Equipment> findAll(Specification<Equipment> spec, Pageable pageable) {
         return repository.findAll(spec, pageable);
+    }
+
+    @Override
+    public List<Equipment> findByOwner(MaintenanceProject owner) {
+        return repository.findByOwner(owner);
     }
 
     @Override

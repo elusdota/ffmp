@@ -5,6 +5,7 @@ import com.jrtech.templates.services.UserDetailsUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by jiangliang on 2016/6/22.页面跳转控制器，elus
@@ -25,14 +27,16 @@ public class PageController {
     //登陆
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login(
-            @RequestParam(value = "error", required = false) String error) {
+            @RequestParam(value = "error", required = false) String error,HttpServletRequest rq, HttpServletResponse response) {
         ModelAndView model = new ModelAndView();
         if (error != null) {
 //            model.addObject("serviceException", "用户名或密码错误!");
             if(null!=UserDetailsUtils.getCurrent()){
             logger.error( UserDetailsUtils.getCurrent().getUsername()+":登录失败");
             }
-            throw new ServiceException("用户名或密码错误!","login");
+            HttpSession session = rq.getSession(false);
+            AuthenticationException exception= (AuthenticationException) session.getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
+            throw new ServiceException(exception.getMessage(),"login");
         }
         model.setViewName("login");
         return model;

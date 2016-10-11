@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by jiangliang on 2016/7/27.设备操作控制器,elus
  */
@@ -48,6 +50,11 @@ public class EquipmentController {
         jld.setRows(equipments.getContent());
         logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载设备列表");
         return jld;
+    }
+    @RequestMapping(value = "/findAllList", method = RequestMethod.GET)
+    public List<Equipment> findAllList(@RequestParam("projectId") String projectId) {
+        MaintenanceProject maintenanceProject=maintenanceProjectService.findOne(projectId);
+       return service.findByOwner(maintenanceProject);
     }
 
     /**

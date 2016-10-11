@@ -72,3 +72,35 @@ $(document).ready(function () {
         return index + 1;
     }
 });
+$("#printAllCode").click(function () {
+    printWindow = window.open("", "", "width=450px,height=600px");
+    printWindow.document.write(getStyle() +"<div class='form-group' id='imgbarcode'></div>");
+    $.ajax('rest/equipment/findAllList?projectId=' + $("#id").val().trim(), {
+        type: 'GET',
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (data, XMLHttpRequest, jqXHR) {
+            if(data.length>0){
+                data.forEach(function(e){
+                    var name =e.name;
+                    var labelName="<table><tr><td style='text-align:center'><label>"+name+"</label></td></tr><tr> <td>";
+                    var el =   printWindow.document.getElementById('imgbarcode');
+                    el.innerHTML=labelName+"<img src="+"barcode?fmt=JPEG&msg="+e.code+" height='80px' width='190px'>"+"</td></tr> </table></div>";
+                    printWindow.print();
+                });
+                printWindow.close();
+            }else{
+                printWindow.close();
+            }
+        }, error: function (XMLHttpRequest) {
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
+        }
+    });
+});
+function getStyle(){
+    var style= "<style type='text/css'  media='print'> "+ "@page {margin: 0mm;width=40mm,height=25mm}"+
+        "html {background-color: #fff8f8;margin: 0px;}"+
+        "body {border: solid 0px blue;margin: 0mm 0mm 0mm 0mm;}"+"</style>";
+    return style;
+}

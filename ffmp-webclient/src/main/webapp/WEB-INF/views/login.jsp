@@ -38,7 +38,7 @@
     <div class="form-group has-feedback">
         <div class="row">
           <div class="col-md-6">
-            <input type="text" class="form-control" placeholder="验证码">
+            <input type="text" name="token" class="form-control" placeholder="验证码">
           </div>
           <div class="col-md-6">
              <img src="patchca.png" id="patchcaImage" style="cursor:pointer"  onclick="verifyCode();"/>
