@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+
 /**
  * Created by jiangliang on 2016/10/10.
  */
@@ -34,6 +35,9 @@ public class AountAuthenticationProvider implements AuthenticationProvider {
         // System.out.println(details); details.getRemoteAddress(); details.getSessionId(); details.getToken();
         // 下面是验证逻辑，验证通过则返回UsernamePasswordAuthenticationToken，
         // 否则，可直接抛出错误（AuthenticationException的子类，在登录验证不通过重定向至登录页时可通过session.SPRING_SECURITY_LAST_EXCEPTION.message获取具体错误提示信息）
+        if (null != details.getAgent()) {
+            return passwordAuthenticationToken(authentication, userDetails);
+        }
         String code = details.getToken();
         if (code.equals(details.getRawToken())) {
             return passwordAuthenticationToken(authentication, userDetails);

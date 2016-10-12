@@ -15,12 +15,12 @@ public class AountWebAuthenticationDetails extends WebAuthenticationDetails {
     private static final long serialVersionUID = 6975601077710753878L;
     private final String token;
     private final String rawToken;
-    private boolean markes;
+    private final String agent;
 
     public AountWebAuthenticationDetails(HttpServletRequest request) {
         super(request);
         token = request.getParameter("token");
-        String agent = request.getHeader("mobile");
+        agent = request.getHeader("mobile");
         HttpSession session = request.getSession();
         rawToken= (String) session.getAttribute("PATCHCA");
 
@@ -28,6 +28,10 @@ public class AountWebAuthenticationDetails extends WebAuthenticationDetails {
 
     public String getToken() {
         return token;
+    }
+
+    public String getAgent() {
+        return agent;
     }
 
     public String getRawToken() {
