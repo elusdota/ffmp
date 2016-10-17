@@ -46,5 +46,10 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>4.3.10.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>cn.featherfly</groupId>
+			<artifactId>bccs-api</artifactId>
+			<version>3.0.1</version>
+		</dependency>
 	</dependencies>
 </project>
