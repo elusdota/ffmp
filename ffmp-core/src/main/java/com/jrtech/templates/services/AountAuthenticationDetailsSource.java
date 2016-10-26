@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * Created by jiangliang on 2016/10/8.
+ * Created by jiangliang on 2016/10/8.登录数据封装，elus
  */
 @Component
 public class AountAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, WebAuthenticationDetails> {

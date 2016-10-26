@@ -15,7 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by jiangliang on 2016/10/10.
+ * Created by jiangliang on 2016/10/10.安全登录自定义验证，elus
  */
 @Component
 public class AountAuthenticationProvider implements AuthenticationProvider {
