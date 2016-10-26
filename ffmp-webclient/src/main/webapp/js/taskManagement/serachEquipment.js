@@ -49,7 +49,7 @@ $(document).ready(function () {
 })
 $("#printCode").click(function () {
     var row = $('#equipmentTable').bootstrapTable('getSelections')[0];
-    $("#imgbarcode").html("<img src="+"barcode?fmt=JPEG&msg="+row.code+" height='80px' width='190px'>");
+    $("#imgbarcode").html("<img src="+"barcode?fmt=JPEG&msg="+row.code+" height='68px' width='190px'>");
     //$("#imgbarcode").load("barcode?fmt=JPEG&msg="+row.code, function () {
     //    //$("#main-content").fadeIn();
     //});,top=0,left=0

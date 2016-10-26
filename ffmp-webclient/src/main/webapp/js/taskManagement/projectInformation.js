@@ -81,14 +81,17 @@ $("#printAllCode").click(function () {
         dataType: 'json',
         success: function (data, XMLHttpRequest, jqXHR) {
             if(data.length>0){
+                var html='<table>';
                 data.forEach(function(e){
                     var name =e.name;
-                    var labelName="<table><tr><td style='text-align:center'><label>"+name+"</label></td></tr><tr> <td>";
-                    var el =   printWindow.document.getElementById('imgbarcode');
-                    el.innerHTML=labelName+"<img src="+"barcode?fmt=JPEG&msg="+e.code+" height='80px' width='190px'>"+"</td></tr> </table></div>";
-                    printWindow.print();
+                    var labelName="<tr><td style='text-align:center'><label>"+name+"</label></td></tr><tr> <td>";
+                    html=html+labelName+"<img src="+"barcode?fmt=JPEG&msg="+e.code+" height='68px' width='190px'>"
+                        +"</td></tr> ";
                 });
-                printWindow.close();
+                var el =   printWindow.document.getElementById('imgbarcode');
+                el.innerHTML=html+'</table></div>';
+                printWindow.print();
+                //printWindow.close();
             }else{
                 printWindow.close();
             }

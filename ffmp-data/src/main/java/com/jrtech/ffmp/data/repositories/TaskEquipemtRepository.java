@@ -16,4 +16,5 @@ import java.util.List;
 public interface TaskEquipemtRepository extends CrudRepository<TaskEquipemt, String> {
     Page<TaskEquipemt> findByMaintenanceTask(MaintenanceTask maintenanceTask,Pageable pageable);
     List<TaskEquipemt> findByMaintenanceTaskAndDescriptionNot(MaintenanceTask maintenanceTask,String description);
+    List<TaskEquipemt> findByMaintenanceTask(MaintenanceTask maintenanceTask);
 }

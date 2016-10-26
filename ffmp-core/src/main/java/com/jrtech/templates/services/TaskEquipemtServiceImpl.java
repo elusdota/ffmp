@@ -37,4 +37,9 @@ public class TaskEquipemtServiceImpl implements TaskEquipemtService {
     public List<TaskEquipemt> findByMaintenanceTaskAndDescriptionNot(MaintenanceTask maintenanceTask, String description) {
         return repository.findByMaintenanceTaskAndDescriptionNot(maintenanceTask, description);
     }
+
+    @Override
+    public List<TaskEquipemt> findByMaintenanceTask(MaintenanceTask maintenanceTask) {
+        return repository.findByMaintenanceTask(maintenanceTask);
+    }
 }

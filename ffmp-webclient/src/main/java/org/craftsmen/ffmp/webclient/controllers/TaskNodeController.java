@@ -52,6 +52,17 @@ public class TaskNodeController {
         MaintenanceTask maintenanceTask = taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId());
         //获取当前操作步骤
         FlowchartSteps flowchartSteps = getShtep(historyTaskNodeVO.getMaintenanceTaskId());
+        if(flowchartSteps.getName().equals("巡检")){
+            List<TaskEquipemt> taskEquipemts=taskEquipemtService.findByMaintenanceTask(maintenanceTask);
+           int totals= maintenanceTask.getMaintenanceProject().getEquipments().size();
+            if(totals>0){
+                if(taskEquipemts.size()/totals<0.09){
+                    throw new ServiceException("巡检设备必须超过设备总数的9%，目前只有"+taskEquipemts.size()/totals*100+"%");
+                }
+            }else {
+                throw new ServiceException("该项目没有设备，请先录入设备！");
+            }
+        }
         HistoryTaskNode historyTaskNode = bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask, account, flowchartSteps);
         logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建任务执行节点，名称--" + flowchartSteps.getName() + "。任务名称：" +
                 maintenanceTask.getName());
