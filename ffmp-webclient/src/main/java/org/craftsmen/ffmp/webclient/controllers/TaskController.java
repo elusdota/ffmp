@@ -1,11 +1,18 @@
 package org.craftsmen.ffmp.webclient.controllers;
 
+import com.baidu.yun.push.exception.PushClientException;
+import com.baidu.yun.push.exception.PushServerException;
 import com.jrtech.ffmp.data.entities.HistoryTaskNode;
 import com.jrtech.ffmp.data.entities.MaintenanceProject;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
 import com.jrtech.ffmp.data.entities.TaskDefinition;
 import com.jrtech.templates.services.*;
-import com.jrtech.templates.vo.*;
+import com.jrtech.templates.vo.HistoryTaskSpecs;
+import com.jrtech.templates.vo.JSONListData;
+import com.jrtech.templates.vo.TableGetDataParameters;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+import net.sf.json.util.CycleDetectionStrategy;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +20,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -35,6 +43,9 @@ public class TaskController {
     private RepairFormService repairFormService;
     @Autowired
     private MaintenanceProjectService maintenanceProjectService;
+    @Autowired
+    private AndroidPushMsgToTag androidPushMsgToTag;
+
     private Logger logger = LogManager.getLogger(TaskController.class.getName());
 
     @RequestMapping(value = "/findRunTask", method = RequestMethod.POST)
@@ -73,13 +84,61 @@ public class TaskController {
         if(maintenanceProject==null){
             throw new ServiceException("项目不存在，请重新输入！");
         }
+        String userName = UserDetailsUtils.getCurrent().getUsername();
         maintenanceTask.setMaintenanceProject(maintenanceProject);
         maintenanceTask.setTaskDefinition(taskDefinition);
         maintenanceTask.setCustomer(maintenanceProject.getCustomer());
         maintenanceTask.setDelegate(maintenanceProject.getDelegate());
-        maintenanceTask.setOwner(accountService.findOneByName(UserDetailsUtils.getCurrent().getUsername()));
-        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建任务，名称--" + maintenanceTask.getName());
-        return service.save(maintenanceTask);
+        maintenanceTask.setOwner(accountService.findOneByName(userName));
+        String maintenanceTaskName = maintenanceTask.getName();
+
+
+        MaintenanceTask savedMaintenanceTask = service.save(maintenanceTask);
+
+
+        if(savedMaintenanceTask == null){
+            logger.info(userName + ":创建任务失败，名称--" + maintenanceTaskName);
+            throw new ServiceException("创建维保任务失败");
+        }else{
+            //创建 Android的通知
+            JsonConfig jsonConfig = new JsonConfig();
+            jsonConfig.setExcludes(new String[]{"delegate", "taskDefinition", "owner"});
+            jsonConfig.setIgnoreDefaultExcludes(false);
+            jsonConfig.setCycleDetectionStrategy(CycleDetectionStrategy.LENIENT);
+            JSONObject notification = new JSONObject();
+            notification.put("title", maintenanceTaskName);
+            notification.put("description",maintenanceTask.getDescription());
+            notification.put("notification_builder_id", 0);
+            notification.put("notification_basic_style", 4);
+            notification.put("open_type", 2);
+            notification.put("pkg_content", "com.jrtech.ffmp.activity.ReadyTaskDetailActivity");
+
+            SimpleDateFormat dateformat=new SimpleDateFormat("yyyy-MM-dd");
+            JSONObject jsonCustormCont =  new JSONObject();
+            jsonCustormCont.put("id",savedMaintenanceTask.getId());
+            jsonCustormCont.put("name",savedMaintenanceTask.getName());
+            jsonCustormCont.put("description",savedMaintenanceTask.getDescription());
+            jsonCustormCont.put("startdate",dateformat.format(savedMaintenanceTask.getStartdate()));
+            jsonCustormCont.put("enddate",dateformat.format(savedMaintenanceTask.getEnddate()));
+            jsonCustormCont.put("repairnumber",savedMaintenanceTask.getRepairnumber());
+            JSONObject customerJsonObj =  new JSONObject();
+            customerJsonObj.put("id",savedMaintenanceTask.getCustomer().getId());
+            customerJsonObj.put("name",savedMaintenanceTask.getCustomer().getName());
+            JSONObject maintenanceProjectJsonObj =  new JSONObject();
+            maintenanceProjectJsonObj.put("id",savedMaintenanceTask.getMaintenanceProject().getId());
+            maintenanceProjectJsonObj.put("name",savedMaintenanceTask.getMaintenanceProject().getName());
+            jsonCustormCont.put("customer",customerJsonObj);
+            jsonCustormCont.put("maintenanceProject",maintenanceProjectJsonObj);
+            notification.put("custom_content", jsonCustormCont);
+
+            try {
+                androidPushMsgToTag.pushMsgToAll(notification.toString());
+            } catch (PushClientException | PushServerException e) {
+                e.printStackTrace();
+            }
+        }
+        logger.info(userName + ":创建任务，名称--" + maintenanceTaskName);
+        return savedMaintenanceTask;
     }
 
     @RequestMapping(method = RequestMethod.PUT)

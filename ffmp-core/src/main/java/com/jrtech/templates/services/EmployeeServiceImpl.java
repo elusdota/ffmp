@@ -34,4 +34,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee findOne(String id) {
         return repository.findOne(id);
     }
+
+    @Override
+    public Employee findOneByCode(String code) {
+        return repository.findOneByCode(code);
+    }
 }

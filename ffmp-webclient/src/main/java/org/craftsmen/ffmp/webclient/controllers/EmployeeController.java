@@ -64,4 +64,9 @@ public class EmployeeController {
     public Employee get(@RequestParam("id") String id) {
         return service.findOne(id);
     }
+
+    @RequestMapping(value = "/findByCode",method = RequestMethod.GET)
+    public Employee getByCode(@RequestParam("code") String code) {
+        return service.findOneByCode(code);
+    }
 }

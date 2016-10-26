@@ -8,15 +8,17 @@ import com.baidu.yun.push.constants.BaiduPushConstants;
 import com.baidu.yun.push.exception.PushClientException;
 import com.baidu.yun.push.exception.PushServerException;
 import com.baidu.yun.push.model.*;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by jiangliang on 2016/10/13.
  */
+@Service
 public class AndroidPushMsgToTag {
-    private final String apiKey = "xxxxxxxxxxxxxxxxxxxx";
-    private final String secretKey = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    private final String apiKey = "QwHmF9N1voks0WSUGZGfP2Sy";
+    private final String secretKey = "F5mw55h0GXifFzGki2xRALB9tjSBPg71";
 
     /**
      * 普通组播
@@ -41,7 +43,7 @@ public class AndroidPushMsgToTag {
                     .addMsgExpires(new Integer(3600))
                     .addMessageType(1)
                             // .addSendTime(System.currentTimeMillis() / 1000 + 70).
-                    .addMessage("{\"title\":\"TEST\",\"description\":\"Hello Baidu push!\"}")
+                    .addMessage(msg)
                     .addDeviceType(3);
             // 5. http request
             PushMsgToTagResponse response = pushClient.pushMsgToTag(request);
@@ -166,4 +168,48 @@ public class AndroidPushMsgToTag {
             }
         }
     }
+
+    public void  pushMsgToAll(String msg ) throws PushClientException,PushServerException{
+        PushKeyPair pair = new PushKeyPair(apiKey, secretKey);
+        BaiduPushClient pushClient = new BaiduPushClient(pair,
+                BaiduPushConstants.CHANNEL_REST_URL);
+
+        pushClient.setChannelLogHandler(new YunLogHandler() {
+            @Override
+            public void onHandle(YunLogEvent event) {
+                System.out.println(event.getMessage());
+            }
+        });
+
+        try {
+            // 4. specify request arguments
+            PushMsgToAllRequest request = new PushMsgToAllRequest()
+                    .addMsgExpires(new Integer(3600)).addMessageType(1)
+                    .addMessage(msg)
+                            // 设置定时推送时间，必需超过当前时间一分钟，单位秒.实例70秒后推送
+                    .addSendTime(System.currentTimeMillis() / 1000 + 70).
+                            addDeviceType(3);
+            // 5. http request
+            PushMsgToAllResponse response = pushClient.pushMsgToAll(request);
+            // Http请求返回值解析
+            System.out.println("msgId: " + response.getMsgId() + ",sendTime: "
+                    + response.getSendTime() + ",timerId: "
+                    + response.getTimerId());
+        } catch (PushClientException e) {
+            if (BaiduPushConstants.ERROROPTTYPE) {
+                throw e;
+            } else {
+                e.printStackTrace();
+            }
+        } catch (PushServerException e) {
+            if (BaiduPushConstants.ERROROPTTYPE) {
+                throw e;
+            } else {
+                System.out.println(String.format(
+                        "requestId: %d, errorCode: %d, errorMsg: %s",
+                        e.getRequestId(), e.getErrorCode(), e.getErrorMsg()));
+            }
+        }
+    }
+
 }

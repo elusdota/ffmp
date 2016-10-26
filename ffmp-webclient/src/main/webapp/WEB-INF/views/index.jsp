@@ -55,7 +55,7 @@
 <script src="<c:url value='/bower_components/AdminLTE/dist/js/demo.js'/>"></script>
 <script src="<c:url value='/js/common/navigantion.js'/>"></script>
 <script src="<c:url value='/js/common/index.js'/>"></script>
-<script src="http://api.map.baidu.com/api?v=2.0&ak=3PN2GjPlL6SAb9fksFgrMGl0WiYqhTRE" type="text/javascript"></script>
+<script src="http://api.map.baidu.com/api?v=2.0&ak=d5C8F51QjuheQAZxGN34oEc0s3zdvP2S" type="text/javascript"></script>
 <script type="text/javascript">
     var para = {
         offset: 0,
