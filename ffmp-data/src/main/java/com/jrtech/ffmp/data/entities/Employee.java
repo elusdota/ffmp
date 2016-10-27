@@ -16,16 +16,16 @@ import java.util.Date;
 public class Employee extends AbstractNamedObject {
     //性别
     private String sex;
-    //  身份证
-    private String cardid;
+//    //  身份证
+//    private String cardid;
     //电话
     private String phone;
     //邮箱
     private String email;
     //职务
     private String role;
-    //证书
-    private String certificate;
+//    //证书
+//    private String certificate;
     //编码
     private String code;
     //职称
@@ -36,8 +36,8 @@ public class Employee extends AbstractNamedObject {
     private Date date;
     //是否在职 true:在职
     private boolean work;
-    //证书类型
-    private String type;
+//    //证书类型
+//    private String type;
 
     public String getSex() {
         return sex;
@@ -47,13 +47,13 @@ public class Employee extends AbstractNamedObject {
         this.sex = sex;
     }
 
-    public String getCardid() {
-        return cardid;
-    }
-
-    public void setCardid(String cardid) {
-        this.cardid = cardid;
-    }
+//    public String getCardid() {
+//        return cardid;
+//    }
+//
+//    public void setCardid(String cardid) {
+//        this.cardid = cardid;
+//    }
 
     public String getPhone() {
         return phone;
@@ -79,13 +79,13 @@ public class Employee extends AbstractNamedObject {
         this.role = role;
     }
 
-    public String getCertificate() {
-        return certificate;
-    }
-
-    public void setCertificate(String certificate) {
-        this.certificate = certificate;
-    }
+//    public String getCertificate() {
+//        return certificate;
+//    }
+//
+//    public void setCertificate(String certificate) {
+//        this.certificate = certificate;
+//    }
 
     public String getCode() {
         return code;
@@ -119,11 +119,11 @@ public class Employee extends AbstractNamedObject {
         this.work = work;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+//    public String getType() {
+//        return type;
+//    }
+//
+//    public void setType(String type) {
+//        this.type = type;
+//    }
 }

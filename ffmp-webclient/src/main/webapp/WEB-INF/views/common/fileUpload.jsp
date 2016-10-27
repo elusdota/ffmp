@@ -53,7 +53,7 @@
                 <!-- Redirect browsers with JavaScript disabled to the origin page -->
                 <noscript><input type="hidden" name="redirect" value="<%=request.getContextPath()%>/contract/contractFileUpload">
                 </noscript>
-                <input type="hidden" class="form-control" id="contractId"
+                <input type="hidden" class="form-control" id="documentid"
                        name="contractId" value="${param.id}">
                 <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
                 <div class="row fileupload-buttonbar">
@@ -224,7 +224,7 @@
 <!-- The File Upload user interface plugin -->
 <script src="<c:url value='/bower_components/blueimp-file-upload/js/jquery.fileupload-ui.js'/>"></script>
 <!-- The main application script -->
-<script src="<c:url value='/js/contract/fileupload.js'/>"></script>
+<script src="<c:url value='/js/common/fileupload.js'/>"></script>
 <!-- The XDomainRequest Transport is included for cross-domain file deletion for IE 8 and IE 9 -->
 <!--[if (gte IE 8)&(lt IE 10)]>
 <script src="<c:url value='/bower_components/blueimp-file-upload/js/cors/jquery.xdr-transport.js'/>"></script>

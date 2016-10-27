@@ -117,7 +117,7 @@
     window.attachmentOperateEvents = {
         'click .upload': function (e, value, row, index) {
             $("#main-content").fadeOut(function () {
-                $("#main-content").load("contract/contractFileUpload",{id:row.id}, function () {
+                $("#main-content").load("common/fileUpload",{id:row.id}, function () {
                     $("#main-content").fadeIn();
                 });
             });

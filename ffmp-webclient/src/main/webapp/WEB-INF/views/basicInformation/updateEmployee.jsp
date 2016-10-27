@@ -67,15 +67,15 @@
             </select>
           </div>
         </div>
-        <div class="form-group col-md-4">
-          <label for="cardid" class="col-lg-6 control-label">身份证：<span
-                  class="required">*</span></label>
+        <%--<div class="form-group col-md-4">--%>
+          <%--<label for="cardid" class="col-lg-6 control-label">身份证：<span--%>
+                  <%--class="required">*</span></label>--%>
 
-          <div class="col-lg-6">
-            <input type="text" class="form-control" id="cardid" name="cardid" placeholder="身份证"
-                   required="required">
-          </div>
-        </div>
+          <%--<div class="col-lg-6">--%>
+            <%--<input type="text" class="form-control" id="cardid" name="cardid" placeholder="身份证"--%>
+                   <%--required="required">--%>
+          <%--</div>--%>
+        <%--</div>--%>
         <div class="form-group col-md-4">
           <label for="phone" class="col-lg-6 control-label">电话：<span
                   class="required">*</span></label>
@@ -104,20 +104,20 @@
                    required="required">
           </div>
         </div>
-        <div class="form-group col-md-4">
-          <label for="certificate" class="col-lg-6 control-label">证书：</label>
+        <%--<div class="form-group col-md-4">--%>
+          <%--<label for="certificate" class="col-lg-6 control-label">证书：</label>--%>
 
-          <div class="col-lg-6">
-            <input type="text" class="form-control" id="certificate" name="certificate" placeholder="证书">
-          </div>
-        </div>
-        <div class="form-group col-md-4">
-          <label for="type" class="col-lg-6 control-label">证书类型：</label>
+          <%--<div class="col-lg-6">--%>
+            <%--<input type="text" class="form-control" id="certificate" name="certificate" placeholder="证书">--%>
+          <%--</div>--%>
+        <%--</div>--%>
+        <%--<div class="form-group col-md-4">--%>
+          <%--<label for="type" class="col-lg-6 control-label">证书类型：</label>--%>
 
-          <div class="col-lg-6">
-            <input type="text" class="form-control" id="type" name="type" placeholder="证书类型">
-          </div>
-        </div>
+          <%--<div class="col-lg-6">--%>
+            <%--<input type="text" class="form-control" id="type" name="type" placeholder="证书类型">--%>
+          <%--</div>--%>
+        <%--</div>--%>
         <div class="form-group col-md-4">
           <label for="professional" class="col-lg-6 control-label">职称：</label>
 

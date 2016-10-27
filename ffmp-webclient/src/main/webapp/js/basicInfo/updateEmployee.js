@@ -2,6 +2,9 @@
  * Created by jiangliang on 2016/8/11.
  */
 $(document).ready(function () {
+    $('.datepicker').datepicker({
+        language: 'zh-CN'
+    });
     var id = $("#id").val().trim();
     $.ajax('rest/employee?id=' + id, {
         type: 'GET',
@@ -11,12 +14,12 @@ $(document).ready(function () {
             $("#name").val(data.name);
             $("#code").val(data.code);
             $("#sex").val(data.sex);
-            $("#cardid").val(data.cardid);
+            //$("#cardid").val(data.cardid);
             $("#phone").val(data.phone);
             $("#email").val(data.email);
             $("#role").val(data.role);
-            $("#certificate").val(data.certificate);
-            $("#type").val(data.type);
+            //$("#certificate").val(data.certificate);
+            //$("#type").val(data.type);
             $("#professional").val(data.professional);
             $("#date").val(data.date);
             //$("#work").val(data.work);
@@ -56,11 +59,11 @@ function getSaveData() {
         name: $("#name").val().trim(),
         code: $("#code").val().trim(),
         sex: $("#sex").val().trim(),
-        cardid: $("#cardid").val().trim(),
+        //cardid: $("#cardid").val().trim(),
         phone: $("#phone").val().trim(),
         email: $("#email").val().trim(),
         role: $("#role").val().trim(),
-        certificate: $("#certificate").val().trim(),
+        //certificate: $("#certificate").val().trim(),
         professional: $("#professional").val().trim(),
         date: $("#date").val().trim(),
         work: $("#work").val().trim()

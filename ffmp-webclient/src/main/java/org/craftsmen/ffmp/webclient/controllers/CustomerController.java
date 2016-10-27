@@ -61,7 +61,7 @@ public class CustomerController {
             role.setOrganization(organizationService.findRoot());
             roleService.save(role);
         }
-        Account account = new Account(customer.getName(), new BCryptPasswordEncoder().encode(customer.getTelephone()));
+        Account account = new Account("C"+codeService.getCustomerNum(), new BCryptPasswordEncoder().encode(customer.getTelephone()));
         account.getRoles().add(role);
         accountService.save(account);
         customer.setAccount(account);//

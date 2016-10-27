@@ -355,4 +355,12 @@ public class PageController {
         model.setViewName("taskManagement/material");
         return model;
     }
+    //文件管理
+    @RequestMapping("/common/fileUpload")
+    public ModelAndView fileUpload(@RequestParam("id") String id) throws Exception {
+        ModelAndView model = new ModelAndView();
+        model.addObject("id", id);
+        model.setViewName("common/fileUpload");
+        return model;
+    }
 }

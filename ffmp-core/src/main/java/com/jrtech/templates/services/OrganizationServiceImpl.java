@@ -38,20 +38,26 @@ public class OrganizationServiceImpl implements OrganizationService {
 	@Override
 	public void delete(String id) {
 		Assert.hasText(id);
-		
+
 		Organization org = orgRepository.findOne(id);
 		if (org == null) {
 			return;
 		}
-		
+
+		if(org.getRoles().size()>0){
+			return;
+//			System.out.println(org.getRoles().size()+"----------");
+//			throw new ServiceException("请先删除该组织机构下属的角色！");
+		}
 		if (null != org.getParent()) {
 			Organization parent = org.getParent();
 			parent.getChildren().remove(org);
+//			org.getRoles().clear();
+//			orgRepository.save(org);
 			orgRepository.save(parent);
 		} else {
 			orgRepository.delete(id);
 		}
-		
 	}
 	
 	/* (non-Javadoc)

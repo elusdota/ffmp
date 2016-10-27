@@ -7,6 +7,7 @@ $(document).ready(function () {
     });
     $("#updateEmployee").attr("disabled", "true");
     $("#deleteEmployee").attr("disabled", "true");
+    $("#documentManager").attr("disabled", "true");
     $('#employeeTable').bootstrapTable({
         method: 'POST',
         url: 'rest/employee/findAll',
@@ -18,10 +19,12 @@ $(document).ready(function () {
         onCheck: function (row) {
             $("#updateEmployee").removeAttr("disabled");
             $("#deleteEmployee").removeAttr("disabled");
+            $("#documentManager").removeAttr("disabled");
         },
         onUncheck: function (row) {
             $("#updateEmployee").attr("disabled", "true");
             $("#deleteEmployee").attr("disabled", "true");
+            $("#documentManager").attr("disabled", "true");
         },
         queryParams: function (params) {
             var fin = {
@@ -40,12 +43,12 @@ $(document).ready(function () {
             , {title: "名称", field: "name", sortable: true}
             , {title: "编号", field: "code", sortable: true}
             , {title: "性别", field: "sex", sortable: true}
-            , {title: "身份证", field: "cardid", sortable: true}
+            //, {title: "身份证", field: "cardid", sortable: true}
             , {title: "电话", field: "phone", sortable: true}
             , {title: "邮箱", field: "email", sortable: true}
             , {title: "职务", field: "role", sortable: true}
-            , {title: "证书", field: "certificate", sortable: true}
-            , {title: "证书类型", field: "type", sortable: true}
+            //, {title: "证书", field: "certificate", sortable: true}
+            //, {title: "证书类型", field: "type", sortable: true}
             , {title: "职称", field: "professional", sortable: true}
             , {title: "入职时间", field: "date", sortable: true}
             , {
@@ -90,4 +93,10 @@ $("#deleteEmployee").click(function () {
             $("#message").modal("show");
         }
     });
+});
+$("#documentManager").click(function () {
+    var data = $('#employeeTable').bootstrapTable('getSelections');
+        $("#main-content").load("common/fileUpload",{id:data[0].id}, function () {
+            $("#main-content").fadeIn();
+        });
 });

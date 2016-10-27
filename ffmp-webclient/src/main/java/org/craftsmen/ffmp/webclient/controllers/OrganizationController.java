@@ -55,7 +55,7 @@ public class OrganizationController {
         Organization organization1 = organization.getOrganization();
         organization1.setParent(service.findOne(organization.getParentId()));
         if (!service.isDuplicateNameOnSameLevel(organization1)) {
-            logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建组织机构，名称---"+organization.getOrganization().getName());
+            logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建组织机构，名称---" + organization.getOrganization().getName());
             return service.save(organization1);
         } else {
             throw new ServiceException("该组织机构已经存在");
@@ -80,9 +80,11 @@ public class OrganizationController {
      */
     @RequestMapping(method = RequestMethod.PUT)
     public Organization updateOrganization(@RequestBody Organization organization) {
-        service.findOne(organization.getId());
-        organization.setParent(service.findOne(organization.getId()).getParent());
-        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":修改组织机构，名称---"+organization.getName());
-        return service.save(organization);
+        Organization organization1 = service.findOne(organization.getId());
+        organization1.setName(organization.getName());
+        organization1.setType(organization.getType());
+//        organization.setParent(service.findOne(organization.getId()).getParent());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":修改组织机构，名称---" + organization1.getName());
+        return service.save(organization1);
     }
 }

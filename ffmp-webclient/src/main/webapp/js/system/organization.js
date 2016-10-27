@@ -55,6 +55,23 @@ $("#updateOrganization").click(function () {
     });
     $("#roleModel").modal("show");
 });
+//删除组织机构
+$("#deleteOrganization").click(function () {
+    var dataselect = $('#organization').treeview('getSelected');
+    $.ajax('rest/organization?id='+dataselect[0].id, {
+        type: 'DELETE',
+        async: false,
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        mimeType: 'application/json',
+        success: function (data, XMLHttpRequest, jqXHR) {
+            getOrganizationTree();
+        }, error: function (XMLHttpRequest) {
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
+        }
+    });
+});
 //数据提交事件定义
 $("#submitData").click(function () {
     var id = $("#organizationId").val();

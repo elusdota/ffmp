@@ -42,6 +42,9 @@
           <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/组织机构管理/修改机构')">
             <button type="button" id="updateOrganization" class="btn btn-default pull-right">修改机构</button>
           </sec:authorize>
+          <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/组织机构管理/删除机构')">
+            <button type="button" id="deleteOrganization" class="btn btn-default pull-right">删除机构</button>
+          </sec:authorize>
         </div>
         <div id="organization"/>
       </div>
