@@ -142,6 +142,33 @@
                         </select>
                     </div>
                 </div>
+                <div class="form-group col-md-4">
+                    <label for="diploma" class="col-lg-6 control-label">学历：<span
+                            class="required">*</span></label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="diploma" name="diploma" placeholder="学历"
+                               required="required">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="school" class="col-lg-6 control-label">毕业学校：<span
+                            class="required">*</span></label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="school" name="school" placeholder="毕业学校"
+                               required="required">
+                    </div>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="specializing" class="col-lg-6 control-label">专业：<span
+                            class="required">*</span></label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="specializing" name="specializing" placeholder="专业"
+                               required="required">
+                    </div>
+                </div>
             </form>
         </div>
         <div id="page-selection"></div>

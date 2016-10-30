@@ -18,7 +18,9 @@ $(document).ready(function () {
         clickToSelect: true,
         onCheck: function (row) {
             $("#updateEmployee").removeAttr("disabled");
-            $("#deleteEmployee").removeAttr("disabled");
+            if(row.work){
+                $("#deleteEmployee").removeAttr("disabled");
+            }
             $("#documentManager").removeAttr("disabled");
         },
         onUncheck: function (row) {
@@ -46,6 +48,9 @@ $(document).ready(function () {
             //, {title: "身份证", field: "cardid", sortable: true}
             , {title: "电话", field: "phone", sortable: true}
             , {title: "邮箱", field: "email", sortable: true}
+            , {title: "学历", field: "diploma", sortable: true}
+            , {title: "毕业学校", field: "school", sortable: true}
+            , {title: "专业", field: "specializing", sortable: true}
             , {title: "职务", field: "role", sortable: true}
             //, {title: "证书", field: "certificate", sortable: true}
             //, {title: "证书类型", field: "type", sortable: true}

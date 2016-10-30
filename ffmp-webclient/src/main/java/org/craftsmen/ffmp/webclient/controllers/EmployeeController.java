@@ -41,7 +41,8 @@ public class EmployeeController {
         if (null == accountService.findOneByName(employee.getCode())) {
             String password = new BCryptPasswordEncoder().encode("123456");
             Account account = new Account(employee.getCode(), password);
-            accountService.save(account);
+//            accountService.save(account);
+            employee.setAccount(account);
         } else {
             throw new ServiceException("该职工编码所创建的账户已经存在，无法利用该职工编码为其创建账户！");
         }
@@ -59,6 +60,9 @@ public class EmployeeController {
         employee1.setPhone(employee.getPhone());
         employee1.setEmail(employee.getEmail());
         employee1.setRole(employee.getRole());
+        employee1.setSchool(employee.getSchool());
+        employee1.setSpecializing(employee.getSpecializing());
+        employee1.setDiploma(employee.getDiploma());
 //        employee1.setCertificate(employee.getCertificate());
         employee1.setProfessional(employee.getProfessional());
         employee1.setDate(employee.getDate());
@@ -69,8 +73,12 @@ public class EmployeeController {
     @RequestMapping(method = RequestMethod.DELETE)
     public Employee delete(@RequestParam("id") String id) {
         Employee employee = service.findOne(id);
+        String account=employee.getAccount().getId();
         employee.setWork(false);
-        return service.save(employee);
+        employee.setAccount(null);
+        service.save(employee);
+        accountService.delete(account);
+        return employee;
     }
 
     @RequestMapping(method = RequestMethod.GET)

@@ -2,10 +2,7 @@ package com.jrtech.ffmp.data.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -14,6 +11,8 @@ import java.util.Date;
 @Entity
 @Table(name = "Employee")
 public class Employee extends AbstractNamedObject {
+    @OneToOne(cascade = { CascadeType.ALL })
+    private Account account;
     //性别
     private String sex;
 //    //  身份证
@@ -38,6 +37,12 @@ public class Employee extends AbstractNamedObject {
     private boolean work;
 //    //证书类型
 //    private String type;
+    //学历
+    private String diploma;
+    //毕业学校
+    private String school;
+    //专业
+    private String specializing;
 
     public String getSex() {
         return sex;
@@ -126,4 +131,36 @@ public class Employee extends AbstractNamedObject {
 //    public void setType(String type) {
 //        this.type = type;
 //    }
+
+    public String getDiploma() {
+        return diploma;
+    }
+
+    public void setDiploma(String diploma) {
+        this.diploma = diploma;
+    }
+
+    public String getSchool() {
+        return school;
+    }
+
+    public void setSchool(String school) {
+        this.school = school;
+    }
+
+    public String getSpecializing() {
+        return specializing;
+    }
+
+    public void setSpecializing(String specializing) {
+        this.specializing = specializing;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }

@@ -35,6 +35,9 @@ $(document).ready(function () {
             //certificate:$("#certificate").val().trim(),
             //type:$("#type").val().trim(),
             professional:$("#professional").val().trim(),
+            diploma:$("#diploma").val().trim(),
+            school:$("#school").val().trim(),
+            specializing:$("#specializing").val().trim(),
             date:$("#date").val().trim(),
             work:$("#work").val().trim()
         }

@@ -22,6 +22,9 @@ $(document).ready(function () {
             //$("#type").val(data.type);
             $("#professional").val(data.professional);
             $("#date").val(data.date);
+            $("#diploma").val(data.diploma);
+            $("#school").val(data.school);
+            $("#specializing").val(data.specializing);
             //$("#work").val(data.work);
             if(data.serving){
                 $("#work").val("true");
@@ -65,6 +68,9 @@ function getSaveData() {
         role: $("#role").val().trim(),
         //certificate: $("#certificate").val().trim(),
         professional: $("#professional").val().trim(),
+        diploma:$("#diploma").val().trim(),
+        school:$("#school").val().trim(),
+        specializing:$("#specializing").val().trim(),
         date: $("#date").val().trim(),
         work: $("#work").val().trim()
     }
