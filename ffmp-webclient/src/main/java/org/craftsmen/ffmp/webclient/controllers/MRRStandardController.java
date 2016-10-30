@@ -55,6 +55,9 @@ public class MRRStandardController {
             logger.error(UserDetailsUtils.getCurrent().getUsername() + ":创建维管设施标准错误，维管设施标准数据为NULL");
             throw new ServiceException("创建维管设施标准错误，维管设施标准数据为NULL");
         }
+        if(mrrStandardVo.getMrrStandard().getName() == null || "".equals(mrrStandardVo.getMrrStandard().getName())){
+            throw new ServiceException("创建维管设施标准错误，维管设施标准名称为NULL");
+        }
         MrrStandard mrrStandard = mrrStandardVo.getMrrStandard();
         mrrStandard.setParent(mrrStandardVo.getParent());
 

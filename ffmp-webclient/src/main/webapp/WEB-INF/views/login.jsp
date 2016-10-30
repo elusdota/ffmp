@@ -69,7 +69,7 @@
       </c:if>
     </form>
 
-    <a href="#">忘记密码</a><br>
+    <%--<a href="#">忘记密码</a><br>--%>
     <!-- <a href="register.html" class="text-center">Register a new membership</a> -->
 
   </div>
