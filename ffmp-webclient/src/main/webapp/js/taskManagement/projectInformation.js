@@ -74,25 +74,24 @@ $(document).ready(function () {
 });
 $("#printAllCode").click(function () {
     printWindow = window.open("", "", "width=450px,height=600px");
-    printWindow.document.write(getStyle() +"<div class='form-group' id='imgbarcode'></div>");
+    printWindow.document.write(getStyle() + "<div class='form-group' id='imgbarcode'></div>");
     $.ajax('rest/equipment/findAllList?projectId=' + $("#id").val().trim(), {
         type: 'GET',
         contentType: 'application/json',
         dataType: 'json',
         success: function (data, XMLHttpRequest, jqXHR) {
-            if(data.length>0){
-                var html='<table>';
-                data.forEach(function(e){
-                    var name =e.name;
-                    var labelName="<tr><td style='text-align:center'><label>"+name+"</label></td></tr><tr> <td>";
-                    html=html+labelName+"<img src="+"barcode?fmt=JPEG&msg="+e.code+" height='68px' width='190px'>"
-                        +"</td></tr> ";
+            if (data.length > 0) {
+                var html = '<table>';
+                data.forEach(function (e) {
+                    var name = e.name;
+                    var labelName = "<tr><td style='text-align:center'><label>" + name + "</label></td></tr><tr> <td>";
+                    html = html + labelName + "<img src=" + "barcode?fmt=JPEG&msg=" + e.code + " height='68px' width='190px'>"
+                        + "</td></tr> ";
                 });
-                var el =   printWindow.document.getElementById('imgbarcode');
-                el.innerHTML=html+'</table></div>';
-                printWindow.print();
-                //printWindow.close();
-            }else{
+                var el = printWindow.document.getElementById('imgbarcode');
+                el.innerHTML = html + '</table></div>';
+                timeout(printWindow);
+            } else {
                 printWindow.close();
             }
         }, error: function (XMLHttpRequest) {
@@ -101,9 +100,22 @@ $("#printAllCode").click(function () {
         }
     });
 });
-function getStyle(){
-    var style= "<style type='text/css'  media='print'> "+ "@page {margin: 0mm;width=40mm,height=25mm}"+
-        "html {background-color: #fff8f8;margin: 0px;}"+
-        "body {border: solid 0px blue;margin: 0mm 0mm 0mm 0mm;}"+"</style>";
+function timeout(printWindow) {
+    setTimeout(function () {
+        if (printWindow.document.readyState == 'loading') {
+            getstate(printWindow);
+        } else {
+            timeout(printWindow)
+        }
+    }, 100);
+}
+function getstate(printWindow) {
+    printWindow.print();
+    printWindow.close();
+}
+function getStyle() {
+    var style = "<style type='text/css'  media='print'> " + "@page {margin: 0mm;width=40mm,height=25mm}" +
+        "html {background-color: #fff8f8;margin: 0px;}" +
+        "body {border: solid 0px blue;margin: 0mm 0mm 0mm 0mm;}" + "</style>";
     return style;
 }
