@@ -37,12 +37,18 @@
             <%--</sec:authorize>--%>
                 <button type="button" id="createMrrStandardName" class="btn btn-default">创建设施名称</button>
                 <button type="button" id="createMrrStandard" class="btn btn-default">创建维护管理项目</button>
-            <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/设施维管标准管理/修改设施维管标准')">
-                <button type="button" id="updateMrrStandard" class="btn btn-default hidden">修改设施维管标准</button>
-            </sec:authorize>
-            <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/设施维管标准管理/删除设施维管标准')">
-                <button type="button" id="deleteMrrStandard" class="btn btn-default hidden">删除设施维管标准</button>
-            </sec:authorize>
+
+                <button type="button" id="updateMrrStandardName" class="btn btn-default" disabled>修改设施名称</button>
+                <button type="button" id="updateMrrStandard" class="btn btn-default" disabled>修改维护管理项目</button>
+
+                <button type="button" id="deleteMrrStandardName" class="btn btn-default" disabled>删除设施名称</button>
+                <button type="button" id="deleteMrrStandard" class="btn btn-default" disabled>删除维护管理项目</button>
+            <%--<sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/设施维管标准管理/修改设施维管标准')">--%>
+                <%--<button type="button" id="updateMrrStandard" class="btn btn-default hidden">修改设施维管标准</button>--%>
+            <%--</sec:authorize>--%>
+            <%--<sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/设施维管标准管理/删除设施维管标准')">--%>
+                <%--<button type="button" id="deleteMrrStandard" class="btn btn-default hidden">删除设施维管标准</button>--%>
+            <%--</sec:authorize>--%>
         </div>
         <div class="box-body">
             <table id="mrrstandardTable"
@@ -119,7 +125,9 @@
                                            required="required">
                                 </div>
                             </div>
+                            <input type="hidden" class="form-control" id="MRRStandardId" name="MRRStandardId">
                             <button type="reset" class="btn btn-warning hidden" id="resetMrrStandardName">重置</button>
+
                         </form>
                     </div>
                 </div>
@@ -188,12 +196,12 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="mrrMethod" class="col-md-4 control-label">维管方式：<span
+                                <label for="mrrMethod" class="col-md-4 control-label">维保方式：<span
                                         class="required">*</span></label>
 
                                 <div class="col-md-8">
                                     <select class="form-control" name="mrrMethod" id="mrrMethod">
-                                        <option disabled="disabled" selected="selected">--请选择资维管方式--</option>
+                                        <option disabled="disabled" selected="selected">--请选择维保方式--</option>
                                         <option value="日常巡查">日常巡查</option>
                                         <option value="单项检查">单项检查</option>
                                         <option value="维护保养">维护保养</option>
@@ -257,11 +265,19 @@
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
+                                <label for="inspection" class="col-md-4 control-label">检查方法：</label>
+
+                                <div class="col-md-8">
+                                    <textarea rows="2" class="form-control" id="inspection" name="inspection"
+                                           placeholder="检查方法"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
                                 <label for="remark" class="col-md-4 control-label">备注：</label>
 
                                 <div class="col-md-8">
-                                    <input type="text" class="form-control" id="remark" name="remark"
-                                           placeholder="备注">
+                                    <textarea rows="2" class="form-control" id="remark" name="remark"
+                                           placeholder="备注"></textarea>
                                 </div>
                             </div>
                             <button type="reset" class="btn btn-warning hidden" id="resetMrrStandard">重置</button>
@@ -275,29 +291,29 @@
                             <div class="box-body">
                                 <form role="form" id="techniqueForm" class="form-horizontal">
                                     <div class="form-group col-md-6">
-                                        <label for="tName" class="col-md-4 control-label">技术名称:<span
+                                        <label for="tName" class="col-md-4 control-label">检查内容:<span
                                                 class="required">*</span></label>
 
                                         <div class="col-md-8">
                                             <input type="text" class="form-control" id="tName" name="tName"
-                                                   placeholder="技术名称" required="required">
+                                                   placeholder="检查内容" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="tType" class="col-md-4 control-label">技术类型:<span
+                                        <label for="tType" class="col-md-4 control-label">性质类别:<span
                                                 class="required">*</span></label>
 
                                         <div class="col-md-8">
                                             <input type="text" class="form-control" id="tType" name="tType"
-                                                   placeholder="技术类型" required="required">
+                                                   placeholder="性质类别" required="required">
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="description" class="col-md-4 control-label">描述</label>
+                                        <label for="description" class="col-md-4 control-label">技术规范：</label>
 
                                         <div class="col-md-8">
                                         <textarea rows="2" class="form-control" id="description" name="description"
-                                                  placeholder="描述"></textarea>
+                                                  placeholder="技术规范"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-12">
@@ -359,3 +375,4 @@
 <%--<script src="<c:url value='/bower_components/jquery.inputmask/dist/min/inputmask/jquery.inputmask.min.js'/>"></script>--%>
 <%--<script src="<c:url value='/bower_components/jquery.inputmask/dist/min/inputmask/inputmask.extensions.min.js'/>"></script>--%>
 <script src="<c:url value='/js/basicInfo/mrrStandard.js'/>"></script>
+<script src="<c:url value='/js/basicInfo/updateMrrStandard.js'/>"></script>

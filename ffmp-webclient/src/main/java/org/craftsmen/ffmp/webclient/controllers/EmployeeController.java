@@ -55,7 +55,7 @@ public class EmployeeController {
         Employee employee1 = service.findOne(employee.getId());
         employee1.setName(employee.getName());
         employee1.setCode(employee.getCode());
-//        employee1.setCardid(employee.getCardid());
+        employee1.setCardid(employee.getCardid());
         employee1.setSex(employee.getSex());
         employee1.setPhone(employee.getPhone());
         employee1.setEmail(employee.getEmail());

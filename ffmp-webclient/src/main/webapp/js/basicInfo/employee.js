@@ -45,7 +45,7 @@ $(document).ready(function () {
             , {title: "名称", field: "name", sortable: true}
             , {title: "编号", field: "code", sortable: true}
             , {title: "性别", field: "sex", sortable: true}
-            //, {title: "身份证", field: "cardid", sortable: true}
+            , {title: "身份证", field: "cardid", sortable: true}
             , {title: "电话", field: "phone", sortable: true}
             , {title: "邮箱", field: "email", sortable: true}
             , {title: "学历", field: "diploma", sortable: true}

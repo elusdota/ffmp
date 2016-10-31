@@ -14,7 +14,7 @@ $(document).ready(function () {
             $("#name").val(data.name);
             $("#code").val(data.code);
             $("#sex").val(data.sex);
-            //$("#cardid").val(data.cardid);
+            $("#cardid").val(data.cardid);
             $("#phone").val(data.phone);
             $("#email").val(data.email);
             $("#role").val(data.role);
@@ -26,7 +26,7 @@ $(document).ready(function () {
             $("#school").val(data.school);
             $("#specializing").val(data.specializing);
             //$("#work").val(data.work);
-            if(data.serving){
+            if(data.work){
                 $("#work").val("true");
             }else{
                 $("#work").val("false");
@@ -62,7 +62,7 @@ function getSaveData() {
         name: $("#name").val().trim(),
         code: $("#code").val().trim(),
         sex: $("#sex").val().trim(),
-        //cardid: $("#cardid").val().trim(),
+        cardid: $("#cardid").val().trim(),
         phone: $("#phone").val().trim(),
         email: $("#email").val().trim(),
         role: $("#role").val().trim(),
