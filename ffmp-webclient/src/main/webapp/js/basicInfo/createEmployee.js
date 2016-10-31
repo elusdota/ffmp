@@ -28,7 +28,7 @@ $(document).ready(function () {
             name: $("#name").val().trim(),
             code:$("#code").val().trim(),
             sex:$("#sex").val().trim(),
-            //cardid:$("#cardid").val().trim(),
+            cardid:$("#cardid").val().trim(),
             phone:$("#phone").val().trim(),
             email:$("#email").val().trim(),
             role:$("#role").val().trim(),

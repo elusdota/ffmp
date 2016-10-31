@@ -64,15 +64,15 @@
                         </select>
                     </div>
                 </div>
-                <%--<div class="form-group col-md-4">--%>
-                    <%--<label for="cardid" class="col-lg-6 control-label">身份证：<span--%>
-                            <%--class="required">*</span></label>--%>
+                <div class="form-group col-md-4">
+                    <label for="cardid" class="col-lg-6 control-label">身份证：<span
+                            class="required">*</span></label>
 
-                    <%--<div class="col-lg-6">--%>
-                        <%--<input type="text" class="form-control" id="cardid" name="cardid" placeholder="身份证"--%>
-                               <%--required="required">--%>
-                    <%--</div>--%>
-                <%--</div>--%>
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control" id="cardid" name="cardid" placeholder="身份证"
+                               required="required">
+                    </div>
+                </div>
                 <div class="form-group col-md-4">
                     <label for="phone" class="col-lg-6 control-label">电话：<span
                             class="required">*</span></label>

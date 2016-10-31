@@ -2,7 +2,6 @@
  * 设施维管标准
  * Created by suelmer on 2016/7/16.
  */
-
 ;
 $(function () {
     //$("[data-mask]").inputmask();
@@ -12,7 +11,6 @@ $(function () {
         method: 'POST',
         url: 'rest/mrrstandard/findAll',
         striped: true,
-        singleSelect: true,
         //  clickToSelect: true,
         queryParams: function (params) {
             var fin = {
@@ -24,7 +22,6 @@ $(function () {
             };
             return JSON.stringify(fin);
         },
-
         columns: [
             {
                 field: 'state', checkbox: true
@@ -38,7 +35,7 @@ $(function () {
             {title: "使用年限", field: "lifetime", sortable: true,visible:false},
             {title: "更换年限", field: "changetime", sortable: true,visible:false},
             {title: "期限类型", field: "maturity", sortable: true,visible:false},
-            {title: "备注", field: "remark", sortable: true},
+            //{title: "备注", field: "remark", sortable: true},
             {
                 title: '查看技术要求',
                 align: 'center',
@@ -69,19 +66,10 @@ $(function () {
         }
     };
 
-    function myRowStyle(row, index){
-        //if(row.mrrMethod == null){
-        //    return {
-        //        classes: 'text-nowrap another-class',
-        //        css: {"color": "blue", "font-size": "50px"}
-        //    };
-        //}
-
-    }
     function showModal(row) {
         var $modal = $("#techniqueModal").modal({show: false});
         var $dl = "<dl>";
-        $dl = $dl + "<dt>" + row.name + "</dt>" +
+        $dl = $dl + "<dt>维保项目：" + row.name + "</dt>" +
             "<dt>工作内容：</dt>" +
             "<dd><span>" + row.jobContent + "</span></dd>" +
             "<dt>技术要求：</dt>";

@@ -16,7 +16,7 @@ public class Employee extends AbstractNamedObject {
     //性别
     private String sex;
 //    //  身份证
-//    private String cardid;
+    private String cardid;
     //电话
     private String phone;
     //邮箱
@@ -52,13 +52,13 @@ public class Employee extends AbstractNamedObject {
         this.sex = sex;
     }
 
-//    public String getCardid() {
-//        return cardid;
-//    }
-//
-//    public void setCardid(String cardid) {
-//        this.cardid = cardid;
-//    }
+    public String getCardid() {
+        return cardid;
+    }
+
+    public void setCardid(String cardid) {
+        this.cardid = cardid;
+    }
 
     public String getPhone() {
         return phone;
