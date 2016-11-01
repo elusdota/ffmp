@@ -112,8 +112,7 @@
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="email" class="col-lg-4 control-label">邮箱：<span
-                        class="required"></span></label>
+                <label for="email" class="col-lg-4 control-label">邮箱：</label>
 
                 <div class="col-lg-8">
                   <input type="text" class="form-control" id="email"
@@ -132,8 +131,7 @@
                 </div>
               </div>
                 <div class="form-group col-md-6">
-                    <label for="type" class="col-lg-4 control-label">纳税类型：<span
-                            class="required"></span></label>
+                    <label for="type" class="col-lg-4 control-label">纳税类型：</label>
 
                     <div class="col-lg-8">
                         <input type="text" class="form-control" id="type"
@@ -142,8 +140,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="bank" class="col-lg-4 control-label">开户行：<span
-                            class="required"></span></label>
+                    <label for="bank" class="col-lg-4 control-label">开户行：</label>
 
                     <div class="col-lg-8">
                         <input type="text" class="form-control" id="bank"
@@ -152,8 +149,7 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="bankAccount" class="col-lg-4 control-label">银行账户：<span
-                            class="required"></span></label>
+                    <label for="bankAccount" class="col-lg-4 control-label">银行账户：</label>
 
                     <div class="col-lg-8">
                         <input type="text" class="form-control" id="bankAccount"
