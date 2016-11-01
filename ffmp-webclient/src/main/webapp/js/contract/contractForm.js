@@ -133,7 +133,7 @@ $(function () {
                 managerTel: $("#managerTel").val().trim(),
                 agent: $("#agent").val().trim(),
                 amount: $("#amount").val().trim(),
-                taxNO: $("#taxNO").val().trim(),
+                //taxNO: $("#taxNO").val().trim(),
                 expiry: $("#expiry").val().trim(),
                 contractType: $("#contractType").val().trim(),
                 address: $("#address").val().trim(),

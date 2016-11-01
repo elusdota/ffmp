@@ -34,7 +34,7 @@
             {title: "合同地址", field: "address", align: 'center', sortable: true,visible:false},
             {title: "合同金额", field: "amount", align: 'center', sortable: true},
             {title: "合同类别", field: "contractType", align: 'center', sortable: true},
-            {title: "税号", field: "taxNO", align: 'center', sortable: true},
+            //{title: "税号", field: "taxNO", align: 'center', sortable: true},
             {title: "效期", field: "expiry", align: 'center', sortable: true},
             {title: "合同内容", field: "content", align: 'center', sortable: true,visible:false},
             {title: "创建时间", field: "createTime", align: 'center', sortable: true,visible:false},

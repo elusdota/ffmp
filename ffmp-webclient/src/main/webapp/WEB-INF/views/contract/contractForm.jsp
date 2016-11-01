@@ -97,15 +97,15 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="taxNO" class="col-md-4 control-label">税号：<span
-                                class="required">*</span></label>
+                    <%--<div class="form-group col-md-6">--%>
+                        <%--<label for="taxNO" class="col-md-4 control-label">税号：<span--%>
+                                <%--class="required">*</span></label>--%>
 
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" id="taxNO" name="taxNO"
-                                   placeholder="税号" required="required">
-                        </div>
-                    </div>
+                        <%--<div class="col-md-8">--%>
+                            <%--<input type="text" class="form-control" id="taxNO" name="taxNO"--%>
+                                   <%--placeholder="税号" required="required">--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                     <div class="form-group col-md-6 date">
                         <label for="expiry" class="col-md-4 control-label">合同效期：<span
                                 class="required">*</span></label>
