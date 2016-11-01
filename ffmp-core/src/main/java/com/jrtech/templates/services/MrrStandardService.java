@@ -37,4 +37,10 @@ public interface MrrStandardService {
     MrrStandard findOneByParent(MrrStandard parent);
 
     MrrStandard findOneByCode(String code);
+
+    /**
+     * 通过id删除维管设施标准
+     * @param id
+     */
+    void delete(String id);
 }

@@ -56,4 +56,9 @@ public class MrrStandardServiceImpl implements MrrStandardService {
         return mrrStandardRepository.findOneByCode(code);
     }
 
+    @Override
+    public void delete(String id) {
+         mrrStandardRepository.delete(id);
+    }
+
 }
