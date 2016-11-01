@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by jiangliang on 2016/8/10.
@@ -55,13 +56,13 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
         maintenanceTask.setCustomer(maintenanceProject.getCustomer());
         maintenanceTask.setDelegate(maintenanceProject.getDelegate());
         maintenanceTask.setName(name);
-        Calendar calender1 = Calendar.getInstance();
+        Calendar calender1 =Calendar.getInstance();
         calender1.setTime(new Date());
-        calender1.add(Calendar.DATE, maintenanceProject.getDays());
+        calender1.add(Calendar.DATE, maintenanceProject.getDays()-1);
         maintenanceTask.setStartdate(calender1.getTime());
         Calendar calender = Calendar.getInstance();
         calender.setTime(new Date());
-        calender.add(Calendar.DATE, maintenanceProject.getDays()+5);
+        calender.add(Calendar.DATE, maintenanceProject.getDays()+4);
         maintenanceTask.setEnddate(calender.getTime());
         if(null!=description){
             maintenanceTask.setDescription(description);
@@ -71,7 +72,7 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
 
     private MaintenanceTask buildEquipmentTask(MaintenanceProject maintenanceProject) {
         MaintenanceTask maintenanceTask = buildMaintenanceTask(maintenanceProject,"维修任务","定期检修",null);
-        final String[] description = {};
+        final String[] description = {""};
         maintenanceProject.getEquipments().forEach(equipment -> {
             MrrStandard mrrStandard = mrrStandardService.findOneByName(equipment.getTypemin());
             mrrStandard.getTechniqueRequirementsList().forEach(techniqueRequirements -> {
@@ -92,7 +93,7 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
             }
             });
         });
-        if(null!=description[0]){
+        if(description[0].length()>0){
             maintenanceTask.setDescription(description[0]);
             return maintenanceTask;
         }else {
