@@ -22,6 +22,7 @@ $(document).ready(function () {
             $("#manager").val(data.manager);
             $("#inputDate").val(data.inputDate);
             $("#managerTelephone").val(data.managerTelephone);
+            $("#days").val(data.days);
             $("#equipmentCase").val(data.equipmentCase);
             getEquiment(data.id);
         }, error: function (XMLHttpRequest) {

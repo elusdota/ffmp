@@ -158,6 +158,16 @@
                                data-provide="datepicker" id="inputDate">
                     </div>
                 </div>
+                <div class="form-group col-md-4">
+                    <label for="days" class="col-lg-6 control-label">巡检日期：<span
+                            class="required">*</span></label>
+
+                    <div class="col-lg-6">
+                        <input type="text" class="form-control required digits" id="days" name="days"
+                               placeholder="每月几号，>0，<=28"
+                               required="required">
+                    </div>
+                </div>
             </form>
             <div class="modal-footer">
                 <button type="button" id="save" class="btn btn-default pull-right">保存</button>

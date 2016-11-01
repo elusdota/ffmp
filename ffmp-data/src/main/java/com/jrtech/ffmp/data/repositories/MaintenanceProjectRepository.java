@@ -17,4 +17,6 @@ public interface MaintenanceProjectRepository extends PagingAndSortingRepository
     List<MaintenanceProject> findByNameLike(String name);
 
     MaintenanceProject findOneByCode(String code);
+
+    Iterable<MaintenanceProject> findByTerminate(boolean terminate);
 }

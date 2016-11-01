@@ -60,6 +60,10 @@ public class MaintenanceProject extends AbstractNamedObject {
 
     //消防设施情况
     private String equipmentCase;
+    //每月几号巡检
+    private int days;
+    //是否终止
+    private boolean terminate;
 
     public Account getOwner() {
         return owner;
@@ -167,5 +171,21 @@ public class MaintenanceProject extends AbstractNamedObject {
 
     public void setInputDate(Date inputDate) {
         this.inputDate = inputDate;
+    }
+
+    public int getDays() {
+        return days;
+    }
+
+    public void setDays(int days) {
+        this.days = days;
+    }
+
+    public boolean isTerminate() {
+        return terminate;
+    }
+
+    public void setTerminate(boolean terminate) {
+        this.terminate = terminate;
     }
 }

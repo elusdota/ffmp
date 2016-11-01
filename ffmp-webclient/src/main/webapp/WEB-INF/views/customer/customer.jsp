@@ -60,7 +60,7 @@
   <!-- 模态框（Model） -->
   <div class="modal fade" id="customerModel" tabindex="-1" role="dialog"
        aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">
@@ -74,88 +74,88 @@
                     <input type="text" class="form-control" id="id" name="id"/>
                 </div>
               <div class="form-group col-md-6">
-                <label for="name" class="col-md-4 control-label">客户名称：<span
+                <label for="name" class="col-lg-6 control-label">客户名称：<span
                         class="required">*</span></label>
 
-                <div class="col-md-8">
+                <div class="col-lg-6">
                   <input type="text" class="form-control" id="name" name="name" placeholder="客户名称"
                          required="required">
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="contect" class="col-md-4 control-label">联系人：<span
+                <label for="contect" class="col-lg-4 control-label">联系人：<span
                         class="required">*</span></label>
 
-                <div class="col-md-8">
+                <div class="col-lg-8">
                   <input type="text" class="form-control" id="contect" name="contect" placeholder="联系人"
                          required="required">
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="telephone" class="col-md-4 control-label">联系电话：<span
+                <label for="telephone" class="col-lg-6 control-label">联系电话：<span
                         class="required">*</span></label>
 
-                <div class="col-md-8">
+                <div class="col-lg-6">
                   <input type="text" class="form-control" id="telephone" name="telephone"
                          placeholder="联系电话"
                          required="required">
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="address" class="col-md-4 control-label">地址：<span
+                <label for="address" class="col-lg-4 control-label">地址：<span
                         class="required">*</span></label>
 
-                <div class="col-md-8">
+                <div class="col-lg-8">
                   <input type="text" class="form-control" id="address" name="address"
                          placeholder="地址"
                          required="required">
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="email" class="col-md-4 control-label">邮箱：<span
+                <label for="email" class="col-lg-4 control-label">邮箱：<span
                         class="required"></span></label>
 
-                <div class="col-md-8">
+                <div class="col-lg-8">
                   <input type="text" class="form-control" id="email"
                          name="email"
                          placeholder="邮箱">
                 </div>
               </div>
               <div class="form-group col-md-6">
-                <label for="taxId" class="col-md-4 control-label">税号：<span
+                <label for="taxId" class="col-lg-4 control-label">税号：<span
                         class="required">*</span></label>
 
-                <div class="col-md-8">
+                <div class="col-lg-8">
                   <input type="text" class="form-control required" id="taxId"
                          name="taxId"
                          placeholder="税号">
                 </div>
               </div>
                 <div class="form-group col-md-6">
-                    <label for="type" class="col-md-4 control-label">纳税类型：<span
+                    <label for="type" class="col-lg-4 control-label">纳税类型：<span
                             class="required"></span></label>
 
-                    <div class="col-md-8">
+                    <div class="col-lg-8">
                         <input type="text" class="form-control" id="type"
                                name="type"
                                placeholder="纳税类型">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="bank" class="col-md-4 control-label">开户行：<span
+                    <label for="bank" class="col-lg-4 control-label">开户行：<span
                             class="required"></span></label>
 
-                    <div class="col-md-8">
+                    <div class="col-lg-8">
                         <input type="text" class="form-control" id="bank"
                                name="bank"
                                placeholder="开户行">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="bankAccount" class="col-md-4 control-label">银行账户：<span
+                    <label for="bankAccount" class="col-lg-4 control-label">银行账户：<span
                             class="required"></span></label>
 
-                    <div class="col-md-8">
+                    <div class="col-lg-8">
                         <input type="text" class="form-control" id="bankAccount"
                                name="bankAccount"
                                placeholder="银行账户">

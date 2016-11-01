@@ -65,6 +65,10 @@ public class MaintenanceProjectController {
         if(customer==null){
             throw new ServiceException("客户不存在，请重新输入！");
         }
+        if(maintenanceProject.getDays()<0||maintenanceProject.getDays()>=28){
+            throw new ServiceException("巡检日期必须大于0，小于等于28！");
+        }
+        maintenanceProject.setTerminate(false);
         maintenanceProject.setCustomer(customer);
         logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建项目，项目编号---"+maintenanceProject.getCode());
         return service.save(maintenanceProject);
