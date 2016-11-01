@@ -7,6 +7,7 @@ $(function () {
     //$("[data-mask]").inputmask();
     var $mrrstandardTable = $('#mrrstandardTable');
     var $techniqueTable = $('#techniqueTable');
+    var $lookTechniqueTable = $('#lookTechniqueTable');
     $mrrstandardTable.bootstrapTable({
         method: 'POST',
         url: 'rest/mrrstandard/findAll',
@@ -29,13 +30,7 @@ $(function () {
             {title: '序号', formatter: runningFormatter},
             {title: "编码", field: "code", sortable: true},
             {title: "系统/设施名称", field: "name", sortable: true},
-            {title: "维管方式", field: "mrrMethod", sortable: true},
-            {title: "工作内容", field: "jobContent", sortable: true,visible:false},
-            {title: "抽查比例", field: "proportion", sortable: true},
-            {title: "使用年限", field: "lifetime", sortable: true,visible:false},
-            {title: "更换年限", field: "changetime", sortable: true,visible:false},
-            {title: "期限类型", field: "maturity", sortable: true,visible:false},
-            //{title: "备注", field: "remark", sortable: true},
+            {title: "工作内容", field: "jobContent", sortable: true},
             {
                 title: '查看技术要求',
                 align: 'center',
@@ -51,9 +46,9 @@ $(function () {
     }
 
     function operateFormatter(value, row, index) {
-        if(row.mrrMethod == null){
+        if (row.jobContent == null) {
             return "";
-        }else{
+        } else {
             return [
                 '<a class="edit" href="javascript:void(0)"><i class="glyphicon glyphicon-eye-open"></i> 技术要求</a>'
             ].join('');
@@ -62,28 +57,28 @@ $(function () {
 
     window.operateEvents = {
         'click .edit': function (e, value, row, index) {
-            showModal(row);
+            var $modal = $("#techniqueModal").modal({show: false});
+            $lookTechniqueTable.bootstrapTable("load",row.techniqueRequirementsList);
+            $modal.modal('show');
         }
     };
 
-    function showModal(row) {
-        var $modal = $("#techniqueModal").modal({show: false});
-        var $dl = "<dl>";
-        $dl = $dl + "<dt>维保项目：" + row.name + "</dt>" +
-            "<dt>工作内容：</dt>" +
-            "<dd><span>" + row.jobContent + "</span></dd>" +
-            "<dt>技术要求：</dt>";
 
-        $.each(row.techniqueRequirementsList, function (i, item) {
-            $dl = $dl + "<dd><span>【" + item.type + ":" + item.name + "】</span>" + item.description + "</dd>"
-        });
-        $dl = $dl + "<dt>备注信息：</dt>" +
-            "<dd><span>" + row.remark + "</span></dd>" +
-            "</dl>";
-        $("#techniqueContent").html($dl);
-        $modal.modal('show');
-    }
+    $lookTechniqueTable.bootstrapTable({
+        columns: [
+            {title: "序号", formatter: runningFormatter},
+            {title: "检查内容", field: "name", align: 'center', sortable: true},
+            {title: "性质类别", field: "type", align: 'center', sortable: true},
+            {title: "技术规范", field: "description", align: 'center', sortable: true},
+            {title: "维保方式", field: "mrrMethod", align: 'center', sortable: true},
+            {title: "抽查比例(%)", field: "proportion", align: 'center', sortable: true},
+            {title: "检查方法", field: "inspection", align: 'center', sortable: true},
+            {title: "使用年限", field: "lifetime", align: 'center', sortable: true},
+            {title: "检修年限", field: "changetime", align: 'center', sortable: true},
+            {title: "期限类型", field: "maturity", align: 'center', sortable: true}
+        ]
 
+    });
     //创建设施名称
     $("#createMrrStandardName").click(function () {
         $("#resetMrrStandardName").trigger("click");
@@ -121,62 +116,57 @@ $(function () {
     //检查设施名称编号是否重复
     $("#code").blur(function () {
         var $pcode = $("#pcode");
-        var code = $pcode.text() == "" ? $("#code").val().trim() : $pcode.text()+  $("#code").val().trim();
-        if (code !="" && code !=null) {
+        var code = $pcode.text() == "" ? $("#code").val().trim() : $pcode.text() + $("#code").val().trim();
+        var checkResult = checkCodeRepeat(code);
+        console.log("--------checkResult---" + checkResult);
+        if (checkResult) {
+            var html = '<div class="alert alert-warning alert-dismissible" id="codeWarning">' +
+                ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+                '<h5><i class="icon fa fa-warning"></i>编码重复</h5>' +
+                '</div>';
+            $("#codeDiv").after(html);
+        } else {
+            $("#codeWarning").hide();
+        }
+
+    });
+
+    function checkCodeRepeat(code) {
+        var isRepeat = false;
+        if (code != "" && code != null) {
             $.ajax('rest/mrrstandard/findOneByCode', {
                 type: 'get',
+                async: false,
                 data: {code: code},
                 contentType: 'application/json',
                 dataType: 'json',
                 success: function (data, XMLHttpRequest, jqXHR) {
-                    var html = '<div class="alert alert-warning alert-dismissible" id="codeWarning">' +
-                        ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
-                        '<h5><i class="icon fa fa-warning"></i>编码重复</h5>' +
-                        '</div>';
-                    console.log("-----------"+data);
+                    console.log("-----------" + data);
                     if (data != null) {
-                        $("#codeDiv").after(html);
-                    } else {
-                        $("#codeWarning").hide();
+                        isRepeat = true;
                     }
-
-
                 }, error: function (XMLHttpRequest) {
                     $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
                     $("#message").modal("show");
                 }
             });
         }
-    });
+        return isRepeat;
+    }
 
     //检查维护管理项目编号是否重复
     $("#code_content").blur(function () {
         var $pcode = $("#pcode_content");
-        var code = $pcode.text() == "" ? $("#code_content").val().trim() : $pcode.text()+  $("#code_content").val().trim();
-        if (code !="" && code !=null) {
-            $.ajax('rest/mrrstandard/findOneByCode', {
-                type: 'get',
-                data: {code: code},
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function (data, XMLHttpRequest, jqXHR) {
-                    var html = '<div class="alert alert-warning alert-dismissible" id="codeWarning">' +
-                        ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
-                        '<h5><i class="icon fa fa-warning"></i>编码重复</h5>' +
-                        '</div>';
-                    console.log("-----------"+data);
-                    if (data != null) {
-                        $("#codeDiv_content").after(html);
-                    } else {
-                        $("#codeWarning").hide();
-                    }
-
-
-                }, error: function (XMLHttpRequest) {
-                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
-                    $("#message").modal("show");
-                }
-            });
+        var code = $pcode.text() == "" ? $("#code_content").val().trim() : $pcode.text() + $("#code_content").val().trim();
+        var checkResult = checkCodeRepeat(code);
+        if (checkResult) {
+            var html = '<div class="alert alert-warning alert-dismissible" id="codeWarning">' +
+                ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+                '<h5><i class="icon fa fa-warning"></i>编码重复</h5>' +
+                '</div>';
+            $("#codeDiv").after(html);
+        } else {
+            $("#codeWarning").hide();
         }
     });
 
@@ -184,9 +174,15 @@ $(function () {
     $techniqueTable.bootstrapTable({
         columns: [
             {title: "序号", formatter: runningFormatter},
-            {title: "名称", field: "name", align: 'center', sortable: true},
-            {title: "类型", field: "type", align: 'center', sortable: true},
-            {title: "描述", field: "description", align: 'center', sortable: true},
+            {title: "检查内容", field: "name", align: 'center', sortable: true},
+            {title: "性质类别", field: "type", align: 'center', sortable: true},
+            {title: "技术规范", field: "description", align: 'center', sortable: true},
+            {title: "维保方式", field: "mrrMethod", align: 'center', sortable: true},
+            {title: "抽查比例(%)", field: "proportion", align: 'center', sortable: true},
+            {title: "检查方法", field: "inspection", align: 'center', sortable: true},
+            {title: "使用年限", field: "lifetime", align: 'center', sortable: true},
+            {title: "检修年限", field: "changetime", align: 'center', sortable: true},
+            {title: "期限类型", field: "maturity", align: 'center', sortable: true},
             {
                 title: '操作',
                 align: 'center',
@@ -209,7 +205,7 @@ $(function () {
         'click .remove': function (e, value, row, index) {
             $techniqueTable.bootstrapTable('remove', {
                 field: 'description',
-                values: [row.description]
+                values: [row.tName]
             });
         }
     };
@@ -219,7 +215,13 @@ $(function () {
             return {
                 name: $("#tName").val().trim(),
                 type: $("#tType").val().trim(),
-                description: $("#description").val().trim()
+                description: $("#description").val().trim(),
+                mrrMethod: $("#mrrMethod").val().trim(),
+                lifetime: $("#lifetime").val().trim(),
+                changetime: $("#changetime").val().trim(),
+                maturity: $("#maturity").val().trim(),
+                proportion: $("#proportion").val().trim(),
+                inspection: $("#inspection").val().trim()
             };
         }
 
@@ -232,10 +234,23 @@ $(function () {
     //创建设施名称
     $("#createMrrStandardNameBtn").click(function () {
         var selectRow = $mrrstandardTable.bootstrapTable('getSelections');
+        var $pcode = $("#pcode");
+        var code = $pcode.text() == "" ? $("#code").val().trim() : $pcode.text() + $("#code").val().trim();
+        var checkResult = checkCodeRepeat(code);
+        if (checkResult) {
+            var html = '<div class="alert alert-warning alert-dismissible" id="codeWarning">' +
+                ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+                '<h5><i class="icon fa fa-warning"></i>编码重复</h5>' +
+                '</div>';
+            $("#codeDiv").after(html);
+            return;
+        } else {
+            $("#codeWarning").hide();
+        }
+
         if ($("#mrrStandardNameForm").valid()) {
-            var $pcode = $("#pcode");
             var mrrStandardVal = {
-                code: $pcode.text() == "" ?  $("#code").val().trim() : $pcode.text() +  $("#code").val().trim(),
+                code: code,
                 name: $("#name").val().trim()
             };
             var mrrStandardInfo = {
@@ -263,18 +278,25 @@ $(function () {
     //创建维护项目
     $("#createMrrStandardBtn").click(function () {
         var selectRow = $mrrstandardTable.bootstrapTable('getSelections');
+        var $pcode = $("#pcode_content");
+        var code = $pcode.text() == "" ? $("#code_content").val().trim() : $pcode.text() + $("#code_content").val().trim();
+        var checkResult = checkCodeRepeat(code);
+        if (checkResult) {
+            var html = '<div class="alert alert-warning alert-dismissible" id="codeWarning">' +
+                ' <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>' +
+                '<h5><i class="icon fa fa-warning"></i>编码重复</h5>' +
+                '</div>';
+            $("#codeDiv").after(html);
+            return;
+        } else {
+            $("#codeWarning").hide();
+        }
         if ($("#mrrStandardForm").valid()) {
             var techniqueVal = $techniqueTable.bootstrapTable("getData");
-            var $pcode = $("#pcode_content");
             var mrrStandardVal = {
-                code: $pcode.text() == "" ?  $("#code_content").val().trim() : $pcode.text() +  $("#code_content").val().trim(),
+                code: code,
                 name: $("#name_content").val().trim(),
-                mrrMethod: $("#mrrMethod").val().trim(),
-                lifetime:$("#lifetime").val().trim(),
-                changetime:$("#changetime").val().trim(),
-                maturity:$("#maturity").val().trim(),
                 jobContent: $("#jobContent").val().trim(),
-                proportion: $("#proportion").val().trim(),
                 remark: $("#remark").val().trim(),
                 techniqueRequirementsList: techniqueVal instanceof Array ? techniqueVal : []
             };

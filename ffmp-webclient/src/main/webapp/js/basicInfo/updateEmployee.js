@@ -39,6 +39,11 @@ $(document).ready(function () {
     });
 })
 $("#save").click(function () {
+    var cardInfo = getIdCardInfo($("#cardid").val().trim());
+    if(!cardInfo.isTrue){
+        $("#cardid-error").css("display","inline-block");
+        return;
+    }
     if ($("#saveForm").valid()) {
         $.ajax('rest/employee', {
             type: 'PUT',
@@ -56,6 +61,16 @@ $("#save").click(function () {
         });
     }
 });
+//检查身份证号码格式是否准确
+$("#cardid").blur(function () {
+    var cardNo = document.getElementById('cardid').value;
+    var cardInfo = getIdCardInfo(cardNo);
+    if(cardInfo.isTrue){
+        $("#cardid-error").css("display","none");
+    }else{
+        $("#cardid-error").css("display","inline-block");
+    }
+})
 function getSaveData() {
     var data = {
         id: $("#id").val().trim(),

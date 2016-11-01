@@ -72,4 +72,37 @@ public class MRRStandardController {
         logger.info(UserDetailsUtils.getCurrent().getUsername() + ":通过code查找维管设施标准，code--"+code);
         return mrrStandardService.findOneByCode(code);
     }
+
+    @RequestMapping(value = "/update",method = RequestMethod.PUT)
+    public MrrStandard update(@RequestBody MrrStandardVO mrrStandardVo) {
+        MrrStandard agrs = mrrStandardVo.getMrrStandard();//传过来的参数
+        MrrStandard mrrStandard = mrrStandardService.findOne(agrs.getId());
+        mrrStandard.setCode(agrs.getCode());
+        mrrStandard.setName(agrs.getName());
+        mrrStandard.setJobContent(agrs.getJobContent());
+        mrrStandard.setRemark(agrs.getRemark());
+
+        mrrStandard.setParent(agrs.getParent());
+
+        mrrStandard.getTechniqueRequirementsList().forEach(item -> item.setMrrStandard(mrrStandard));
+
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":更新维管设施标准，维管设施标准名称--" + agrs.getName());
+        return mrrStandardService.save(mrrStandard);
+    }
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public String delete(@RequestParam("id") String id){
+        mrrStandardService.delete(id);
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":删除维管设施标准， 名称id--" + id);
+        return "delete success!";
+    }
+
+    @RequestMapping(value = "/parent", method = RequestMethod.GET)
+    public MrrStandard findParent(@RequestParam("id") String id) {
+        if(id==null || "".equals(id)){
+            throw new ServiceException("查询维管设施标准父级目录出错，维管设施标准id为NULL");
+        }
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":通过id查找维管设施标准的上一级，--id"+id);
+        MrrStandard mrrStandard = mrrStandardService.findOne(id);
+        return mrrStandard.getParent();
+    }
 }

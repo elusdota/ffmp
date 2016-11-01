@@ -133,7 +133,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="createMrrStandardNameBtn">创建</button>
+                    <button type="button" class="btn btn-primary" id="createMrrStandardNameBtn">保存</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -195,20 +195,7 @@
                                            required="required">
                                 </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="mrrMethod" class="col-md-4 control-label">维保方式：<span
-                                        class="required">*</span></label>
 
-                                <div class="col-md-8">
-                                    <select class="form-control" name="mrrMethod" id="mrrMethod">
-                                        <option disabled="disabled" selected="selected">--请选择维保方式--</option>
-                                        <option value="日常巡查">日常巡查</option>
-                                        <option value="单项检查">单项检查</option>
-                                        <option value="维护保养">维护保养</option>
-                                        <option value="联动检查">联动检查</option>
-                                    </select>
-                                </div>
-                            </div>
                             <div class="form-group col-md-6">
                                 <label for="jobContent" class="col-md-4 control-label">工作内容：<span
                                         class="required">*</span></label>
@@ -219,59 +206,8 @@
                                               required="required"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group col-md-6">
-                                <label for="proportion" class="col-md-4 control-label">抽查比例：<span
-                                        class="required">*</span></label>
 
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control required number" id="proportion" name="proportion"
-                                           placeholder="抽查比例" >
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="lifetime" class="col-md-4 control-label">使用年限：<span
-                                        class="required">*</span></label>
 
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control required digits" id="lifetime" name="lifetime"
-                                               placeholder="如果为0则无使用年限">
-                                        <span class="input-group-addon">年</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="changetime" class="col-md-4 control-label">检修年限：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control required digits" id="changetime" name="changetime"
-                                               placeholder="如果为0则无检修年限">
-                                        <span class="input-group-addon">年</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="maturity" class="col-md-4 control-label">期限类型：<span
-                                        class="required">*</span></label>
-
-                                <div class="col-md-8">
-                                    <select class="form-control" name="maturity" id="maturity">
-                                        <%--<option disabled="disabled" selected="selected">--请选择期限类型--</option>--%>
-                                        <option value="生产日期" selected="selected">生产日期</option>
-                                        <option value="投入使用日期">投入使用日期</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="inspection" class="col-md-4 control-label">检查方法：</label>
-
-                                <div class="col-md-8">
-                                    <textarea rows="2" class="form-control" id="inspection" name="inspection"
-                                           placeholder="检查方法"></textarea>
-                                </div>
-                            </div>
                             <div class="form-group col-md-6">
                                 <label for="remark" class="col-md-4 control-label">备注：</label>
 
@@ -291,16 +227,16 @@
                             <div class="box-body">
                                 <form role="form" id="techniqueForm" class="form-horizontal">
                                     <div class="form-group col-md-6">
-                                        <label for="tName" class="col-md-4 control-label">检查内容:<span
+                                        <label for="tName" class="col-md-4 control-label">检查内容：<span
                                                 class="required">*</span></label>
 
                                         <div class="col-md-8">
-                                            <input type="text" class="form-control" id="tName" name="tName"
-                                                   placeholder="检查内容" required="required">
+                                            <textarea rows="2" class="form-control" id="tName" name="tName"
+                                                   placeholder="检查内容" required="required"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="tType" class="col-md-4 control-label">性质类别:<span
+                                        <label for="tType" class="col-md-4 control-label">性质类别：<span
                                                 class="required">*</span></label>
 
                                         <div class="col-md-8">
@@ -309,11 +245,78 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
+                                        <label for="mrrMethod" class="col-md-4 control-label">维保方式：<span
+                                                class="required">*</span></label>
+
+                                        <div class="col-md-8">
+                                            <select class="form-control" name="mrrMethod" id="mrrMethod">
+                                                <option disabled="disabled" selected="selected">--请选择维保方式--</option>
+                                                <option value="日常巡查">日常巡查</option>
+                                                <option value="单项检查">单项检查</option>
+                                                <option value="维护保养">维护保养</option>
+                                                <option value="联动检查">联动检查</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="proportion" class="col-md-4 control-label">抽查比例：<span
+                                                class="required">*</span></label>
+
+                                        <div class="col-md-8">
+                                            <input type="text" class="form-control required number" id="proportion" name="proportion"
+                                                   placeholder="抽查比例" >
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="lifetime" class="col-md-4 control-label">使用年限：<span
+                                                class="required">*</span></label>
+
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control required digits" id="lifetime" name="lifetime"
+                                                       placeholder="如果为0则无使用年限">
+                                                <span class="input-group-addon">年</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="changetime" class="col-md-4 control-label">检修年限：<span
+                                                class="required">*</span></label>
+
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control required digits" id="changetime" name="changetime"
+                                                       placeholder="如果为0则无检修年限">
+                                                <span class="input-group-addon">年</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="maturity" class="col-md-4 control-label">期限类型：<span
+                                                class="required">*</span></label>
+
+                                        <div class="col-md-8">
+                                            <select class="form-control" name="maturity" id="maturity">
+                                                <%--<option disabled="disabled" selected="selected">--请选择期限类型--</option>--%>
+                                                <option value="生产日期" selected="selected">生产日期</option>
+                                                <option value="投入使用日期">投入使用日期</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
                                         <label for="description" class="col-md-4 control-label">技术规范：</label>
 
                                         <div class="col-md-8">
                                         <textarea rows="2" class="form-control" id="description" name="description"
                                                   placeholder="技术规范"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inspection" class="col-md-4 control-label">检查方法：</label>
+
+                                        <div class="col-md-8">
+                                    <textarea rows="2" class="form-control" id="inspection" name="inspection"
+                                              placeholder="检查方法"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group col-md-12">
@@ -332,7 +335,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary" id="createMrrStandardBtn">创建</button>
+                    <button type="button" class="btn btn-primary" id="createMrrStandardBtn">保存</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -342,7 +345,7 @@
 
     <!--技术要求-->
     <div id="techniqueModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -350,7 +353,12 @@
                     <h4 class="modal-title">技术要求</h4>
                 </div>
                 <div class="modal-body">
-                    <div id="techniqueContent"></div>
+                    <table id="lookTechniqueTable"
+                           data-striped="true"
+                           data-show-refresh="true"
+                           data-show-columns="true"
+                           data-minimum-count-columns="2"
+                           data-id-field="id" ></table>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-info" data-dismiss="modal">关闭</button>
@@ -375,4 +383,4 @@
 <%--<script src="<c:url value='/bower_components/jquery.inputmask/dist/min/inputmask/jquery.inputmask.min.js'/>"></script>--%>
 <%--<script src="<c:url value='/bower_components/jquery.inputmask/dist/min/inputmask/inputmask.extensions.min.js'/>"></script>--%>
 <script src="<c:url value='/js/basicInfo/mrrStandard.js'/>"></script>
-<script src="<c:url value='/js/basicInfo/updateMrrStandard.js'/>"></script>
+<%--<script src="<c:url value='/js/basicInfo/updateMrrStandard.js'/>"></script>--%>

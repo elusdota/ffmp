@@ -2,9 +2,6 @@ package com.jrtech.templates.services;
 
 import com.jrtech.ffmp.data.entities.MaintenanceProject;
 import com.jrtech.ffmp.data.entities.MaintenanceTask;
-import com.jrtech.ffmp.data.entities.MrrStandard;
-import com.jrtech.ffmp.data.entities.TaskDefinition;
-import com.jrtech.ffmp.data.repositories.EquipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -71,24 +68,24 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
     private MaintenanceTask buildEquipmentTask(MaintenanceProject maintenanceProject) {
         MaintenanceTask maintenanceTask = buildMaintenanceTask(maintenanceProject,"维修任务","定期检修",null);
         final String[] description = {};
-        maintenanceProject.getEquipments().forEach(equipment -> {
-            MrrStandard mrrStandard = mrrStandardService.findOneByName(equipment.getTypemin());
-            Date date1 = new Date();
-            Date date2 = new Date();
-            if (mrrStandard.getMaturity() == "生产日期") {
-                date1 = getDate(equipment.getProductionDate(), mrrStandard.getChangetime(), -1);
-                date2 = getDate(equipment.getProductionDate(), mrrStandard.getLifetime(), -1);
-            } else {
-                date1 = getDate(equipment.getInputDate(), mrrStandard.getChangetime(), -1);
-                date2 = getDate(equipment.getInputDate(), mrrStandard.getLifetime(), -1);
-            }
-            if (mrrStandard.getChangetime() > 0 && date1.after(new Date()) && date1.before(getDate(new Date(), 0, 1))) {
-                description[0] = description[0] + equipment.getCode() + ",到期维修。";
-            }
-            if (mrrStandard.getLifetime() > 0 && date2.after(new Date()) && date2.before(getDate(new Date(), 0, 1))) {
-                description[0] = description[0] + equipment.getCode() + ",到期报废。";
-            }
-        });
+//        maintenanceProject.getEquipments().forEach(equipment -> {
+//            MrrStandard mrrStandard = mrrStandardService.findOneByName(equipment.getTypemin());
+//            Date date1 = new Date();
+//            Date date2 = new Date();
+//            if (mrrStandard.getMaturity() == "生产日期") {
+//                date1 = getDate(equipment.getProductionDate(), mrrStandard.getChangetime(), -1);
+//                date2 = getDate(equipment.getProductionDate(), mrrStandard.getLifetime(), -1);
+//            } else {
+//                date1 = getDate(equipment.getInputDate(), mrrStandard.getChangetime(), -1);
+//                date2 = getDate(equipment.getInputDate(), mrrStandard.getLifetime(), -1);
+//            }
+//            if (mrrStandard.getChangetime() > 0 && date1.after(new Date()) && date1.before(getDate(new Date(), 0, 1))) {
+//                description[0] = description[0] + equipment.getCode() + ",到期维修。";
+//            }
+//            if (mrrStandard.getLifetime() > 0 && date2.after(new Date()) && date2.before(getDate(new Date(), 0, 1))) {
+//                description[0] = description[0] + equipment.getCode() + ",到期报废。";
+//            }
+//        });
         if(null!=description[0]){
             maintenanceTask.setDescription(description[0]);
             return maintenanceTask;

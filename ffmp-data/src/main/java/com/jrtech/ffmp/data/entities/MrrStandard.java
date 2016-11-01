@@ -20,16 +20,6 @@ public class MrrStandard extends AbstractTreeNode<MrrStandard>{
     private String code;
     //工作内容
     private String jobContent;
-    //维管方式
-    private String mrrMethod;
-    //抽查比例
-    private double proportion;
-    //使用年限
-    private int lifetime;
-    //维修年限
-    private int changetime;
-    //根据使用年限还是更换年限计算设备到期时间
-    private String maturity;
     //备注
     private String remark;
 
@@ -62,22 +52,6 @@ public class MrrStandard extends AbstractTreeNode<MrrStandard>{
         this.techniqueRequirementsList = techniqueRequirementsList;
     }
 
-    public String getMrrMethod() {
-        return mrrMethod;
-    }
-
-    public void setMrrMethod(String mrrMethod) {
-        this.mrrMethod = mrrMethod;
-    }
-
-    public double getProportion() {
-        return proportion;
-    }
-
-    public void setProportion(double proportion) {
-        this.proportion = proportion;
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -86,27 +60,5 @@ public class MrrStandard extends AbstractTreeNode<MrrStandard>{
         this.remark = remark;
     }
 
-    public int getLifetime() {
-        return lifetime;
-    }
 
-    public void setLifetime(int lifetime) {
-        this.lifetime = lifetime;
-    }
-
-    public int getChangetime() {
-        return changetime;
-    }
-
-    public void setChangetime(int changetime) {
-        this.changetime = changetime;
-    }
-
-    public String getMaturity() {
-        return maturity;
-    }
-
-    public void setMaturity(String maturity) {
-        this.maturity = maturity;
-    }
 }

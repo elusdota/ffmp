@@ -73,7 +73,8 @@
 
           <div class="col-lg-6">
             <input type="text" class="form-control" id="cardid" name="cardid" placeholder="身份证"
-                   required="required">
+                  >
+            <label id="cardid-error" class="error" for="cardid" style="display: none;">身份证号码无效</label>
           </div>
         </div>
         <div class="form-group col-md-4">
@@ -191,6 +192,7 @@
 <script src="<c:url value='/bower_components/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js'/>"></script>
 <script src="<c:url value='/bower_components/tableExport.jquery.plugin/tableExport.min.js'/>"></script>
 <script src="<c:url value='/bower_components/jquery.base64.js/jquery.base64.js'/>"></script>
+<script src="<c:url value='/js/basicInfo/id.number.validator.js'/>"></script>
 <script src="<c:url value='/js/basicInfo/updateEmployee.js'/>"></script>
 
 
