@@ -42,8 +42,19 @@ $(document).ready(function () {
             , {title: "楼层", field: "floors", sortable: true}
             , {title: "使用性质", field: "nature", sortable: true}
             , {title: "消防安全管理人", field: "manager", sortable: true}
-            ,{title: "建筑投入使用时间", field: "inputDate", sortable: true}
+            , {title: "建筑投入使用时间", field: "inputDate", sortable: true}
+            , {title: "每月几号巡检", field: "days", sortable: true}
             , {title: "联系电话", field: "managerTelephone", sortable: true}
+            , {
+                title: "项目状态", field: "terminate", sortable: true, formatter: function (val) {
+                    if (val) {
+                        return '终止';
+                    }
+                    else {
+                        return '正在维护';
+                    }
+                }
+            }
         ]
     });
 //序号加载
@@ -59,13 +70,13 @@ $("#createProject").click(function () {
 });
 $("#allocationEquipment").click(function () {
     var data = $('#projectTable').bootstrapTable('getSelections');
-    $("#main-content").load("taskManagement/equipment?id="+data[0].id, function () {
+    $("#main-content").load("taskManagement/equipment?id=" + data[0].id, function () {
         $("#main-content").fadeIn();
     });
 });
 $("#queryProject").click(function () {
     var data = $('#projectTable').bootstrapTable('getSelections');
-    $("#main-content").load("taskManagement/projectInformation?id="+data[0].id, function () {
+    $("#main-content").load("taskManagement/projectInformation?id=" + data[0].id, function () {
         $("#main-content").fadeIn();
     });
 });

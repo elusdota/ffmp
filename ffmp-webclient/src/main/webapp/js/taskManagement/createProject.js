@@ -77,6 +77,7 @@ $(document).ready(function () {
             nature:$("#nature").val().trim(),
             manager:$("#manager").val().trim(),
             inputDate:$("#inputDate").val().trim(),
+            days:$("#days").val().trim(),
             managerTelephone:$("#managerTelephone").val().trim(),
             equipmentCase:$("#equipmentCase").val().trim()
 

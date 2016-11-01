@@ -28,6 +28,11 @@ public class MaintenanceProjectServiceImpl implements  MaintenanceProjectService
     }
 
     @Override
+    public Iterable<MaintenanceProject> findByTerminate(boolean terminate) {
+        return repository.findByTerminate(terminate);
+    }
+
+    @Override
     public MaintenanceProject findOneByName(String name) {
         return repository.findOneByName(name);
     }

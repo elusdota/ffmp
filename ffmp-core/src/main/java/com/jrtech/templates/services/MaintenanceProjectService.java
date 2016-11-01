@@ -15,6 +15,8 @@ public interface MaintenanceProjectService {
 
     Iterable<MaintenanceProject> findAll();
 
+    Iterable<MaintenanceProject> findByTerminate(boolean terminate);
+
     MaintenanceProject findOneByName(String name);
 
     MaintenanceProject findOneByCode(String code);
@@ -25,6 +27,7 @@ public interface MaintenanceProjectService {
 
     /**
      * 通过名称模糊查询
+     *
      * @param name
      * @return
      */
