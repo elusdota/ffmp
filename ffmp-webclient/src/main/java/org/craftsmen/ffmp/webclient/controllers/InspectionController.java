@@ -51,6 +51,19 @@ public class InspectionController {
     }
     public Inspection getInspection(String id,String name){
         Inspection inspection=service.findByMaintenanceProjectAndName(maintenanceProjectService.findOne(id),name);
+//        if(null!=inspection) {
+//            Collection<MrrStandard> mrrStandards = new ArrayList<>();
+//            inspection.getMrrStandards().forEach(mrrStandard -> {
+//                if (!mrrStandards.contains(mrrStandard)) {
+//                    mrrStandards.add(mrrStandard);
+//                }
+//            });
+//            inspection.getMrrStandards().clear();
+//            inspection.getMrrStandards().addAll(mrrStandards);
             return inspection;
+//        }
+//        else {
+//            return null;
+//        }
     }
 }
