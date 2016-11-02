@@ -50,6 +50,8 @@ public class MaintenanceTask extends AbstractNamedObject {
     private Date enddate;
     //备注
     private String description;
+    //类型
+    private String type;
 
     public TaskDefinition getTaskDefinition() {
         return taskDefinition;
@@ -129,5 +131,13 @@ public class MaintenanceTask extends AbstractNamedObject {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

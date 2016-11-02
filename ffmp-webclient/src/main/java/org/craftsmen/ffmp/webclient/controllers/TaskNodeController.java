@@ -32,6 +32,8 @@ public class TaskNodeController {
     private AccountService accountService;
     @Autowired
     private AutomaticDeploymentServiceImpl automaticDeploymentService;
+    @Autowired
+    private InspectionService inspectionService;
     private Logger logger = LogManager.getLogger(TaskNodeController.class.getName());
 
     @RequestMapping(method = RequestMethod.GET)
@@ -52,16 +54,8 @@ public class TaskNodeController {
         MaintenanceTask maintenanceTask = taskRuntimeService.findOne(historyTaskNodeVO.getMaintenanceTaskId());
         //获取当前操作步骤
         FlowchartSteps flowchartSteps = getShtep(historyTaskNodeVO.getMaintenanceTaskId());
-        if(flowchartSteps.getName().equals("巡检")){
-            List<TaskEquipemt> taskEquipemts=taskEquipemtService.findByMaintenanceTask(maintenanceTask);
-           int totals= maintenanceTask.getMaintenanceProject().getEquipments().size();
-            if(totals>0){
-                if(taskEquipemts.size()/totals<0.09){
-                    throw new ServiceException("巡检设备必须超过设备总数的9%，目前只有"+taskEquipemts.size()/totals*100+"%");
-                }
-            }else {
-                throw new ServiceException("该项目没有设备，请先录入设备！");
-            }
+        if (flowchartSteps.getName().equals("巡检")) {
+            isTaskNonLocked(maintenanceTask);
         }
         HistoryTaskNode historyTaskNode = bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask, account, flowchartSteps);
         logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建任务执行节点，名称--" + flowchartSteps.getName() + "。任务名称：" +
@@ -74,12 +68,41 @@ public class TaskNodeController {
             FlowchartSteps flowchartSteps1 = findOneByTaskDefinitionAndParametric(maintenanceTask.getTaskDefinition(), flowchartSteps.getCatch(historyTaskNode.getDescription()));
             logger.info(UserDetailsUtils.getCurrent().getUsername() + ":创建任务执行节点，名称--" + flowchartSteps1.getName() + "。任务名称：" +
                     maintenanceTask.getName());
-            if(maintenanceTask.getTaskDefinition().getName().equals("巡检任务")){
+            if (maintenanceTask.getTaskDefinition().getName().equals("巡检任务")) {
                 buildTask(maintenanceTask);
             }
             return service.save(bulidHistoryTaskNode(historyTaskNodeVO, maintenanceTask, account, flowchartSteps1));
         } else {
             return service.save(historyTaskNode);
+        }
+    }
+
+    //判断巡检任务是否完成巡检比例，elus
+    public void isTaskNonLocked(MaintenanceTask maintenanceTask) {
+        List<TaskEquipemt> taskEquipemts = taskEquipemtService.findByMaintenanceTask(maintenanceTask);
+        int totals = maintenanceTask.getMaintenanceProject().getEquipments().size();
+        if (totals > 0) {
+            double iou = 0.0;
+            Inspection inspection = null;
+            if (maintenanceTask.getType().equals("月度巡检")) {
+                inspection = inspectionService.findByMaintenanceProjectAndName(maintenanceTask.getMaintenanceProject(), "月度巡检");
+            }
+            if (maintenanceTask.getType().equals("季度巡检")) {
+                inspection = inspectionService.findByMaintenanceProjectAndName(maintenanceTask.getMaintenanceProject(), "季度巡检");
+            }
+            if (maintenanceTask.getType().equals("年度巡检")) {
+                inspection = inspectionService.findByMaintenanceProjectAndName(maintenanceTask.getMaintenanceProject(), "年度巡检");
+            }
+            if (null != inspection) {
+                if (inspection.getRatio() > 0) {
+                    iou = inspection.getRatio() / 100;
+                }
+            }
+            if (taskEquipemts.size() / totals < iou) {
+                throw new ServiceException("巡检设备必须超过设备总数的" + iou * 100 + "%，目前只有" + taskEquipemts.size() / totals * 100 + "%");
+            }
+        } else {
+            throw new ServiceException("该项目没有设备，请先录入设备！");
         }
     }
 
@@ -127,7 +150,7 @@ public class TaskNodeController {
     private void buildTask(MaintenanceTask maintenanceTask) {
         final String[] description = {"维修以下设备："};
         taskEquipemtService.findByMaintenanceTaskAndDescriptionNot(maintenanceTask, "功能正常").forEach(taskEquipemt -> {
-            description[0] = description[0] + taskEquipemt.getEquipment().getCode()+";";
+            description[0] = description[0] + taskEquipemt.getEquipment().getCode() + ";";
         });
         taskRuntimeService.save(automaticDeploymentService.buildMaintenanceTask(maintenanceTask.getMaintenanceProject(), "维修任务", maintenanceTask.getName() + "-维修", description[0]));
     }

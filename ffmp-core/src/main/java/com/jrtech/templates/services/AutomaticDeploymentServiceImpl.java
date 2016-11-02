@@ -72,6 +72,15 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
         if (null != description) {
             maintenanceTask.setDescription(description);
         }
+        if(taskDefinition.equals("巡检任务")&&getName().equals("月巡检")){
+         maintenanceTask.setType("月度巡检");
+        }
+        if(taskDefinition.equals("巡检任务")&&getName().equals("年度巡检")){
+            maintenanceTask.setType("年度巡检");
+        }
+        if(taskDefinition.equals("巡检任务")&&(getName().equals("第一季度巡检")||getName().equals("第二季度巡检")||getName().equals("第三季度巡检"))){
+            maintenanceTask.setType("季度巡检");
+        }
         return maintenanceTask;
     }
 
