@@ -36,6 +36,9 @@
         <sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/项目信息管理/设备录入')">
           <button type="button" id="allocationEquipment" class="btn btn-default pull-left">设备录入</button>
         </sec:authorize>
+          <%--<sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/项目信息管理/巡检标准')">--%>
+              <button type="button" id="allocationInspections" class="btn btn-default pull-left">巡检标准</button>
+          <%--</sec:authorize>--%>
       </div>
       <table id="projectTable"
              data-toolbar="#toolbar"

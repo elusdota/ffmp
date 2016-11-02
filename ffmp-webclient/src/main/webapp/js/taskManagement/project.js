@@ -80,3 +80,9 @@ $("#queryProject").click(function () {
         $("#main-content").fadeIn();
     });
 });
+$("#allocationInspections").click(function () {
+    var data = $('#projectTable').bootstrapTable('getSelections');
+    $("#main-content").load("taskManagement/inspection?id=" + data[0].id, function () {
+        $("#main-content").fadeIn();
+    });
+});

@@ -1,5 +1,6 @@
 package com.jrtech.templates.services;
 
+import com.jrtech.ffmp.data.entities.Inspection;
 import com.jrtech.ffmp.data.entities.MrrStandard;
 import com.jrtech.ffmp.data.repositories.MrrStandardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
 
 /**
  * Created by suelmer on 2016/7/16.

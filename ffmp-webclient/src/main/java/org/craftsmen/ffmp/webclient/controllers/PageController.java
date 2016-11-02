@@ -363,4 +363,12 @@ public class PageController {
         model.setViewName("common/fileUpload");
         return model;
     }
+    //巡检标准
+    @RequestMapping("/taskManagement/inspection")
+    public ModelAndView inspection(@RequestParam("id") String id) throws Exception {
+        ModelAndView model = new ModelAndView();
+        model.addObject("id", id);
+        model.setViewName("taskManagement/inspection");
+        return model;
+    }
 }

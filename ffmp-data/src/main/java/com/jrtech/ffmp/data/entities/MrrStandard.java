@@ -12,7 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "mrrstandard")
-@JsonIgnoreProperties(value = { "parent" })
+@JsonIgnoreProperties(value = { "parent" ,"inspection"})
 public class MrrStandard extends AbstractTreeNode<MrrStandard>{
      public  MrrStandard(){
     }
@@ -24,7 +24,7 @@ public class MrrStandard extends AbstractTreeNode<MrrStandard>{
     private String remark;
 
     //技术要求列表
-    @OneToMany(fetch = FetchType.EAGER,mappedBy = "mrrStandard", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "mrrStandard", cascade = CascadeType.ALL)
     private List<TechniqueRequirements> techniqueRequirementsList = new ArrayList<>();
 
 
@@ -59,6 +59,4 @@ public class MrrStandard extends AbstractTreeNode<MrrStandard>{
     public void setRemark(String remark) {
         this.remark = remark;
     }
-
-
 }

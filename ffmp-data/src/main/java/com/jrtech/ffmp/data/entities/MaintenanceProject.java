@@ -23,6 +23,9 @@ public class MaintenanceProject extends AbstractNamedObject {
     @NotNull
     @ManyToOne(cascade = { CascadeType.REFRESH })
     private Organization delegate;
+    //巡检标准
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "maintenanceProject", cascade = { CascadeType.ALL }, orphanRemoval = true)
+    private Collection<Inspection> inspections=new ArrayList<Inspection>();
     @NotNull
     @ManyToOne(cascade = { CascadeType.REFRESH })
     //使用单位
@@ -83,6 +86,10 @@ public class MaintenanceProject extends AbstractNamedObject {
 
     public void setDelegate(Organization delegate) {
         this.delegate = delegate;
+    }
+
+    public Collection<Inspection> getInspections() {
+        return inspections;
     }
 
     public Customer getCustomer() {

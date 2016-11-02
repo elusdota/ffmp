@@ -44,9 +44,15 @@ public class MRRStandardController {
     }
 
     @RequestMapping(value = "/findOneByName", method = RequestMethod.GET)
-    public Iterable<MrrStandard> findOneByName(@RequestParam("name") String name) {
+    public Iterable<MrrStandard> findByName(@RequestParam("name") String name) {
         logger.info(UserDetailsUtils.getCurrent().getUsername() + ":通过name查找维管设施标准，名称--"+name);
         return mrrStandardService.findOneByName(name).getChildren();
+    }
+
+    @RequestMapping(value = "/findOneByNameOnly", method = RequestMethod.GET)
+    public MrrStandard findOneByName(@RequestParam("name") String name) {
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":通过name查找维管设施标准，名称--"+name);
+        return mrrStandardService.findOneByName(name);
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)

@@ -1,9 +1,12 @@
 package com.jrtech.templates.services;
 
+import com.jrtech.ffmp.data.entities.Inspection;
 import com.jrtech.ffmp.data.entities.MrrStandard;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+
+import java.util.Collection;
 
 /**
  * Created by suelmer on 2016/7/16.

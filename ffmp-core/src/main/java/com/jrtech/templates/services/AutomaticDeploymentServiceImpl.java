@@ -31,9 +31,9 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
 //    @Scheduled(cron = "0 0 22 * * ?")
     public void buildScheduledTask() {
         maintenanceProjectService.findByTerminate(false).forEach(maintenanceProject -> {
-            MaintenanceTask maintenanceTask = taskRuntimeService.findOneByName(getName(maintenanceProject.getCode()));
+            MaintenanceTask maintenanceTask = taskRuntimeService.findOneByName(getName());
             if (maintenanceTask == null) {
-                taskRuntimeService.save(buildMaintenanceTask(maintenanceProject, "巡检任务", getName(maintenanceProject.getCode()), "系统指定的巡检任务,请按标准执行巡检任务！"));
+                taskRuntimeService.save(buildMaintenanceTask(maintenanceProject, "巡检任务", getName(), "系统指定的巡检任务,请按标准执行巡检任务！"));
             }
         });
     }
@@ -109,9 +109,9 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
         return calender.getTime();
     }
 
-    private String getName(String code) {
+    private String getName() {
         LocalDate today = LocalDate.now();
-        int year = today.getYear();
+//        int year = today.getYear();
         int month = today.getMonthValue();
         String name = "";
         switch (month) {
@@ -128,8 +128,30 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
                 name = "年度巡检";
                 break;
             default:
-                name = month + "月巡检";
+                name = "月巡检";
         }
-        return code + year + name;
+        return name;
+    }
+    public String getInspection(MaintenanceProject maintenanceProject){
+        String InspectionDescription=maintenanceProject.getName();
+        InspectionDescription=InspectionDescription+"-----";
+//        String name="";
+//        switch (getName()) {
+//            case "月巡检":
+//                name = "第一季度巡检";
+//                break;
+//            case 6:
+//                name = "第二季度巡检";
+//                break;
+//            case 9:
+//                name = "第三季度巡检";
+//                break;
+//            case 12:
+//                name = "年度巡检";
+//                break;
+//            default:
+//                name = "月巡检";
+//        }
+        return null;
     }
 }
