@@ -50,12 +50,11 @@
                             class="required">*</span></label>
 
                     <div class="col-lg-6">
-                        <%--<select class="form-control select2" id="organization" data-placeholder="所属维保小组">--%>
-                            <%--<option></option>--%>
-                        <%--</select>--%>
-                        <input type="text" class="form-control" id="organization" name="organization"
-                               placeholder="所属维保小组"
-                               required="required">
+                        <select class="form-control select2" id="organization" data-placeholder="所属维保小组">
+                        </select>
+                        <%--<input type="text" class="form-control" id="organization" name="organization"--%>
+                               <%--placeholder="所属维保小组"--%>
+                               <%--required="required">--%>
                     </div>
                 </div>
                 <div class="form-group col-md-4">
