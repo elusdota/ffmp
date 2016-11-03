@@ -22,12 +22,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-            任务审核
+            任务执行情况
             <small></small>
         </h1>
         <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-wrench"></i> 维管工作管理</a></li>
-            <li class="active">任务审核</li>
+            <li class="active">任务执行情况</li>
         </ol>
     </section>
     <!-- Main content -->

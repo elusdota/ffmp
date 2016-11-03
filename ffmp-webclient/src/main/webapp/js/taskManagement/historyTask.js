@@ -3,6 +3,7 @@
  */
 $(document).ready(function () {
     $("#viewTask").attr("disabled", "true");
+    $("#detailsTask").attr("disabled", "true");
     $('#taskTable').bootstrapTable({
         method: 'POST',
         url: 'rest/task/findHistoryTask',
@@ -13,9 +14,11 @@ $(document).ready(function () {
         clickToSelect: true,
         onCheck: function (row) {
             $("#viewTask").removeAttr("disabled");
+            $("#detailsTask").removeAttr("disabled");
         },
         onUncheck: function (row) {
             $("#viewTask").attr("disabled", "true");
+            $("#detailsTask").attr("disabled", "true");
         },
         queryParams: function (params) {
             var fin = {
@@ -47,6 +50,12 @@ $(document).ready(function () {
 $("#viewTask").click(function () {
     var data = $('#taskTable').bootstrapTable('getSelections');
     $("#main-content").load("taskManagement/taskInformation?id="+data[0].id, function () {
+        $("#main-content").fadeIn();
+    });
+});
+$("#detailsTask").click(function () {
+    var data = $('#taskTable').bootstrapTable('getSelections');
+    $("#main-content").load("taskManagement/auditTask?id=" + data[0].id, function () {
         $("#main-content").fadeIn();
     });
 });

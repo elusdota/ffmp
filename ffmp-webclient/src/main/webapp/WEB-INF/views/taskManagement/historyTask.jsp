@@ -30,6 +30,9 @@
         <sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/历史任务/查看历史任务')">
           <button type="button" id="viewTask" class="btn btn-default pull-left">查看任务</button>
         </sec:authorize>
+          <%--<sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/待完成任务/任务审核')">--%>
+              <button type="button" id="detailsTask" class="btn btn-default pull-left">查看任务执行情况</button>
+          <%--</sec:authorize>--%>
       </div>
       <table id="taskTable"
              data-toolbar="#toolbar"

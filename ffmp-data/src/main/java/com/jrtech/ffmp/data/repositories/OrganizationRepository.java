@@ -5,6 +5,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.List;
+
 @Repository
 public interface OrganizationRepository extends CrudRepository<Organization, String> {
     /**
@@ -16,4 +19,6 @@ public interface OrganizationRepository extends CrudRepository<Organization, Str
     Organization findRoot();
 
     Organization findOneByName(String name);
+
+    List<Organization> findByTypeAndNameLike(int type,String name);
 }

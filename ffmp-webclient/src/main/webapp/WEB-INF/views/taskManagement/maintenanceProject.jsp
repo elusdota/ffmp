@@ -39,6 +39,8 @@
           <%--<sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/项目信息管理/巡检标准')">--%>
               <button type="button" id="allocationInspections" class="btn btn-default pull-left">巡检标准</button>
           <%--</sec:authorize>--%>
+          <button type="button" id="updateProject" class="btn btn-default pull-left">修改项目</button>
+          <button type="button" id="endProject" class="btn btn-default pull-left">终止项目</button>
       </div>
       <table id="projectTable"
              data-toolbar="#toolbar"

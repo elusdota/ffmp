@@ -68,7 +68,7 @@ $("#printCode").click(function () {
 function timeout(printWindow) {
     setTimeout(function () {
         getstate(printWindow);
-    }, 100);
+    }, 1000);
 }
 function getstate(printWindow) {
     if(printWindow.document.readyState=='loading'){

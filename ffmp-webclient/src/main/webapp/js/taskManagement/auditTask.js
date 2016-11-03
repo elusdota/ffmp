@@ -14,6 +14,10 @@ $(document).ready(function () {
             $("#customer").val(data.customer.name);
             $("#description").val(data.description);
             $("#repairnumber").val(data.repairnumber);
+            if(data.suspended){
+                $("#approved").addClass("hidden");
+                $("#rejected").addClass("hidden");
+            }
         }, error: function (XMLHttpRequest) {
             $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
             $("#message").modal("show");

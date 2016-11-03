@@ -86,7 +86,7 @@ $("#printAllCode").click(function () {
                 data.forEach(function (e) {
                     var name = e.name;
                     var labelName = "<tr><td style='text-align:center'><label>" + name + "</label></td></tr><tr> <td>";
-                    html = html + labelName + "<img src=" + "barcode?fmt=JPEG&msg=" + e.code + " height='68px' width='190px'>"
+                    html = html + labelName + "<img src=" + "barcode?fmt=JPEG&msg=" + e.code + " height='78px' width='190px'>"
                         + "</td></tr> ";
                 });
                 var el = printWindow.document.getElementById('imgbarcode');
@@ -108,7 +108,7 @@ function timeout(printWindow) {
         } else {
             timeout(printWindow)
         }
-    }, 100);
+    }, 1000);
 }
 function getstate(printWindow) {
     printWindow.print();

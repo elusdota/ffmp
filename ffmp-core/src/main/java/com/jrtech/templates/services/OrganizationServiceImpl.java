@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.Collection;
+import java.util.List;
+
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
 	@Autowired
@@ -78,6 +81,11 @@ public class OrganizationServiceImpl implements OrganizationService {
 		}
 		
 		return hasSameName;
+	}
+
+	@Override
+	public List<Organization> findByTypeAndNameLike(int type, String name) {
+		return orgRepository.findByTypeAndNameLike(type,name);
 	}
 
 	@Override

@@ -4,6 +4,10 @@
 $(document).ready(function () {
     $("#queryProject").attr("disabled", "true");
     $("#allocationEquipment").attr("disabled", "true");
+    $("#allocationInspections").attr("disabled", "true");
+    $("#updateProject").attr("disabled", "true");
+    $("#endProject").attr("disabled", "true");
+
     $('#projectTable').bootstrapTable({
         method: 'POST',
         url: 'rest/maintenanceProject/findAll',
@@ -15,10 +19,16 @@ $(document).ready(function () {
         onCheck: function (row) {
             $("#queryProject").removeAttr("disabled");
             $("#allocationEquipment").removeAttr("disabled");
+            $("#allocationInspections").removeAttr("disabled");
+            $("#updateProject").removeAttr("disabled");
+            $("#endProject").removeAttr("disabled");
         },
         onUncheck: function (row) {
             $("#queryProject").attr("disabled", "true");
             $("#allocationEquipment").attr("disabled", "true");
+            $("#allocationInspections").attr("disabled", "true");
+            $("#updateProject").attr("disabled", "true");
+            $("#endProject").attr("disabled", "true");
         },
         queryParams: function (params) {
             var fin = {
@@ -37,8 +47,8 @@ $(document).ready(function () {
             , {title: "项目名称", field: "name", sortable: true}
             , {title: "项目编号", field: "code", sortable: true}
             , {title: "地址", field: "address", sortable: true}
-            , {title: "建筑面积", field: "area", sortable: true}
-            , {title: "建筑总高度", field: "totalHeight", sortable: true}
+            , {title: "建筑面积(m²)", field: "area", sortable: true}
+            , {title: "建筑总高度(m)", field: "totalHeight", sortable: true}
             , {title: "楼层", field: "floors", sortable: true}
             , {title: "使用性质", field: "nature", sortable: true}
             , {title: "消防安全管理人", field: "manager", sortable: true}
@@ -84,5 +94,25 @@ $("#allocationInspections").click(function () {
     var data = $('#projectTable').bootstrapTable('getSelections');
     $("#main-content").load("taskManagement/inspection?id=" + data[0].id, function () {
         $("#main-content").fadeIn();
+    });
+});
+$("#updateProject").click(function () {
+    var data = $('#projectTable').bootstrapTable('getSelections');
+    $("#main-content").load("taskManagement/updateProject?id=" + data[0].id, function () {
+        $("#main-content").fadeIn();
+    });
+});
+$("#endProject").click(function () {
+    var data = $('#projectTable').bootstrapTable('getSelections');
+    $.ajax('rest/maintenanceProject?id='+data[0].id, {
+        type: 'DELETE',
+        contentType: 'application/json',
+        dataType: 'json',
+        success: function (data, XMLHttpRequest, jqXHR) {
+            $('#projectTable').bootstrapTable('refresh');
+        }, error: function (XMLHttpRequest) {
+            $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+            $("#message").modal("show");
+        }
     });
 });

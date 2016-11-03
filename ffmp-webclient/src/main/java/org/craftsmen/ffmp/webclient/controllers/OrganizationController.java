@@ -18,6 +18,7 @@ import org.springframework.orm.ObjectRetrievalFailureException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -86,5 +87,10 @@ public class OrganizationController {
 //        organization.setParent(service.findOne(organization.getId()).getParent());
         logger.info(UserDetailsUtils.getCurrent().getUsername() + ":修改组织机构，名称---" + organization1.getName());
         return service.save(organization1);
+    }
+    @RequestMapping(value = "/findByNameLike", method = RequestMethod.GET)
+    public List<Organization> findByNameLike(@RequestParam("name") String name) {
+        logger.info(UserDetailsUtils.getCurrent().getUsername()+":查询客户，客户关键字--"+name);
+        return service.findByTypeAndNameLike(2,"%" + name + "%");
     }
 }

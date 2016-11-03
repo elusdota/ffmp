@@ -126,4 +126,25 @@ public class MaintenanceProjectController {
         logger.info(UserDetailsUtils.getCurrent().getUsername()+":查询项目，项目关键字--"+name);
         return service.findByNameLike("%" + name + "%");
     }
+    @RequestMapping(method = RequestMethod.DELETE)
+    public MaintenanceProject delete(@RequestParam("id") String id) {
+        MaintenanceProject maintenanceProject = service.findOne(id);
+        maintenanceProject.setTerminate(true);
+        return service.save(maintenanceProject);
+    }
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
+    public MaintenanceProject updateCommon(@RequestBody MaintenanceProject maintenanceProject) {
+        MaintenanceProject maintenanceProject1=service.findOne(maintenanceProject.getId());
+        maintenanceProject1.setAddress(maintenanceProject.getAddress());
+        maintenanceProject1.setArea(maintenanceProject.getArea());
+        maintenanceProject1.setDays(maintenanceProject.getDays());
+        maintenanceProject1.setFloors(maintenanceProject.getFloors());
+        maintenanceProject1.setNature(maintenanceProject.getNature());
+        maintenanceProject1.setManager(maintenanceProject.getManager());
+        maintenanceProject1.setManagerTelephone(maintenanceProject.getManagerTelephone());
+        maintenanceProject1.setTotalHeight(maintenanceProject.getTotalHeight());
+        maintenanceProject1.setInputDate(maintenanceProject.getInputDate());
+        return service.save(maintenanceProject1);
+    }
 }
+

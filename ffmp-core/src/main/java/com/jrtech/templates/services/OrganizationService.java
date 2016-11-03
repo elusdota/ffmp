@@ -3,6 +3,9 @@ package com.jrtech.templates.services;
 
 import com.jrtech.ffmp.data.entities.Organization;
 
+import java.util.Collection;
+import java.util.List;
+
 public interface OrganizationService {
 
     /**
@@ -44,5 +47,7 @@ public interface OrganizationService {
      * @return boolean true:已经存在，false:不重复
      */
     boolean isDuplicateNameOnSameLevel(Organization org);
+    //通过类型，名称模糊查询
+    List<Organization> findByTypeAndNameLike(int type,String name);
 
 }

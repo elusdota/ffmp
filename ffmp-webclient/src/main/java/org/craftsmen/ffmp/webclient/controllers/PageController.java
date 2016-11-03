@@ -138,6 +138,14 @@ public class PageController {
     public String createProject(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/createProject";
     }
+    //设备
+    @RequestMapping("/taskManagement/updateProject")
+    public ModelAndView updateProject(@RequestParam("id") String id) throws Exception {
+        ModelAndView model = new ModelAndView();
+        model.addObject("id", id);
+        model.setViewName("taskManagement/updateProject");
+        return model;
+    }
 
     //设备
     @RequestMapping("/taskManagement/equipment")
