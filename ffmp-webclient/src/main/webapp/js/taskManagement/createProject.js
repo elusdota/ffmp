@@ -51,42 +51,40 @@ $(document).ready(function () {
         templateResult: formatRepo,
         templateSelection: formatRepoSelection
     });
-    $("#organization").select2({
-        theme: "bootstrap",
-        language: "zh-CN",
-        ajax: {
-            url: "rest/organization/findByNameLike",
-            dataType: 'json',
-            delay: 250,
-            data: function (params) {
-                return {
-                    name: params.term
-                };
-            },
-            processResults: function (data, params) {
-                params.page = params.page || 1;
-                return {
-                    results: data,
-                    pagination: {
-                        more: (params.page * 2) < data.length
-                    }
-                };
-            },
-            cache: true
-        },
-        escapeMarkup: function (markup) { return markup; }, // 定义option格式使其工作
-        minimumInputLength: 1,
-        templateResult: formatRepo,
-        templateSelection: formatRepoSelection
-    });
+    //$("#organization").select2({
+    //    theme: "bootstrap",
+    //    language: "zh-CN",
+    //    ajax: {
+    //        url: "rest/organization/findByNameLike",
+    //        dataType: 'json',
+    //        delay: 250,
+    //        data: function (params) {
+    //            return {
+    //                name: params.term
+    //            };
+    //        },
+    //        processResults: function (data, params) {
+    //            params.page = params.page || 1;
+    //            return {
+    //                results: data,
+    //                pagination: {
+    //                    more: (params.page * 2) < data.length
+    //                }
+    //            };
+    //        },
+    //        cache: true
+    //    },
+    //    escapeMarkup: function (markup) { return markup; }, // 定义option格式使其工作
+    //    minimumInputLength: 1,
+    //    templateResult: formatRepo,
+    //    templateSelection: formatRepoSelection
+    //});
 
     function formatRepo (repo) {
-        alert(repo.id)
         var markup =  "<option value="+ repo.id + ">"+ repo.name + "</option>";
         return markup;
     }
     function formatRepoSelection (repo) {
-        alert(repo.name)
         return repo.name || "" ;
     }
     function getSaveData() {
