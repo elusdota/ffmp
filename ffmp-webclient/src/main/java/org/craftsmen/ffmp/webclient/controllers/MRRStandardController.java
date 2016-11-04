@@ -88,9 +88,7 @@ public class MRRStandardController {
         mrrStandard.setJobContent(agrs.getJobContent());
         mrrStandard.setRemark(agrs.getRemark());
 
-        mrrStandard.setParent(agrs.getParent());
-
-        mrrStandard.getTechniqueRequirementsList().forEach(item -> item.setMrrStandard(mrrStandard));
+        mrrStandard.setParent(mrrStandard.getParent());
 
         logger.info(UserDetailsUtils.getCurrent().getUsername() + ":更新维管设施标准，维管设施标准名称--" + agrs.getName());
         return mrrStandardService.save(mrrStandard);
@@ -107,7 +105,7 @@ public class MRRStandardController {
         if(id==null || "".equals(id)){
             throw new ServiceException("查询维管设施标准父级目录出错，维管设施标准id为NULL");
         }
-        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":通过id查找维管设施标准的上一级，--id"+id);
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":通过id查找维管设施标准的上一级，--id-----"+id);
         MrrStandard mrrStandard = mrrStandardService.findOne(id);
         return mrrStandard.getParent();
     }

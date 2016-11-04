@@ -12,7 +12,7 @@ $(function () {
         method: 'POST',
         url: 'rest/mrrstandard/findAll',
         striped: true,
-        //  clickToSelect: true,
+        clickToSelect: true,
         queryParams: function (params) {
             var fin = {
                 offset: params.offset,
@@ -31,6 +31,7 @@ $(function () {
             {title: "编码", field: "code", sortable: true},
             {title: "系统/设施名称", field: "name", sortable: true},
             {title: "工作内容", field: "jobContent", sortable: true},
+            {title: "备注", field: "remark", sortable: true},
             {
                 title: '查看技术要求',
                 align: 'center',
@@ -46,7 +47,7 @@ $(function () {
     }
 
     function operateFormatter(value, row, index) {
-        if (row.jobContent == null) {
+        if (row.jobContent == null || row.jobContent =="") {
             return "";
         } else {
             return [
@@ -58,14 +59,18 @@ $(function () {
     window.operateEvents = {
         'click .edit': function (e, value, row, index) {
             var $modal = $("#techniqueModal").modal({show: false});
-            $lookTechniqueTable.bootstrapTable("load",row.techniqueRequirementsList);
+            $lookTechniqueTable.bootstrapTable("load", row.techniqueRequirementsList);
             $modal.modal('show');
         }
     };
 
 
     $lookTechniqueTable.bootstrapTable({
+        singleSelect: true,
+        clickToSelect: true,
         columns: [
+            {field: 'state', checkbox: true},
+            {field: 'id', title: 'ID', visible: false, switchable: false},
             {title: "序号", formatter: runningFormatter},
             {title: "检查内容", field: "name", align: 'center', sortable: true},
             {title: "性质类别", field: "type", align: 'center', sortable: true},
@@ -131,29 +136,6 @@ $(function () {
 
     });
 
-    function checkCodeRepeat(code) {
-        var isRepeat = false;
-        if (code != "" && code != null) {
-            $.ajax('rest/mrrstandard/findOneByCode', {
-                type: 'get',
-                async: false,
-                data: {code: code},
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function (data, XMLHttpRequest, jqXHR) {
-                    console.log("-----------" + data);
-                    if (data != null) {
-                        isRepeat = true;
-                    }
-                }, error: function (XMLHttpRequest) {
-                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
-                    $("#message").modal("show");
-                }
-            });
-        }
-        return isRepeat;
-    }
-
     //检查维护管理项目编号是否重复
     $("#code_content").blur(function () {
         var $pcode = $("#pcode_content");
@@ -198,16 +180,32 @@ $(function () {
             '<a class="remove" href="javascript:void(0)" title="移除">',
             '<i class="glyphicon glyphicon-remove"></i>',
             '</a>'
+            //,
+            //'<a class="edit" href="javascript:void(0)" title="修改">',
+            //'<i class="glyphicon glyphicon-edit"></i>',
+            //'</a>'
         ].join('');
     }
 
     window.techniqueOperateEvents = {
         'click .remove': function (e, value, row, index) {
             $techniqueTable.bootstrapTable('remove', {
-                field: 'description',
-                values: [row.tName]
+                field: 'name',
+                values: [row.name]
             });
         }
+        //,
+        //'click .edit': function (e, value, row, index) {
+        //    $("#tName").val(row.name);
+        //    $("#tType").val(row.type);
+        //    $("#description").val(row.description);
+        //    $("#mrrMethod").val(row.mrrMethod);
+        //    $("#lifetime").val(row.lifetime);
+        //    $("#changetime").val(row.changetime);
+        //    $("#maturity").val(row.maturity);
+        //    $("#proportion").val(row.proportion);
+        //    $("#inspection").val(row.inspection);
+        //}
     };
     //添加技术标准
     $("#addTechnique").click(function () {
@@ -230,6 +228,29 @@ $(function () {
             $("#resetTechnique").trigger("click");
         }
     });
+//检查编码是否重复
+    function checkCodeRepeat(code) {
+        var isRepeat = false;
+        if (code != "" && code != null) {
+            $.ajax('rest/mrrstandard/findOneByCode', {
+                type: 'get',
+                async: false,
+                data: {code: code},
+                contentType: 'application/json',
+                dataType: 'json',
+                success: function (data, XMLHttpRequest, jqXHR) {
+                    console.log("-----------" + data);
+                    if (data != null) {
+                        isRepeat = true;
+                    }
+                }, error: function (XMLHttpRequest) {
+                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                    $("#message").modal("show");
+                }
+            });
+        }
+        return isRepeat;
+    }
 
     //创建设施名称
     $("#createMrrStandardNameBtn").click(function () {
@@ -258,21 +279,10 @@ $(function () {
                 mrrStandard: mrrStandardVal
             };
             console.log(mrrStandardVal.code);
-            $.ajax('rest/mrrstandard/create', {
-                type: 'POST',
-                data: JSON.stringify(mrrStandardInfo),
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function (data, XMLHttpRequest, jqXHR) {
-                    $mrrstandardTable.bootstrapTable('refresh');
-                    $("#pcode").text("");
-                    $("#resetMrrStandardName").trigger("click");
-                    $("#createMrrStandardNameModal").modal("hide");
-                }, error: function (XMLHttpRequest) {
-                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
-                    $("#message").modal("show");
-                }
-            });
+            saveMrrStandard(mrrStandardInfo);
+            $("#pcode").text("");
+            $("#resetMrrStandardName").trigger("click");
+            $("#createMrrStandardNameModal").modal("hide");
         }
     });
     //创建维护项目
@@ -305,21 +315,26 @@ $(function () {
                 mrrStandard: mrrStandardVal
             };
             console.log(mrrStandardVal.code);
-            $.ajax('rest/mrrstandard/create', {
-                type: 'POST',
-                data: JSON.stringify(mrrStandardInfo),
-                contentType: 'application/json',
-                dataType: 'json',
-                success: function (data, XMLHttpRequest, jqXHR) {
-                    $mrrstandardTable.bootstrapTable('refresh');
-                    $("#pcode_content").text("");
-                    $("#resetMrrStandard").trigger("click");
-                    $("#createMrrStandardModal").modal("hide");
-                }, error: function (XMLHttpRequest) {
-                    $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
-                    $("#message").modal("show");
-                }
-            });
+            saveMrrStandard(mrrStandardInfo);
+            $("#pcode_content").text("");
+            $("#resetMrrStandard").trigger("click");
+            $("#createMrrStandardModal").modal("hide");
         }
     });
+
+//创建一个维保标准
+    function saveMrrStandard(info){
+        $.ajax("rest/mrrstandard/create", {
+            type: "POST",
+            data: JSON.stringify(info),
+            contentType: 'application/json',
+            dataType: 'json',
+            success: function (data, XMLHttpRequest, jqXHR) {
+                $mrrstandardTable.bootstrapTable('refresh');
+            }, error: function (XMLHttpRequest) {
+                $("#tips").html(XMLHttpRequest.responseText).appendTo("body");
+                $("#message").modal("show");
+            }
+        });
+    }
 });

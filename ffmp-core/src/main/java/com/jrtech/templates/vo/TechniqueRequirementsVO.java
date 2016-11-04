@@ -1,16 +1,12 @@
-package com.jrtech.ffmp.data.entities;
+package com.jrtech.templates.vo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+import com.jrtech.ffmp.data.entities.MrrStandard;
 
 /**
- * 技术要求
- * Created by suelmer on 2016/7/17.
+ * Created by suelmer on 2016/9/4.
  */
-@Entity
-@Table(name = "techniqueRequirements")
-public class TechniqueRequirements extends AbstractDomainObject{
+public class TechniqueRequirementsVO {
+    private String id;
     //检查内容为 强制，自定
     private String name;
     // 技术要求 性质类别为 A/B/C/无
@@ -31,19 +27,15 @@ public class TechniqueRequirements extends AbstractDomainObject{
     private String maturity;
     //检查方法
     private String inspection;
-
     //维管标准
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "mrrstandard_id", nullable = true)
     private MrrStandard mrrStandard;
 
-    public String getNumber() {
-        return number;
+    public int getChangetime() {
+        return changetime;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setChangetime(int changetime) {
+        this.changetime = changetime;
     }
 
     public String getDescription() {
@@ -54,36 +46,12 @@ public class TechniqueRequirements extends AbstractDomainObject{
         this.description = description;
     }
 
-    public MrrStandard getMrrStandard() {
-        return mrrStandard;
+    public String getId() {
+        return id;
     }
 
-    public void setMrrStandard(MrrStandard mrrStandard) {
-        this.mrrStandard = mrrStandard;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public int getChangetime() {
-        return changetime;
-    }
-
-    public void setChangetime(int changetime) {
-        this.changetime = changetime;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getInspection() {
@@ -118,11 +86,43 @@ public class TechniqueRequirements extends AbstractDomainObject{
         this.mrrMethod = mrrMethod;
     }
 
+    public MrrStandard getMrrStandard() {
+        return mrrStandard;
+    }
+
+    public void setMrrStandard(MrrStandard mrrStandard) {
+        this.mrrStandard = mrrStandard;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
     public double getProportion() {
         return proportion;
     }
 
     public void setProportion(double proportion) {
         this.proportion = proportion;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 }

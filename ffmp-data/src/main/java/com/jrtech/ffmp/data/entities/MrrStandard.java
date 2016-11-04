@@ -24,7 +24,7 @@ public class MrrStandard extends AbstractTreeNode<MrrStandard>{
     private String remark;
 
     //技术要求列表
-    @ManyToMany(fetch = FetchType.EAGER,mappedBy = "mrrStandard", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "mrrStandard", cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     private List<TechniqueRequirements> techniqueRequirementsList = new ArrayList<>();
 
 

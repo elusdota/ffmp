@@ -38,10 +38,10 @@
                 <div class="form-group" hidden="true">
                     <input type="text" class="form-control" id="id" name="id" value="${id}"/>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="name" class="col-lg-6 control-label">项目名称：</label>
+                <div class="form-group col-md-6">
+                    <label for="name" class="col-md-4 control-label">项目名称：</label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-8">
                         <input type="text" class="form-control" readonly id="name" name="name" placeholder="项目名称">
                     </div>
                 </div>
@@ -50,19 +50,19 @@
         <div class="row">
             <form class="form-horizontal" id="equipumentForm">
                 <div class="form-group col-md-6">
-                    <label for="equipumentname" class="col-lg-6 control-label">设备名称：<span
+                    <label for="equipumentname" class="col-md-4 control-label">设备名称：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-8">
                         <input type="text" class="form-control" id="equipumentname" name="equipumentname"
                                placeholder="设备名称"
                                required="required">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="typemax" class="col-lg-4 control-label">大类：<span
+                    <label for="typemax" class="col-md-4 control-label">大类：<span
                             class="required">*</span></label>
-                    <div class="col-lg-8">
+                    <div class="col-md-8">
                         <select class="form-control m-bot15 required" name="typemax" id="typemax"
                                 required="required"
                                 onchange="type_onChange()">
@@ -70,36 +70,36 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="typemin" class="col-lg-4 control-label">小类：<span
+                    <label for="typemin" class="col-md-4 control-label">小类：<span
                             class="required">*</span></label>
-                    <div class="col-lg-8">
+                    <div class="col-md-8">
                         <select class="form-control m-bot15 required" name="typemin" id="typemin"
                                 required="required">
                         </select>
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="manufacturer" class="col-lg-6 control-label">生产厂家：<span
+                    <label for="manufacturer" class="col-md-4 control-label">生产厂家：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-8">
                         <input type="text" class="form-control" id="manufacturer" name="manufacturer"
                                placeholder="生产厂家"
                                required="required">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="model" class="col-lg-4 control-label">型号：</label>
+                    <label for="model" class="col-md-4 control-label">型号：</label>
 
-                    <div class="col-lg-8">
+                    <div class="col-md-8">
                         <input type="text" class="form-control" id="model" name="model"
                                placeholder="型号">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="nowstate" class="col-lg-4 control-label">状态：</label>
+                    <label for="nowstate" class="col-md-4 control-label">状态：</label>
 
-                    <div class="col-lg-8">
+                    <div class="col-md-8">
                         <select class="form-control m-bot15" id="nowstate" name="nowstate" required="required">
                             <option value="功能正常">功能正常</option>
                             <option value="外观不完好">外观不完好</option>
@@ -110,33 +110,33 @@
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="quantity" class="col-lg-4 control-label">数量：<span
+                    <label for="quantity" class="col-md-4 control-label">数量：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-8">
+                    <div class="col-md-8">
                         <input type="text" class="form-control required digits" id="quantity"
                                name="quantity"
                                placeholder="数量">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label class="control-label col-lg-4">生产日期：<span
+                    <label class="control-label col-md-4">生产日期：<span
                             class="required">*</span></label>
-                    <div class="input-group input-daterange col-lg-8">
+                    <div class="input-daterange col-md-8">
                         <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker"
                                data-provide="datepicker" id="productionDate">
                     </div>
                 </div>
                 <div class="form-group col-md-6">
-                    <label class="control-label col-lg-4">投入使用日期：<span
+                    <label class="control-label col-md-4">投入使用日期：<span
                             class="required">*</span></label>
-                    <div class="input-group input-daterange col-lg-8">
+                    <div class="input-daterange col-md-8">
                         <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker"
                                data-provide="datepicker" id="inputDate">
                     </div>
                 </div>
-                <div class="form-actions">
-                    <div class="col-md-3">
+                <div class="form-group col-md-6">
+                    <div class="col-md-offset-4 col-md-8">
                         <button id="restForm" type="reset"
                                 class="btn btn-danger btn-small">重置
                         </button>
@@ -148,7 +148,7 @@
             </form>
         </div>
         <div class="row">
-            <label for="name" class="col-lg-6 control-label">设备列表：</label>
+            <label for="name" class="col-md-6 control-label">设备列表：</label>
         </div>
         <table id="equipmentTable"
                data-toolbar="#toolbar"
@@ -166,7 +166,7 @@
         </table>
         <div class="row">
             <div class="box-footer">
-                <button type="button" id="save" class="btn btn-default pull-left">保存</button>
+                <button type="button" id="save" class="btn btn-info pull-right">保存</button>
             </div>
         </div>
         <div id="page-selection"></div>

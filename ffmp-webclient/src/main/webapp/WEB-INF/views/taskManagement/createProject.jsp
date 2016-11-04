@@ -37,23 +37,23 @@
         <div class="row">
             <form class="form-horizontal" id="saveForm">
                 <div class="form-group col-md-4">
-                    <label for="name" class="col-lg-6 control-label">项目名称：<span
+                    <label for="name" class="col-md-6 control-label">项目名称：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="name" name="name" placeholder="项目名称"
                                required="required">
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="organization" class="col-lg-6 control-label">所属维保小组：<span
+                    <label for="organization" class="col-md-6 control-label">所属维保小组：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <%--<select class="form-control select2" id="organization" data-placeholder="所属维保小组">--%>
                             <%--<option></option>--%>
                         <%--</select>--%>
-                        <input type="text" class="form-control" id="organization" name="organization"
+                        <input type="text" class="col-md-6 form-control" id="organization" name="organization"
                                placeholder="所属维保小组"
                                required="required">
                     </div>
@@ -68,21 +68,21 @@
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="address" class="col-lg-6 control-label">地址：<span
+                    <label for="address" class="col-md-6 control-label">地址：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="address" name="address" placeholder="地址"
                                required="required">
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="area" class="col-lg-6 control-label">建筑总面积：<span
+                    <label for="area" class="col-md-6 control-label">建筑总面积：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <div class="input-group">
-                            <input type="text" class="form-control required digits" id="area" name="area"
+                            <input type="text" class="form-control required number" id="area" name="area"
                                    placeholder="建筑总面积"
                                    required="required">
                             <span class="input-group-addon">m²</span>
@@ -90,12 +90,12 @@
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="totalHeight" class="col-lg-6 control-label">建筑总高度：<span
+                    <label for="totalHeight" class="col-md-6 control-label">建筑总高度：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <div class="input-group">
-                            <input type="text" class="form-control required digits" id="totalHeight" name="totalHeight"
+                            <input type="text" class="form-control required number" id="totalHeight" name="totalHeight"
                                    placeholder="建筑总高度"
                                    required="required">
                             <span class="input-group-addon">m</span>
@@ -103,66 +103,66 @@
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="floors" class="col-lg-6 control-label">楼层：<span
+                    <label for="floors" class="col-md-6 control-label">楼层：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="floors" name="floors" placeholder="楼层"
                                required="required">
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="nature" class="col-lg-6 control-label">使用性质：<span
+                    <label for="nature" class="col-md-6 control-label">使用性质：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="nature" name="nature" placeholder="使用性质"
                                required="required">
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="manager" class="col-lg-6 control-label">消防安全管理人：<span
+                    <label for="manager" class="col-md-6 control-label">消防安全管理人：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="manager" name="manager" placeholder="消防安全管理人"
                                required="required">
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="managerTelephone" class="col-lg-6 control-label">联系电话：<span
+                    <label for="managerTelephone" class="col-md-6 control-label">联系电话：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="managerTelephone" name="managerTelephone"
                                placeholder="联系电话"
                                required="required">
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="equipmentCase" class="col-lg-6 control-label">消防设施情况：<span
+                    <label for="equipmentCase" class="col-md-6 control-label">消防设施情况：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <input type="text" class="form-control" id="equipmentCase" name="equipmentCase"
                                placeholder="消防设施情况"
                                required="required">
                     </div>
                 </div>
-                <div class="form-group col-md-6">
-                    <label class="control-label col-lg-5">建筑投入使用日期：<span
+                <div class="form-group col-md-4">
+                    <label class="control-label col-md-6">建筑投入使用日期：<span
                             class="required">*</span></label>
 
-                    <div class="input-group input-daterange col-lg-7">
+                    <div class="input-daterange col-md-6">
                         <input type="text" data-date-format="yyyy-mm-dd" class="form-control datepicker"
                                data-provide="datepicker" id="inputDate">
                     </div>
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="days" class="col-lg-6 control-label">巡检日期：<span
+                    <label for="days" class="col-md-6 control-label">巡检日期：<span
                             class="required">*</span></label>
 
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <input type="text" class="form-control required digits" id="days" name="days"
                                placeholder=">0，<=28"
                                required="required">
@@ -170,7 +170,7 @@
                 </div>
             </form>
             <div class="modal-footer">
-                <button type="button" id="save" class="btn btn-default pull-right">保存</button>
+                <button type="button" id="save" class="btn btn-info pull-right">保存</button>
             </div>
         </div>
         <div id="page-selection"></div>
