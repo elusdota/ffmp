@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -20,4 +21,6 @@ public interface EquipmentRepository extends PagingAndSortingRepository<Equipmen
     List<Equipment> findByOwner(MaintenanceProject owner);
 
     Equipment findOneByCode(String code);
+
+    Collection<Equipment> findByOwnerAndCodeIsNull(MaintenanceProject owner);
 }
