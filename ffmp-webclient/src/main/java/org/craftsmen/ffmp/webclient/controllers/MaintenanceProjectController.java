@@ -56,12 +56,12 @@ public class MaintenanceProjectController {
     @RequestMapping(method = RequestMethod.POST)
     public MaintenanceProject create(@RequestBody MaintenanceProject maintenanceProject) {
         maintenanceProject.setCode(codeService.getMaintenanceProjectNum());
-        Organization organization = organizationService.findOneByName(maintenanceProject.getDelegate().getName());
+        Organization organization = organizationService.findOne(maintenanceProject.getDelegate().getId());
         if(organization==null){
             throw new ServiceException("维保小组不存在，请重新输入！");
         }
         maintenanceProject.setDelegate(organization);
-        Customer customer = customerService.findOne(maintenanceProject.getCustomer().getName());
+        Customer customer = customerService.findOne(maintenanceProject.getCustomer().getId());
         if(customer==null){
             throw new ServiceException("客户不存在，请重新输入！");
         }
