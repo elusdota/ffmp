@@ -285,7 +285,7 @@ public class PageController {
     }
 
     /**
-     * 基础信息管理->合同管理->创建/更新合同信息
+     * 基础信息管理->合同管理->创建合同信息
      *
      * @param request
      * @param response
@@ -296,6 +296,20 @@ public class PageController {
     @ResponseStatus(HttpStatus.OK)
     public String contractForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "/contract/contractForm";
+    }
+
+    /**
+     * 基础信息管理->合同管理->更新合同信息
+     *
+     * @param request
+     * @param response
+     * @return string
+     * @throws Exception
+     */
+    @RequestMapping("/contract/updateContract")
+    @ResponseStatus(HttpStatus.OK)
+    public String updateContract(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        return "/contract/updateContract";
     }
 
     /**

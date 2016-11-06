@@ -608,8 +608,5 @@
 <script src="<c:url value='/bower_components/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js'/>"></script>
 <script src="<c:url value='/bower_components/tableExport.jquery.plugin/tableExport.min.js'/>"></script>
 <script src="<c:url value='/bower_components/jquery.base64.js/jquery.base64.js'/>"></script>
-<%--<script src="<c:url value='/bower_components/jquery.inputmask/dist/min/inputmask/inputmask.min.js'/>"></script>--%>
-<%--<script src="<c:url value='/bower_components/jquery.inputmask/dist/min/inputmask/jquery.inputmask.min.js'/>"></script>--%>
-<%--<script src="<c:url value='/bower_components/jquery.inputmask/dist/min/inputmask/inputmask.extensions.min.js'/>"></script>--%>
 <script src="<c:url value='/js/basicInfo/mrrStandard.js'/>"></script>
 <script src="<c:url value='/js/basicInfo/updateMrrStandard.js'/>"></script>
