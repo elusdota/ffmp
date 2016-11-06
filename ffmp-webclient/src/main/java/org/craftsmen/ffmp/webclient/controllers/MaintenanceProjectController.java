@@ -35,8 +35,6 @@ public class MaintenanceProjectController {
     private AccountService accountService;
     @Autowired
     private CodeService codeService;
-    @Autowired
-    private MrrStandardService mrrStandardService;
 
     private Logger logger = LogManager.getLogger(MaintenanceProjectController.class.getName());
 
@@ -77,15 +75,15 @@ public class MaintenanceProjectController {
     @RequestMapping(method = RequestMethod.PUT)
     public MaintenanceProject update(@RequestBody MaintenanceProjectEquipmentVo maintenanceProject) {
         MaintenanceProject maintenanceProject1 = service.findOne(maintenanceProject.getId());
-        final int[] i = {0};
-        i[0] = maintenanceProject1.getEquipments().size();
+//        final int[] i = {0};
+//        i[0] = maintenanceProject1.getEquipments().size();
         maintenanceProject.getEquipments().forEach(equipment1 -> {
-            i[0] = i[0] + 1;
-            int t = i[0] - 1;
-            String code = getLastSixNum("" + t, 3);
-            equipment1.setCode(getCodeNum(maintenanceProject1.getCode(), 4) +
-//                    mrrStandardService.findOneByName(equipment1.getTypemax()).getCode() +
-                    mrrStandardService.findOneByName(equipment1.getTypemin()).getCode() + code);
+//            i[0] = i[0] + 1;
+//            int t = i[0] - 1;
+//            String code = getLastSixNum("" + t, 3);
+//            equipment1.setCode(getCodeNum(maintenanceProject1.getCode(), 4) +
+////                    mrrStandardService.findOneByName(equipment1.getTypemax()).getCode() +
+//                    mrrStandardService.findOneByName(equipment1.getTypemin()).getCode() + code);
             equipment1.setOwner(maintenanceProject1);
             equipment1.setCustomer(maintenanceProject1.getCustomer());
         });
@@ -98,29 +96,7 @@ public class MaintenanceProjectController {
     public MaintenanceProject get(@RequestParam("id") String id) {
         return service.findOne(id);
     }
-    public String getLastSixNum(String s,int v) {
-        String rs = s;
-        int i = Integer.parseInt(rs);
-        i += 1;
-        rs = "" + i;
-        for (int j = rs.length(); j < v; j++) {
-            rs = "0" + rs;
-            // 直接使用StringUtils类的leftPad方法处理补零
-            rs = StringUtils.leftPad(rs, j + 1, "0");
-        }
-        return rs;
-    }
-    public String getCodeNum(String s,int v) {
-        String rs = s;
-        int i = Integer.parseInt(rs);
-        rs = "" + i;
-        for (int j = rs.length(); j < v; j++) {
-            rs = "0" + rs;
-            // 直接使用StringUtils类的leftPad方法处理补零
-            rs = StringUtils.leftPad(rs, j, "0");
-        }
-        return rs;
-    }
+
     @RequestMapping(value = "/findByNameLike", method = RequestMethod.GET)
     public List<MaintenanceProject> findByNameLike(@RequestParam("name") String name) {
         logger.info(UserDetailsUtils.getCurrent().getUsername()+":查询项目，项目关键字--"+name);
