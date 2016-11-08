@@ -86,6 +86,7 @@ public class EquipmentController {
                 mrrStandardService.findOneByName(equipment.getTypemax()).getCode() +
                 mrrStandardService.findOneByName(equipment.getTypemin()).getCode() + code;
         equipment.setCode(equipmentcode);
+        equipment.setOwner(maintenanceProject);
         return service.save(equipment);
     }
 
