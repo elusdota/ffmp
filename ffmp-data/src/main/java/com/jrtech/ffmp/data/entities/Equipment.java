@@ -36,7 +36,7 @@ public class Equipment extends AbstractNamedObject {
     private String description;
     //数量
     private long quantity;
-    //设备位置，设备的具体位置
+    //设备位置，设备的具体位置披露
     private String location;
     //生产日期
     @Temporal(TemporalType.TIMESTAMP)

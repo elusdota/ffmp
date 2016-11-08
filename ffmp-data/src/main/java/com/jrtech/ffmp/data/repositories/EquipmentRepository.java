@@ -22,5 +22,5 @@ public interface EquipmentRepository extends PagingAndSortingRepository<Equipmen
 
     Equipment findOneByCode(String code);
 
-    Collection<Equipment> findByOwnerAndCodeIsNull(MaintenanceProject owner);
+    Page<Equipment> findByTypeminAndTypemax(String typemin, String typemax, Pageable pageable);
 }

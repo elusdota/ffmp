@@ -23,7 +23,5 @@ public interface EquipmentService {
 
     public Equipment findOneByCode(String code);
 
-    Collection<Equipment> findByOwnerAndCodeIsNull(MaintenanceProject owner);
-
     Equipment findOne(String id);
 }

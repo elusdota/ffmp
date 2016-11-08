@@ -41,8 +41,12 @@ public interface MrrStandardService {
 
     MrrStandard findOneByCode(String code);
 
+    //查出有定期维修的设备分类
+    Collection<MrrStandard> findExpired();
+
     /**
      * 通过id删除维管设施标准
+     *
      * @param id
      */
     void delete(String id);

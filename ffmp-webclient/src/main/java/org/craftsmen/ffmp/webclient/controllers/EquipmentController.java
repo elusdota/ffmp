@@ -61,13 +61,6 @@ public class EquipmentController {
         return service.findByOwner(maintenanceProject);
     }
 
-    //查出未分配条码的设备
-    @RequestMapping(value = "/findAllListCodeIsNull", method = RequestMethod.GET)
-    public Collection<Equipment> findByOwnerAndCodeIsNull(@RequestParam("id") String id) {
-        MaintenanceProject maintenanceProject = maintenanceProjectService.findOne(id);
-        return service.findByOwnerAndCodeIsNull(maintenanceProject);
-    }
-
     /**
      * 扫描条码 通过条码返回设备信息
      *
@@ -80,11 +73,10 @@ public class EquipmentController {
         return service.findOneByCode(code);
     }
 
-    //分配条码
-    @RequestMapping(value = "/distribution", method = RequestMethod.POST)
-    public Equipment create(@RequestBody EquipmentVo equipmentVo) {
-        Equipment equipment = service.findOne(equipmentVo.getEquipment().getId());
-        Equipment equipment1 = new Equipment();
+    //创建设备
+    @RequestMapping(method = RequestMethod.POST)
+    public Equipment create(@RequestBody Equipment equipment) {
+        MaintenanceProject maintenanceProject=maintenanceProjectService.findOne(equipment.getOwner().getId());
         final int[] i = {0};
         i[0] = service.findByOwner(equipment.getOwner()).size();
         i[0] = i[0] + 1;
@@ -93,28 +85,7 @@ public class EquipmentController {
         String equipmentcode = getCodeNum(equipment.getOwner().getCode(), 4) +
                 mrrStandardService.findOneByName(equipment.getTypemax()).getCode() +
                 mrrStandardService.findOneByName(equipment.getTypemin()).getCode() + code;
-        if (equipment.getQuantity() <= equipmentVo.getQuantity()) {
-            equipment.setQuantity(equipmentVo.getQuantity());
-            equipment.setCode(equipmentcode);
-            equipment.setLocation(equipmentVo.getLocation());
-        } else {
-            equipment1.setOwner(equipment.getOwner());
-            equipment1.setName(equipment.getName());
-            equipment1.setCustomer(equipment.getCustomer());
-            equipment1.setInputDate(equipment.getInputDate());
-            equipment1.setDescription(equipment.getDescription());
-            equipment1.setLocation(equipmentVo.getLocation());
-            equipment1.setManufacturer(equipment.getManufacturer());
-            equipment1.setModel(equipment.getModel());
-            equipment1.setCode(equipmentcode);
-            equipment1.setNowstate(equipment.getNowstate());
-            equipment1.setTypemax(equipment.getTypemax());
-            equipment1.setTypemin(equipment.getTypemin());
-            equipment1.setProductionDate(equipment.getProductionDate());
-            equipment1.setQuantity(equipmentVo.getQuantity());
-            equipment.setQuantity(equipment.getQuantity() - equipment1.getQuantity());
-            service.save(equipment1);
-        }
+        equipment.setCode(equipmentcode);
         return service.save(equipment);
     }
 
