@@ -21,6 +21,7 @@ import java.util.Collection;
 public class MrrStandardServiceImpl implements MrrStandardService {
     @Autowired
     private MrrStandardRepository mrrStandardRepository;
+    @Autowired
     private TechniqueRequirementsRepository techniqueRequirementsRepository;
 
     @Override

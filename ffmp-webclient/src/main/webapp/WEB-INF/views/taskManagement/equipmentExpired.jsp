@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: jiangliang
-  Date: 2016/7/15
-  Time: 15:41
+  Date: 2016/8/10
+  Time: 17:12
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -15,37 +15,27 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      项目信息管理
+      项目定期设备检查
       <small></small>
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-wrench"></i> 维管工作管理</a></li>
-      <li class="active">项目信息管理</li>
+      <li class="active">项目管理</li>
+      <li class="active">项目定期设备检查</li>
     </ol>
   </section>
   <!-- Main content -->
   <section class="content">
     <div class="row">
-      <div class="box-footer">
-        <sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/项目信息管理/创建项目')">
-          <button type="button" id="createProject" class="btn btn-default pull-left">创建项目</button>
-        </sec:authorize>
-        <sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/项目信息管理/查看项目详细信息')">
-          <button type="button" id="queryProject" class="btn btn-default pull-left">查看项目信息</button>
-        </sec:authorize>
-        <%--<sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/项目信息管理/设备录入')">--%>
-          <%--<button type="button" id="allocationEquipment" class="btn btn-default pull-left">设备录入</button>--%>
-        <%--</sec:authorize>--%>
-          <%--<sec:authorize access="@userDetailsUtils.isAuthorized('/维管工作管理/项目信息管理/巡检标准')">--%>
-              <button type="button" id="allocationInspections" class="btn btn-default pull-left">巡检标准</button>
-          <%--</sec:authorize>--%>
-          <button type="button" id="updateProject" class="btn btn-default pull-left">修改项目</button>
-          <button type="button" id="endProject" class="btn btn-default pull-left">终止项目</button>
-          <button type="button" id="expired" class="btn btn-default pull-left">定期检查设备</button>
-      </div>
-      <table id="projectTable"
+      <form class="form-horizontal" id="searchForm">
+        <div class="form-group" hidden="true">
+          <input type="text" class="form-control" id="id" name="id" value="${id}"/>
+        </div>
+      </form>
+    </div>
+    <div class="row">
+      <table id="equipmentTable"
              data-toolbar="#toolbar"
-             data-search="true"
              data-show-refresh="true"
              data-show-toggle="true"
              data-show-columns="true"
@@ -72,7 +62,7 @@
 <script src="<c:url value='/bower_components/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js'/>"></script>
 <script src="<c:url value='/bower_components/tableExport.jquery.plugin/tableExport.min.js'/>"></script>
 <script src="<c:url value='/bower_components/jquery.base64.js/jquery.base64.js'/>"></script>
-<script src="<c:url value='/js/taskManagement/project.js'/>"></script>
+<script src="<c:url value='/js/taskManagement/equipmentExpired.js'/>"></script>
 
 
 
