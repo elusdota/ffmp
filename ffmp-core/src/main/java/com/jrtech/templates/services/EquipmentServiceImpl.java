@@ -46,11 +46,6 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public Collection<Equipment> findByOwnerAndCodeIsNull(MaintenanceProject owner) {
-        return repository.findByOwnerAndCodeIsNull(owner);
-    }
-
-    @Override
     public Equipment findOne(String id) {
         return repository.findOne(id);
     }

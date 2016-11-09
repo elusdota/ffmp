@@ -72,25 +72,25 @@ public class MaintenanceProjectController {
         return service.save(maintenanceProject);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    public MaintenanceProject update(@RequestBody MaintenanceProjectEquipmentVo maintenanceProject) {
-        MaintenanceProject maintenanceProject1 = service.findOne(maintenanceProject.getId());
-//        final int[] i = {0};
-//        i[0] = maintenanceProject1.getEquipments().size();
-        maintenanceProject.getEquipments().forEach(equipment1 -> {
-//            i[0] = i[0] + 1;
-//            int t = i[0] - 1;
-//            String code = getLastSixNum("" + t, 3);
-//            equipment1.setCode(getCodeNum(maintenanceProject1.getCode(), 4) +
-////                    mrrStandardService.findOneByName(equipment1.getTypemax()).getCode() +
-//                    mrrStandardService.findOneByName(equipment1.getTypemin()).getCode() + code);
-            equipment1.setOwner(maintenanceProject1);
-            equipment1.setCustomer(maintenanceProject1.getCustomer());
-        });
-        maintenanceProject1.getEquipments().addAll(maintenanceProject.getEquipments());
-        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":绑定项目设备，项目编号---" + maintenanceProject1.getCode());
-        return service.save(maintenanceProject1);
-    }
+//    @RequestMapping(method = RequestMethod.PUT)
+//    public MaintenanceProject update(@RequestBody MaintenanceProjectEquipmentVo maintenanceProject) {
+//        MaintenanceProject maintenanceProject1 = service.findOne(maintenanceProject.getId());
+////        final int[] i = {0};
+////        i[0] = maintenanceProject1.getEquipments().size();
+//        maintenanceProject.getEquipments().forEach(equipment1 -> {
+////            i[0] = i[0] + 1;
+////            int t = i[0] - 1;
+////            String code = getLastSixNum("" + t, 3);
+////            equipment1.setCode(getCodeNum(maintenanceProject1.getCode(), 4) +
+//////                    mrrStandardService.findOneByName(equipment1.getTypemax()).getCode() +
+////                    mrrStandardService.findOneByName(equipment1.getTypemin()).getCode() + code);
+//            equipment1.setOwner(maintenanceProject1);
+//            equipment1.setCustomer(maintenanceProject1.getCustomer());
+//        });
+//        maintenanceProject1.getEquipments().addAll(maintenanceProject.getEquipments());
+//        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":绑定项目设备，项目编号---" + maintenanceProject1.getCode());
+//        return service.save(maintenanceProject1);
+//    }
 
     @RequestMapping(method = RequestMethod.GET)
     public MaintenanceProject get(@RequestParam("id") String id) {

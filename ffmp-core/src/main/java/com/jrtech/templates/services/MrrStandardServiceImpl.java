@@ -2,13 +2,16 @@ package com.jrtech.templates.services;
 
 import com.jrtech.ffmp.data.entities.Inspection;
 import com.jrtech.ffmp.data.entities.MrrStandard;
+import com.jrtech.ffmp.data.entities.TechniqueRequirements;
 import com.jrtech.ffmp.data.repositories.MrrStandardRepository;
+import com.jrtech.ffmp.data.repositories.TechniqueRequirementsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -18,6 +21,7 @@ import java.util.Collection;
 public class MrrStandardServiceImpl implements MrrStandardService {
     @Autowired
     private MrrStandardRepository mrrStandardRepository;
+    private TechniqueRequirementsRepository techniqueRequirementsRepository;
 
     @Override
     public MrrStandard save(MrrStandard mrrStandard) {
@@ -60,8 +64,20 @@ public class MrrStandardServiceImpl implements MrrStandardService {
     }
 
     @Override
+    public Collection<MrrStandard> findExpired() {
+        Collection<TechniqueRequirements> techniqueRequirementses = techniqueRequirementsRepository.findByLifetimeIsNotOrChangetimeIsNot(0, 0);
+        Collection<MrrStandard> mrrStandards = new ArrayList<>();
+        techniqueRequirementses.forEach(techniqueRequirements -> {
+            if (!mrrStandards.contains(techniqueRequirements.getMrrStandard())) {
+                mrrStandards.add(techniqueRequirements.getMrrStandard());
+            }
+        });
+        return mrrStandards;
+    }
+
+    @Override
     public void delete(String id) {
-         mrrStandardRepository.delete(id);
+        mrrStandardRepository.delete(id);
     }
 
 }
