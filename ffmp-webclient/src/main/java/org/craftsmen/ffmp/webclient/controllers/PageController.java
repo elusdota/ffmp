@@ -393,4 +393,12 @@ public class PageController {
         model.setViewName("taskManagement/inspection");
         return model;
     }
+    //巡检标准
+    @RequestMapping("/taskManagement/equipmentExpired")
+    public ModelAndView equipmentExpired(@RequestParam("id") String id) throws Exception {
+        ModelAndView model = new ModelAndView();
+        model.addObject("id", id);
+        model.setViewName("taskManagement/equipmentExpired");
+        return model;
+    }
 }

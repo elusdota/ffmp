@@ -7,7 +7,7 @@ $(document).ready(function () {
     $("#allocationInspections").attr("disabled", "true");
     $("#updateProject").attr("disabled", "true");
     $("#endProject").attr("disabled", "true");
-
+    $("#expired").attr("disabled", "true");
     $('#projectTable').bootstrapTable({
         method: 'POST',
         url: 'rest/maintenanceProject/findAll',
@@ -22,6 +22,7 @@ $(document).ready(function () {
             $("#allocationInspections").removeAttr("disabled");
             $("#updateProject").removeAttr("disabled");
             $("#endProject").removeAttr("disabled");
+            $("#expired").removeAttr("disabled");
         },
         onUncheck: function (row) {
             $("#queryProject").attr("disabled", "true");
@@ -29,6 +30,7 @@ $(document).ready(function () {
             $("#allocationInspections").attr("disabled", "true");
             $("#updateProject").attr("disabled", "true");
             $("#endProject").attr("disabled", "true");
+            $("#expired").attr("disabled", "true");
         },
         queryParams: function (params) {
             var fin = {
@@ -99,6 +101,12 @@ $("#allocationInspections").click(function () {
 $("#updateProject").click(function () {
     var data = $('#projectTable').bootstrapTable('getSelections');
     $("#main-content").load("taskManagement/updateProject?id=" + data[0].id, function () {
+        $("#main-content").fadeIn();
+    });
+});
+$("#expired").click(function () {
+    var data = $('#projectTable').bootstrapTable('getSelections');
+    $("#main-content").load("taskManagement/equipmentExpired?id=" + data[0].id, function () {
         $("#main-content").fadeIn();
     });
 });

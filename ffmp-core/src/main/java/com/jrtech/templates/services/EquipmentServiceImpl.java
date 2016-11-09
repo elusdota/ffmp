@@ -2,6 +2,7 @@ package com.jrtech.templates.services;
 
 import com.jrtech.ffmp.data.entities.Equipment;
 import com.jrtech.ffmp.data.entities.MaintenanceProject;
+import com.jrtech.ffmp.data.entities.MrrStandard;
 import com.jrtech.ffmp.data.repositories.EquipmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,8 @@ import java.util.List;
 public class EquipmentServiceImpl implements EquipmentService {
     @Autowired
     private EquipmentRepository repository;
+    @Autowired
+    private MrrStandardService mrrStandardService;
 
     @Override
     public Equipment save(Equipment equipment) {
