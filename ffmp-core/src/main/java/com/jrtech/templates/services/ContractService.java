@@ -14,7 +14,7 @@ public interface ContractService {
 
     /**
      * 创建合同信息
-     * @param contract 合同信息
+     * @param contractVO 合同信息
      * @return 合同
      */
     Contract save(ContractVO contractVO);
@@ -26,6 +26,19 @@ public interface ContractService {
      */
     Contract findOne(String id);
 
+    /**
+     * 根据id 删除合同
+     * @param id id
+     * @return 合同
+     */
+    void delete(String id);
+
+    /**
+     * 更新合同信息
+     * @param contractVO 合同信息
+     * @return
+     */
+   Contract update(ContractVO contractVO);
     /**
      * 查询所有合同
      * @param spec  查询参数

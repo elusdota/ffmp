@@ -23,12 +23,12 @@
 
 <section class="content-header">
     <h1>
-        创建合同信息
+        修改合同信息
     </h1>
     <ol class="breadcrumb">
         <li><a href="index"><i class="fa fa-dashboard"></i> 主页</a></li>
         <li><a href="javascript:;" data-url="contract/contract"> 合同管理</a></li>
-        <li class="active"> 创建合同信息</li>
+        <li class="active"> 修改合同信息</li>
     </ol>
 </section>
 
@@ -37,7 +37,8 @@
     <div class="box box-info">
         <div class="box-header with-border">
             <div class="row">
-                <form class="form-horizontal" id="contractForm">
+                <form class="form-horizontal" id="update_ContractForm">
+                    <input type="hidden" class="form-control" id="contractId" name="contractId" value="${param.id}"/>
                     <div class="form-group col-md-6">
                         <label for="name" class="col-md-4 control-label">合同名称：<span
                                 class="required">*</span></label>
@@ -48,11 +49,10 @@
                         </div>
                     </div>
                     <div class="form-group col-md-6">
-                        <label for="customer" class="col-md-4 control-label">客户名称：<span
-                                class="required">*</span></label>
+                        <label for="customer" class="col-md-4 control-label">客户名称：</label>
 
                         <div class="col-md-8">
-                            <select class="form-control select2"  id="customer" data-placeholder="选择客户名称" style="width: 100%;">
+                            <select class="form-control select2 "  id="customer" data-placeholder="选择客户名称" style="width: 100%;">
                             </select>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
 
                         <div class="col-md-8">
                             <input type="text" data-date-format="yyyy-mm-dd"
-                                   class="form-control datepicker"
+                                   class="form-control required datepicker"
                                    data-provide="datepicker" id="expiry">
                         </div>
                     </div>
@@ -153,95 +153,95 @@
         </div>
         <div class="box-body">
             <div><h4>付款方式：</h4></div>
-            <div class="row">
-                <form role="form" id="paymentMethodForm" class="form-horizontal">
-                    <div class="form-group col-md-6 date">
-                        <label for="paymentDate" class="col-md-4 control-label">付款时间：<span
-                                class="required">*</span></label>
-
-                        <div class="col-md-8">
-                            <input type="text" data-date-format="yyyy-mm-dd"
-                                   class="form-control required datepicker"
-                                   data-provide="datepicker" id="paymentDate" name="paymentDate">
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="paymentAmount" class="col-md-4 control-label">付款金额：<span
-                                class="required">*</span></label>
-
-                        <div class="col-md-8">
-                            <div class="input-group">
-                                <input type="text" class="form-control required number" id="paymentAmount" name="paymentAmount"
-                                       placeholder="付款金额" >
-                                <div class="input-group-addon">元</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="receipt" class="col-md-4 control-label">票据类型: <span
-                                class="required">*</span></label>
-
-                        <div class="col-md-8">
-                            <select class="form-control required" id="receipt">
-                                <option disabled="disabled" selected="selected">--请选择票据类型--</option>
-                                <option value="普票">普票</option>
-                                <option value="专票">专票</option>
-                                <option value="收据">收据</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="confirmation" class="col-md-4 control-label">确认收款：<span
-                                class="required">*</span></label>
-
-                        <div class="col-md-8">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="confirmation" id="confirmationYes" value="true" checked>
-                                   是
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" name="confirmation" id="confirmationNo" value="false">
-                                   否
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <div class="col-md-offset-10 col-md-2">
-                            <button type="reset" class="btn btn-warning" id="resetPaymentMethod">重置</button>
-                            <button type="button" class="btn btn-primary" id="addPaymentMethod">添加</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <hr>
             <div class="table-responsive">
-                <table id="paymentTable"></table>
+                <table id="paymentTable" data-unique-id="id"></table>
             </div>
         </div>
         <div class="box-footer clearfix">
             <button type="button"  class="btn btn-danger"  id="cancelBtn">取消</button>
-            <button type="button" class="btn btn-primary pull-right" id="createContractdBtn">创建</button>
+            <button type="button" class="btn btn-primary pull-right" id="saveContractdBtn">保存</button>
         </div>
     </div>
 
     <!-- 模态框（Model） -->
-    <div id="contractModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div id="paymentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">创建合同</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">修改付款方式</h4>
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <form role="form" id="paymentMethodForm" class="form-horizontal">
+
+                            <div class="form-group col-md-6 date">
+                                <label for="paymentDate" class="col-md-4 control-label">付款时间：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <input type="text" data-date-format="yyyy-mm-dd"
+                                           class="form-control required datepicker"
+                                           data-provide="datepicker" id="paymentDate" name="paymentDate">
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="paymentAmount" class="col-md-4 control-label">付款金额：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control required number" id="paymentAmount" name="paymentAmount"
+                                               placeholder="付款金额" >
+                                        <div class="input-group-addon">元</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="receipt" class="col-md-4 control-label">票据类型: <span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <select class="form-control required" id="receipt">
+                                        <option disabled="disabled" selected="selected">--请选择票据类型--</option>
+                                        <option value="普票">普票</option>
+                                        <option value="专票">专票</option>
+                                        <option value="收据">收据</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="confirmation" class="col-md-4 control-label">确认收款：<span
+                                        class="required">*</span></label>
+
+                                <div class="col-md-8">
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="confirmation" id="confirmationYes" value="true" >
+                                            是
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="confirmation" id="confirmationNo" value="false">
+                                            否
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-12">
+                                <div class="col-md-offset-10 col-md-2">
+                                    <input type="hidden" class="form-control" id="paymentMethodId" name="paymentMethodId"/>
+                                    <button type="reset" class="btn btn-warning hidden" id="resetPaymentMethod">重置</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger"  id="cancel">取消</button>
-                    <button type="button" class="btn btn-primary pull-right" id="btn">创建</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"  id="cancel">取消</button>
+                    <button type="button" class="btn btn-primary pull-right" id="updatePaymentBtn">确定</button>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -261,4 +261,4 @@
 <script src="<c:url value='/bower_components/jquery.base64.js/jquery.base64.js'/>"></script>
 <script src="<c:url value='/bower_components/select2/dist/js/i18n/zh-CN.js'/>"></script>
 <script src="<c:url value='/bower_components/select2/dist/js/select2.full.min.js'/>"></script>
-<script src="<c:url value='/js/contract/contractForm.js'/>"></script>
+<script src="<c:url value='/js/contract/updateContract.js'/>"></script>

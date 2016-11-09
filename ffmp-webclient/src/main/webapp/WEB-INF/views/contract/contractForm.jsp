@@ -52,7 +52,7 @@
                                 class="required">*</span></label>
 
                         <div class="col-md-8">
-                            <select class="form-control select2"  id="customer" data-placeholder="选择客户名称" style="width: 100%;">
+                            <select class="form-control required select2"  id="customer" data-placeholder="选择客户名称" style="width: 100%;">
                             </select>
                         </div>
                     </div>
@@ -112,7 +112,7 @@
 
                         <div class="col-md-8">
                             <input type="text" data-date-format="yyyy-mm-dd"
-                                   class="form-control datepicker"
+                                   class="form-control required  datepicker"
                                    data-provide="datepicker" id="expiry">
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                                 class="required">*</span></label>
 
                         <div class="col-md-8">
-                            <select class="form-control" id="contractType" required="required">
+                            <select class="form-control required" id="contractType">
                                 <option disabled="disabled" selected="selected">--请选择合同类别--</option>
                                 <option value="自营--维保">自营--维保</option>
                                 <option value="自营--检测">自营--检测</option>
@@ -228,26 +228,6 @@
         </div>
     </div>
 
-    <!-- 模态框（Model） -->
-    <div id="contractModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">创建合同</h4>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger"  id="cancel">取消</button>
-                    <button type="button" class="btn btn-primary pull-right" id="btn">创建</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-    </div>
-    <!-- /.modal-dialog -->
 </section>
 <script src="<c:url value='/bower_components/jquery-validation/dist/jquery.validate.js'/>"></script>
 <script src="<c:url value='/bower_components/jquery-validation/dist/additional-methods.js'/>"></script>

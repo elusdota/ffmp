@@ -38,7 +38,7 @@ public class ContractServiceImpl implements ContractService {
         contract.setManager(contractVO.getManager());
         contract.setManagerTel(contractVO.getManagerTel());
         contract.setName(contractVO.getName());
-        contract.setTaxNO(contractVO.getTaxNO());
+//        contract.setTaxNO(contractVO.getTaxNO());
         contract.setCreateTime(new Date());
         List<Payment> payments = new ArrayList<>();
         contractVO.getPaymentVOList().forEach(item -> {
@@ -56,7 +56,51 @@ public class ContractServiceImpl implements ContractService {
     }
 
     @Override
+    public void delete(String id) {
+        contractRepository.delete(id);
+    }
+
+    @Override
     public Page<Contract> findAll(Specification<Contract> spec, Pageable pageable) {
         return contractRepository.findAll(spec, pageable);
+    }
+
+    @Override
+    public Contract update(ContractVO contractVO) {
+        Contract contract = contractRepository.findOne(contractVO.getId());
+        contract.setAddress(contractVO.getAddress());
+        contract.setAgent(contractVO.getAgent());
+        contract.setAmount(contractVO.getAmount());
+        contract.setContent(contractVO.getContent());
+        contract.setContractType(contractVO.getContractType());
+        contract.setCustomer(customerRepository.findOne(contractVO.getCustomerId()));
+        contract.setExpiry(contractVO.getExpiry());
+        contract.setManager(contractVO.getManager());
+        contract.setManagerTel(contractVO.getManagerTel());
+        contract.setName(contractVO.getName());
+//        contract.setTaxNO(contractVO.getTaxNO());
+        contract.setCreateTime(new Date());
+        List<Payment> payments = new ArrayList<>();
+        contractVO.getPaymentVOList().forEach(item -> {
+            if(item.getId()==null || "".equals(item.getId())){
+                Payment payment = new Payment(item.getPaymentAmount(),item.isConfirmation(), item.getPaymentDate(), item.getPeriod(), item.getReceipt());
+                payments.add(payment);
+            }else{
+                System.out.println(item.getId()+"-----------------");
+                List<Payment> list = contract.getPaymentList();
+                list.forEach(payment -> {
+                    if(payment.getId().equals(item.getId())){
+                        payment.setPaymentAmount(item.getPaymentAmount());
+                        payment.setConfirmation(item.isConfirmation());
+                        payment.setPaymentDate(item.getPaymentDate());
+                        payment.setPeriod(item.getPeriod());
+                        payment.setReceipt(item.getReceipt());
+                        payments.add(payment);
+                    }
+                });
+            }
+        });
+        contract.setPaymentList(payments);
+        return contractRepository.save(contract);
     }
 }
