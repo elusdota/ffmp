@@ -79,7 +79,7 @@ $(function () {
             {title: "抽查比例(%)", field: "proportion", align: 'center', sortable: true},
             {title: "检查方法", field: "inspection", align: 'center', sortable: true},
             {title: "使用年限", field: "lifetime", align: 'center', sortable: true},
-            {title: "检修年限", field: "changetime", align: 'center', sortable: true},
+            {title: "检修期限", field: "changetime", align: 'center', sortable: true},
             {title: "期限类型", field: "maturity", align: 'center', sortable: true}
         ]
 

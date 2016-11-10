@@ -93,13 +93,13 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
                 Date date1 = new Date();
                 Date date2 = new Date();
                 if (techniqueRequirements.getMaturity() == "生产日期") {
-                    date1 = getDate(equipment.getProductionDate(), techniqueRequirements.getChangetime(), -1);
+                    date1 = getChangDate(equipment.getProductionDate(), techniqueRequirements.getChangetime(), -1);
                     date2 = getDate(equipment.getProductionDate(), techniqueRequirements.getLifetime(), -1);
                 } else {
-                    date1 = getDate(equipment.getInputDate(), techniqueRequirements.getChangetime(), -1);
+                    date1 = getChangDate(equipment.getInputDate(), techniqueRequirements.getChangetime(), -1);
                     date2 = getDate(equipment.getInputDate(), techniqueRequirements.getLifetime(), -1);
                 }
-                if (techniqueRequirements.getChangetime() > 0 && date1.after(new Date()) && date1.before(getDate(new Date(), 0, 1))) {
+                if (techniqueRequirements.getChangetime() > 12 && date1.after(new Date()) && date1.before(getDate(new Date(), 0, 1))) {
                     description[0] = description[0] + equipment.getCode() + ",到期维修。技术要求：" + techniqueRequirements.getName();
                 }
                 if (techniqueRequirements.getLifetime() > 0 && date2.after(new Date()) && date2.before(getDate(new Date(), 0, 1))) {
@@ -120,6 +120,13 @@ public class AutomaticDeploymentServiceImpl implements AutomaticDeploymentServic
         calender.setTime(date1);
         calender.add(Calendar.YEAR, year);
         calender.add(Calendar.MONTH, month);
+        return calender.getTime();
+    }
+    private Date getChangDate(Date date1, int month1, int month2) {
+        Calendar calender = Calendar.getInstance();
+        calender.setTime(date1);
+        calender.add(Calendar.MONTH, month1);
+        calender.add(Calendar.MONTH, month2);
         return calender.getTime();
     }
 

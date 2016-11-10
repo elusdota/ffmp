@@ -12,5 +12,5 @@ import java.util.Collection;
  */
 @Repository
 public interface TechniqueRequirementsRepository extends PagingAndSortingRepository<TechniqueRequirements, String>, JpaSpecificationExecutor {
-    Collection<TechniqueRequirements> findByLifetimeIsNotOrChangetimeIsNot(int lifetime, int changetime);
+    Collection<TechniqueRequirements> findByLifetimeGreaterThanOrChangetimeGreaterThan(int lifetime, int changetime);
 }

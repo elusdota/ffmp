@@ -66,7 +66,7 @@ public class MrrStandardServiceImpl implements MrrStandardService {
 
     @Override
     public Collection<MrrStandard> findExpired() {
-        Collection<TechniqueRequirements> techniqueRequirementses = techniqueRequirementsRepository.findByLifetimeIsNotOrChangetimeIsNot(0, 0);
+        Collection<TechniqueRequirements> techniqueRequirementses = techniqueRequirementsRepository.findByLifetimeGreaterThanOrChangetimeGreaterThan(0, 12);
         Collection<MrrStandard> mrrStandards = new ArrayList<>();
         techniqueRequirementses.forEach(techniqueRequirements -> {
             if (!mrrStandards.contains(techniqueRequirements.getMrrStandard())) {

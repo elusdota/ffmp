@@ -80,8 +80,15 @@ public class TaskNodeController {
     //判断巡检任务是否完成巡检比例，elus
     public void isTaskNonLocked(MaintenanceTask maintenanceTask) {
         List<TaskEquipemt> taskEquipemts = taskEquipemtService.findByMaintenanceTask(maintenanceTask);
-        int totals = maintenanceTask.getMaintenanceProject().getEquipments().size();
-        if (totals > 0) {
+        final long[] totals = {0};
+         maintenanceTask.getMaintenanceProject().getEquipments().forEach(equipment -> {
+             totals[0] = totals[0] +equipment.getQuantity();
+         });
+        final long[] one = {0};
+        taskEquipemts.forEach(taskEquipemt -> {
+            one[0]=one[0]+taskEquipemt.getEquipment().getQuantity();
+        });
+        if (totals[0] > 0) {
             double iou = 0.0;
             Inspection inspection = null;
             if (maintenanceTask.getType().equals("月度巡检")) {
@@ -98,8 +105,8 @@ public class TaskNodeController {
                     iou = inspection.getRatio() / 100;
                 }
             }
-            if (taskEquipemts.size() / totals < iou) {
-                throw new ServiceException("巡检设备必须超过设备总数的" + iou * 100 + "%，目前只有" + taskEquipemts.size() / totals * 100 + "%");
+            if (one[0] / totals[0] < iou) {
+                throw new ServiceException("巡检设备必须超过设备总数的" + iou * 100 + "%，目前只有" + taskEquipemts.size() / totals[0] * 100 + "%");
             }
         } else {
             throw new ServiceException("该项目没有设备，请先录入设备！");

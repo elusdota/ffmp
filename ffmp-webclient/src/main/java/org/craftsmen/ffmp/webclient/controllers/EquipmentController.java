@@ -63,7 +63,7 @@ public class EquipmentController {
             final Date[] date1 = {new Date()};
             final Date[] date2 = {new Date()};
             mrrStandard.getTechniqueRequirementsList().forEach(techniqueRequirements -> {
-                if (techniqueRequirements.getChangetime() > 0 || techniqueRequirements.getLifetime() > 0) {
+                if (techniqueRequirements.getChangetime() > 12 || techniqueRequirements.getLifetime() > 0) {
                     if (techniqueRequirements.getMaturity() == "生产日期") {
                         date1[0] = getDate(equipment.getProductionDate(), techniqueRequirements.getChangetime());
                         date2[0] = getDate(equipment.getProductionDate(), techniqueRequirements.getLifetime());

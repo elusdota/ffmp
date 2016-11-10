@@ -285,15 +285,15 @@
                                         </div>
                                     </div>
                                     <div class="form-group col-md-6">
-                                        <label for="changetime" class="col-md-4 control-label">检修年限：<span
+                                        <label for="changetime" class="col-md-4 control-label">检修期限：<span
                                                 class="required">*</span></label>
 
                                         <div class="col-md-8">
                                             <div class="input-group">
                                                 <input type="text" class="form-control required digits" id="changetime"
                                                        name="changetime"
-                                                       placeholder="如果为0则无检修年限">
-                                                <span class="input-group-addon">年</span>
+                                                       placeholder="如果为0则无检修">
+                                                <span class="input-group-addon">月</span>
                                             </div>
                                         </div>
                                     </div>
