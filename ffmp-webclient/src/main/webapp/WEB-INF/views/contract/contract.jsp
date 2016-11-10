@@ -36,12 +36,12 @@
             <sec:authorize access="@userDetailsUtils.isAuthorized('/合同管理/创建合同信息')">
                 <button type="button" id="createContract" class="btn btn-default">创建合同信息</button>
             </sec:authorize>
-            <%--<sec:authorize access="@userDetailsUtils.isAuthorized('/合同管理/修改合同信息')">--%>
-                <%--<button type="button" id="updateContract" class="btn btn-default" disabled>修改合同信息</button>--%>
-            <%--</sec:authorize>--%>
-            <%--<sec:authorize access="@userDetailsUtils.isAuthorized('/合同管理/查询合同信息')">--%>
-                <%--<button type="button" id="deleteContract" class="btn btn-default" disabled>查询合同信息</button>--%>
-            <%--</sec:authorize>--%>
+            <sec:authorize access="@userDetailsUtils.isAuthorized('/合同管理/修改合同信息')">
+                <button type="button" id="updateContract" class="btn btn-default" disabled>修改合同信息</button>
+            </sec:authorize>
+            <sec:authorize access="@userDetailsUtils.isAuthorized('/合同管理/删除合同信息')">
+                <button type="button" id="deleteContract" class="btn btn-default" disabled>删除合同信息</button>
+            </sec:authorize>
         </div>
         <div class="box-body">
             <table id="contractTable"

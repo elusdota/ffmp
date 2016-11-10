@@ -49,7 +49,7 @@ $(function () {
         }
     };
     function confirmFormatter(value, row, index) {
-        if (value == "true") {
+        if (value == true) {
             return "是";
         } else {
             return "否";

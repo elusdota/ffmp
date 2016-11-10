@@ -39,7 +39,6 @@ $(document).ready(function () {
             , {title: "投入使用日期", field: "inputDate", align: 'center', sortable: true}
             , {title: "位置", field: "location", align: 'center', sortable: true}
             , {title: "状态", field: "nowstate", align: 'center', sortable: true}
-            , {title: "备注", field: "description", align: 'center', sortable: true}
         ]
     });
 //序号加载
@@ -64,9 +63,7 @@ $("#printCode").click(function () {
     var name = row.name;
     var labelName = "<table><tr><td style='text-align:center'><label>" + name + "</label></td></tr><tr> <td>";
     printWindow.document.write(getStyle() + "<div class='form-group' id='imgbarcode'>" + labelName + newstr + "</td></tr> </table></div>");
-    printWindow.print();
-    printWindow.close();
-    //timeout(printWindow);
+    timeout(printWindow);
 });
 function timeout(printWindow) {
     setTimeout(function () {
