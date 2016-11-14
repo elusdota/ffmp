@@ -2,10 +2,7 @@ package org.craftsmen.ffmp.webclient.controllers;
 
 import com.baidu.yun.push.exception.PushClientException;
 import com.baidu.yun.push.exception.PushServerException;
-import com.jrtech.ffmp.data.entities.HistoryTaskNode;
-import com.jrtech.ffmp.data.entities.MaintenanceProject;
-import com.jrtech.ffmp.data.entities.MaintenanceTask;
-import com.jrtech.ffmp.data.entities.TaskDefinition;
+import com.jrtech.ffmp.data.entities.*;
 import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.HistoryTaskSpecs;
 import com.jrtech.templates.vo.JSONListData;
@@ -74,9 +71,13 @@ public class TaskController {
 
     @RequestMapping(method = RequestMethod.POST)
     public MaintenanceTask create(@RequestBody MaintenanceTask maintenanceTask) {
+        RepairForm repairForm=repairFormService.findOneByCode(maintenanceTask.getRepairnumber());
         if (!maintenanceTask.getRepairnumber().isEmpty()) {
-            if (repairFormService.findOneByCode(maintenanceTask.getRepairnumber()) == null) {
+            if (repairForm == null) {
                 throw new ServiceException("报修单编号不存在！请检查数据。");
+            }else{
+                repairForm.setProcessing(true);
+                repairFormService.save(repairForm);
             }
         }
         TaskDefinition taskDefinition = taskDefinitionService.findOneByName("维修任务");
@@ -91,11 +92,7 @@ public class TaskController {
         maintenanceTask.setDelegate(maintenanceProject.getDelegate());
         maintenanceTask.setOwner(accountService.findOneByName(userName));
         String maintenanceTaskName = maintenanceTask.getName();
-
-
         MaintenanceTask savedMaintenanceTask = service.save(maintenanceTask);
-
-
         if(savedMaintenanceTask == null){
             logger.info(userName + ":创建任务失败，名称--" + maintenanceTaskName);
             throw new ServiceException("创建维保任务失败");

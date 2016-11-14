@@ -37,6 +37,9 @@
   <section class="content">
     <div class="row">
       <form class="form-horizontal" id="saveForm">
+        <div class="form-group" hidden="true">
+          <input type="text" class="form-control" id="id" name="id" value="${id}"/>
+        </div>
         <div class="form-group col-md-6">
           <label for="name" class="col-lg-6 control-label">任务名称：<span
                   class="required">*</span></label>
@@ -64,7 +67,7 @@
             </select>
           </div>
         </div>
-        <div class="form-group col-md-6">
+        <div class="form-group col-md-6" hidden="true">
           <label for="repairnumber" class="col-lg-6 control-label">报修单编号：</label>
 
           <div class="col-lg-6">

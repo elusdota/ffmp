@@ -11,8 +11,12 @@ import org.springframework.data.jpa.domain.Specification;
 public interface RepairFormService {
     RepairForm save(RepairForm repairForm);
 
+    RepairForm findOne(String id);
+
     Page<RepairForm> findAll(Specification<RepairForm> spec, Pageable pageable);
 
     RepairForm findOneByCode(String code);
+
+    Page<RepairForm> findByProcessing(boolean processing, Pageable pageable);
 
 }

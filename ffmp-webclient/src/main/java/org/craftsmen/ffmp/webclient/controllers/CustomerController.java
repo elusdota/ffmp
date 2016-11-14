@@ -51,15 +51,16 @@ public class CustomerController {
     public Customer create(@RequestBody Customer customer) {
         Role role = roleService.findOneByName("customer");
         if (role == null) {
-            role = new Role("customer");
-            role.getAuthorities().add(grantedAuthorityService.findOneByName("维管工作管理"));
-            role.getAuthorities().add(grantedAuthorityService.findOneByName("项目信息管理"));
-            role.getAuthorities().add(grantedAuthorityService.findOneByName("查看项目详细信息"));
-            role.getAuthorities().add(grantedAuthorityService.findOneByName("历史任务查询"));
-            role.getAuthorities().add(grantedAuthorityService.findOneByName("历史任务"));
-            role.getAuthorities().add(grantedAuthorityService.findOneByName("查看历史任务"));
-            role.setOrganization(organizationService.findRoot());
-            roleService.save(role);
+            throw new ServiceException("客户角色不存在！");
+//            role = new Role("customer");
+//            role.getAuthorities().add(grantedAuthorityService.findOneByName("维管工作管理"));
+//            role.getAuthorities().add(grantedAuthorityService.findOneByName("项目信息管理"));
+//            role.getAuthorities().add(grantedAuthorityService.findOneByName("查看项目详细信息"));
+//            role.getAuthorities().add(grantedAuthorityService.findOneByName("历史任务查询"));
+//            role.getAuthorities().add(grantedAuthorityService.findOneByName("历史任务"));
+//            role.getAuthorities().add(grantedAuthorityService.findOneByName("查看历史任务"));
+//            role.setOrganization(organizationService.findRoot());
+//            roleService.save(role);
         }
         Account account = new Account("C"+codeService.getCustomerNum(), new BCryptPasswordEncoder().encode(customer.getTelephone()));
         account.getRoles().add(role);

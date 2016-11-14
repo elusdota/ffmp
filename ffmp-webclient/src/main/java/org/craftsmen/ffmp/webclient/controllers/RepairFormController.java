@@ -1,5 +1,6 @@
 package org.craftsmen.ffmp.webclient.controllers;
 
+import com.jrtech.ffmp.data.entities.MaintenanceProject;
 import com.jrtech.ffmp.data.entities.RepairForm;
 import com.jrtech.templates.services.*;
 import com.jrtech.templates.vo.JSONListData;
@@ -46,11 +47,29 @@ public class RepairFormController {
         return jld;
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public RepairForm get(@RequestParam("id") String id) {
+        return service.findOne(id);
+    }
+
+    @RequestMapping(value = "/findStateFalse", method = RequestMethod.POST)
+    public JSONListData findState(@RequestBody TableGetDataParameters parameters) {
+        PageableImpl pageable = new PageableImpl(parameters);
+        Page<RepairForm> repairForms = service.findByProcessing(false, pageable);
+        JSONListData jld = new JSONListData();
+        jld.setTotal(repairForms.getTotalElements());
+        jld.setRows(repairForms.getContent());
+        logger.info(UserDetailsUtils.getCurrent().getUsername() + ":加载报修单列表");
+        return jld;
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public RepairForm create(@RequestBody RepairForm repairForm) {
-        if (maintenanceProjectService.findOneByCode(repairForm.getProjectNumber()) == null) {
+        MaintenanceProject maintenanceProject = maintenanceProjectService.findOne(repairForm.getProjectNumber());
+        if (maintenanceProject == null) {
             throw new ServiceException("无此项目编号的项目！请重新输入项目编号。");
         }
+        repairForm.setProjectNumber(maintenanceProject.getName());
         repairForm.setCode(codeService.getRepairFormNum());
         repairForm.setDate(new Date());
         repairForm.setAccount(accountService.findOneByName(UserDetailsUtils.getCurrent().getUsername()));

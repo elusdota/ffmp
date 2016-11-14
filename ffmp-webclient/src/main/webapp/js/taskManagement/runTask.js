@@ -6,6 +6,7 @@ $(document).ready(function () {
     $("#repairAuditTask").attr("disabled", "true");
     $("#auditTask").attr("disabled", "true");
     $("#materialsTask").attr("disabled", "true");
+    $("#insert").attr("disabled", "true");
     $('#taskTable').bootstrapTable({
         method: 'POST',
         url: 'rest/task/findRunTask',
@@ -70,6 +71,41 @@ $(document).ready(function () {
             , {title: "任务描述", field: "description", sortable: true}
         ]
     });
+    $('#repairFormTable').bootstrapTable({
+        method: 'POST',
+        url: 'rest/repairForm/findStateFalse',
+        sidePagination: 'server',
+        striped: true,
+        singleSelect: true,
+        checkbox: true,
+        clickToSelect: true,
+        onCheck: function (row) {
+            $("#insert").removeAttr("disabled");
+        },
+        onUncheck: function (row) {
+            $("#insert").attr("disabled", "true");
+        },
+        queryParams: function (params) {
+            var fin = {
+                offset: params.offset,
+                limit: params.limit,
+                order: params.order,
+                sort: params.sort,
+                search: params.search
+            };
+            return JSON.stringify(fin);
+        },
+        columns: [{
+            field: 'state', checkbox: true
+        }
+            , {title: '序号', formatter: runningFormatter}
+            , {title: "报修单编号", field: "code", sortable: true}
+            , {title: "项目名称", field: "projectNumber", sortable: true}
+            , {title: "报修人", field: "person", sortable: true}
+            , {title: "故障部位", field: "parts", sortable: true}
+            , {title: "故障描述", field: "description", sortable: true}
+        ]
+    });
 //序号加载
     function runningFormatter(value, row, index) {
         return index + 1;
@@ -77,7 +113,7 @@ $(document).ready(function () {
 
 })
 $("#createTask").click(function () {
-    $("#main-content").load("taskManagement/createTask", function () {
+    $("#main-content").load("taskManagement/createTask?id=" + "", function () {
         $("#main-content").fadeIn();
     });
 });
@@ -98,4 +134,20 @@ $("#auditTask").click(function () {
     $("#main-content").load("taskManagement/auditTask?id=" + data[0].id, function () {
         $("#main-content").fadeIn();
     });
+});
+$("#insert").click(function () {
+    $("#conversionModel").modal("hide");
+    setTimeout(function () {
+        var data = $('#repairFormTable').bootstrapTable('getSelections');
+        $("#main-content").load("taskManagement/createTask?id=" + data[0].id, function () {
+            $("#main-content").fadeIn();
+        });
+    }, 1000);
+});
+$("#conversionTask").click(function () {
+    $('#conversionModel').modal({
+        backdrop: 'static',
+        keyboard: false
+    });
+    $("#conversionModel").modal("show");
 });

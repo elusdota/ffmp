@@ -1,6 +1,8 @@
 package com.jrtech.ffmp.data.repositories;
 
 import com.jrtech.ffmp.data.entities.RepairForm;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
@@ -11,4 +13,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RepairFormRepository extends PagingAndSortingRepository<RepairForm, String>, JpaSpecificationExecutor {
     RepairForm findOneByCode(String code);
+
+    Page<RepairForm> findByProcessing(boolean processing,Pageable pageable);
 }

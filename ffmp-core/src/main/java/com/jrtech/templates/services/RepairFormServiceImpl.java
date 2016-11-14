@@ -14,11 +14,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class RepairFormServiceImpl implements RepairFormService {
     @Autowired
-    private RepairFormRepository repository;
+    protected RepairFormRepository repository;
 
     @Override
     public RepairForm save(RepairForm repairForm) {
         return repository.save(repairForm);
+    }
+
+    @Override
+    public RepairForm findOne(String id) {
+        return repository.findOne(id);
     }
 
     @Override
@@ -30,4 +35,10 @@ public class RepairFormServiceImpl implements RepairFormService {
     public RepairForm findOneByCode(String code) {
         return repository.findOneByCode(code);
     }
+
+    @Override
+    public Page<RepairForm> findByProcessing(boolean processing, Pageable pageable) {
+        return repository.findByProcessing(processing, pageable);
+    }
+
 }

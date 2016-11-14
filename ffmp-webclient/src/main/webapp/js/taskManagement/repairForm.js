@@ -2,6 +2,49 @@
  * Created by jiangliang on 2016/7/25.
  */
 $(document).ready(function () {
+    $("#projectNumber").select2({
+        theme: "bootstrap",
+        language: "zh-CN",
+        id: function (data) {
+            return data.id;
+        },
+        ajax: {
+            url: "rest/maintenanceProject/findByNameLike",
+            dataType: 'json',
+            //async: false,
+            delay: 1000,
+            data: function (params) {
+                return {
+                    name: params.term
+                };
+            },
+            processResults: function (data, params) {
+                var results = [];
+                $.each(data, function (i, v) {
+                    var o = {};
+                    o.id = v.id;
+                    o.name = v.name;
+                    results.push(o);
+                })
+                return {
+                    results: results
+                };
+            },
+            cache: true
+        },
+        escapeMarkup: function (markup) {
+            return markup;
+        }, // 定义option格式使其工作
+        minimumInputLength: 1,
+        templateResult: function (org) {
+            var markup ="<option id='" + org.id + "' value='" + org.id + "'>" + org.name + '</option>'
+            //$("#organization").append(markup);
+            return markup;
+        },
+        templateSelection: function(org){
+            return org.name;
+        }
+    });
     $("#queryTask").attr("disabled", "true");
     $('#repairTable').bootstrapTable({
         method: 'POST',
@@ -32,10 +75,20 @@ $(document).ready(function () {
         }
             , {title: '序号', formatter: runningFormatter}
             , {title: "报修单编号", field: "code", sortable: true}
-            , {title: "项目编号", field: "projectNumber", sortable: true}
+            , {title: "项目名称", field: "projectNumber", sortable: true}
             , {title: "报修人", field: "person", sortable: true}
             , {title: "故障部位", field: "parts", sortable: true}
             , {title: "故障描述", field: "description", sortable: true}
+            , {
+                title: "是否处理", field: "processing", sortable: true, formatter: function (val) {
+                    if (val) {
+                        return '是';
+                    }
+                    else {
+                        return '否';
+                    }
+                }
+            }
         ]
     });
 //序号加载

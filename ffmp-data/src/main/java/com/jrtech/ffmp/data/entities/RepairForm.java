@@ -12,7 +12,7 @@ import java.util.Date;
  */
 @Entity
 @Table(name = "RepairForm")
-@JsonIgnoreProperties(value = {"maintenanceProject","account"})
+@JsonIgnoreProperties(value = {"maintenanceProject", "account"})
 public class RepairForm extends AbstractDomainObject {
     @ManyToOne
     //创建人
@@ -31,6 +31,8 @@ public class RepairForm extends AbstractDomainObject {
     @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", locale = "zh", timezone = "GMT+8")
     private Date date;
+    //状态 false未处理，true处理
+    private boolean processing;
 
     public Account getAccount() {
         return account;
@@ -86,5 +88,13 @@ public class RepairForm extends AbstractDomainObject {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public boolean isProcessing() {
+        return processing;
+    }
+
+    public void setProcessing(boolean processing) {
+        this.processing = processing;
     }
 }

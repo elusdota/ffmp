@@ -169,6 +169,10 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         third.setIcons("fa-remove");
         third.setParent(second);
         second.getChildren().add(third);
+        third = new GrantedAuthorityImpl("证件管理");
+        third.setIcons("fa-clone");
+        third.setParent(second);
+        second.getChildren().add(third);
         second = new GrantedAuthorityImpl("设施维管标准管理");
         second.setSrc("basicInfo/MRRStandard");
         second.setIcons("fa-truck");
@@ -238,6 +242,22 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         third.setIcons("fa-pencil");
         third.setParent(second);
         second.getChildren().add(third);
+        third = new GrantedAuthorityImpl("巡检标准");
+        third.setIcons("fa-asterisk");
+        third.setParent(second);
+        second.getChildren().add(third);
+        third = new GrantedAuthorityImpl("修改项目");
+        third.setIcons("fa-pencil");
+        third.setParent(second);
+        second.getChildren().add(third);
+        third = new GrantedAuthorityImpl("终止项目");
+        third.setIcons("fa-asteriskl");
+        third.setParent(second);
+        second.getChildren().add(third);
+        third = new GrantedAuthorityImpl("定期检查设备");
+        third.setIcons("fa-asterisk");
+        third.setParent(second);
+        second.getChildren().add(third);
         third = new GrantedAuthorityImpl("查询项目");
         third.setIcons("fa-search");
         third.setParent(second);
@@ -280,6 +300,10 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         third.setIcons("fa-hourglass-end");
         third.setParent(second);
         second.getChildren().add(third);
+        third = new GrantedAuthorityImpl("报修转任务");
+        third.setIcons("fa-hourglass-end");
+        third.setParent(second);
+        second.getChildren().add(third);
         third = new GrantedAuthorityImpl("申请材料");
         third.setIcons("fa-hand-lizard-o");
         third.setParent(second);
@@ -295,6 +319,10 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         second.getChildren().add(third);
         third = new GrantedAuthorityImpl("查看历史任务");
         third.setIcons("fa-hand-lizard-o");
+        third.setParent(second);
+        second.getChildren().add(third);
+        third = new GrantedAuthorityImpl("查看任务执行情况");
+        third.setIcons("fa-asterisk");
         third.setParent(second);
         second.getChildren().add(third);
         gaRepository.save(root);
@@ -603,9 +631,21 @@ public class SystemInitializeServiceImpl implements SystemInitializeService {
         account.setAccessType(AccessType.SYSTEM);
         account.getRoles().add(admin);
         accountRepository.save(account);
-        String password1 = new BCryptPasswordEncoder().encode("user");
-        account = new Account("user", password1);
-        accountRepository.save(account);
+        Role role = roleRepository.findOneByName("customer");
+        if (role == null) {
+            role = new Role("customer");
+            role.getAuthorities().add(gaRepository.findOneByName("维管工作管理"));
+            role.getAuthorities().add(gaRepository.findOneByName("项目信息管理"));
+            role.getAuthorities().add(gaRepository.findOneByName("查看项目详细信息"));
+            role.getAuthorities().add(gaRepository.findOneByName("历史任务查询"));
+            role.getAuthorities().add(gaRepository.findOneByName("历史任务"));
+            role.getAuthorities().add(gaRepository.findOneByName("查看历史任务"));
+            role.setOrganization(orgRepository.findRoot());
+            roleRepository.save(role);
+        }
+//        String password1 = new BCryptPasswordEncoder().encode("user");
+//        account = new Account("user", password1);
+//        accountRepository.save(account);
     }
     private void createTaskDefinition() {
         TaskDefinition taskDefinition=new TaskDefinition("维修任务");

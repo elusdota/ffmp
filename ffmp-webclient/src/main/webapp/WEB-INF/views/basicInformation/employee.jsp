@@ -36,9 +36,9 @@
         <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/职工管理/职工离职')">
           <button type="button" id="deleteEmployee" class="btn btn-default pull-left">职工离职</button>
         </sec:authorize>
-          <%--<sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/职工管理/职工离职')">--%>
+          <sec:authorize access="@userDetailsUtils.isAuthorized('/基础信息管理/职工管理/证件管理')">
               <button type="button" id="documentManager" class="btn btn-default pull-left">证件管理</button>
-          <%--</sec:authorize>--%>
+          </sec:authorize>
       </div>
       <table id="employeeTable"
              data-toolbar="#toolbar"

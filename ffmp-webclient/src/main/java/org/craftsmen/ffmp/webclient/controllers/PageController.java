@@ -27,16 +27,16 @@ public class PageController {
     //登陆
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView login(
-            @RequestParam(value = "error", required = false) String error,HttpServletRequest rq, HttpServletResponse response) {
+            @RequestParam(value = "error", required = false) String error, HttpServletRequest rq, HttpServletResponse response) {
         ModelAndView model = new ModelAndView();
         if (error != null) {
 //            model.addObject("serviceException", "用户名或密码错误!");
-            if(null!=UserDetailsUtils.getCurrent()){
-            logger.error( UserDetailsUtils.getCurrent().getUsername()+":登录失败");
+            if (null != UserDetailsUtils.getCurrent()) {
+                logger.error(UserDetailsUtils.getCurrent().getUsername() + ":登录失败");
             }
             HttpSession session = rq.getSession(false);
-            AuthenticationException exception= (AuthenticationException) session.getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
-            throw new ServiceException(exception.getMessage(),"login");
+            AuthenticationException exception = (AuthenticationException) session.getAttribute("SPRING_SECURITY_LAST_EXCEPTION");
+            throw new ServiceException(exception.getMessage(), "login");
         }
         model.setViewName("login");
         return model;
@@ -90,31 +90,37 @@ public class PageController {
     public String inventory(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/warehouse/inventory";
     }
+
     //设备库存
     @RequestMapping("/warehouse/equipmentInventory")
     public String equipmentInventory(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/warehouse/equipmentInventory";
     }
+
     //工具库存
     @RequestMapping("/tools/toolsInventory")
     public String toolsInventory(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/tools/toolsInventory";
     }
+
     //出库
     @RequestMapping("/warehouse/dispatch")
     public String dispatch(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/warehouse/dispatch";
     }
+
     //工具借出
     @RequestMapping("/tools/dispatch")
     public String toolsdispatch(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/tools/dispatch";
     }
+
     //工具归还
     @RequestMapping("/tools/inbounds")
     public String toolsinbounds(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/tools/inbounds";
     }
+
     //报损
     @RequestMapping("/warehouse/loss")
     public String loss(HttpServletRequest rq, HttpServletResponse response) throws Exception {
@@ -138,6 +144,7 @@ public class PageController {
     public String createProject(HttpServletRequest rq, HttpServletResponse response) throws Exception {
         return "/taskManagement/createProject";
     }
+
     //设备
     @RequestMapping("/taskManagement/updateProject")
     public ModelAndView updateProject(@RequestParam("id") String id) throws Exception {
@@ -179,8 +186,11 @@ public class PageController {
 
     //创建任务
     @RequestMapping("/taskManagement/createTask")
-    public String createTask(HttpServletRequest rq, HttpServletResponse response) throws Exception {
-        return "/taskManagement/createTask";
+    public ModelAndView createTask(@RequestParam("id") String id) throws Exception {
+        ModelAndView model = new ModelAndView();
+        model.addObject("id", id);
+        model.setViewName("taskManagement/createTask");
+        return model;
     }
 
     //任务信息
@@ -361,6 +371,7 @@ public class PageController {
     public String information(HttpServletRequest request, HttpServletResponse response) throws Exception {
         return "/system/information";
     }
+
     //任务审核
     @RequestMapping("/taskManagement/auditTask")
     public ModelAndView auditTask(@RequestParam("id") String id) throws Exception {
@@ -369,6 +380,7 @@ public class PageController {
         model.setViewName("taskManagement/auditTask");
         return model;
     }
+
     //申请材料
     @RequestMapping("/taskManagement/material")
     public ModelAndView material(@RequestParam("id") String id) throws Exception {
@@ -377,6 +389,7 @@ public class PageController {
         model.setViewName("taskManagement/material");
         return model;
     }
+
     //文件管理
     @RequestMapping("/common/fileUpload")
     public ModelAndView fileUpload(@RequestParam("id") String id) throws Exception {
@@ -385,6 +398,7 @@ public class PageController {
         model.setViewName("common/fileUpload");
         return model;
     }
+
     //巡检标准
     @RequestMapping("/taskManagement/inspection")
     public ModelAndView inspection(@RequestParam("id") String id) throws Exception {
@@ -393,6 +407,7 @@ public class PageController {
         model.setViewName("taskManagement/inspection");
         return model;
     }
+
     //巡检标准
     @RequestMapping("/taskManagement/equipmentExpired")
     public ModelAndView equipmentExpired(@RequestParam("id") String id) throws Exception {

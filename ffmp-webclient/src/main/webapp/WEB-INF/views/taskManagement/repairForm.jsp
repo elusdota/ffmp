@@ -11,6 +11,8 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <link rel="stylesheet" href="<c:url value='/bower_components/bootstrap-table/dist/bootstrap-table.min.css'/>">
 <link rel="stylesheet" href="<c:url value='/bower_components/AdminLTE/plugins/datepicker/datepicker3.css'/>">
+<link rel="stylesheet" href="<c:url value='/bower_components/select2/dist/css/select2.min.css'/>">
+<link rel="stylesheet" href="<c:url value='/bower_components/select2-bootstrap-theme/dist/select2-bootstrap.min.css'/>">
 <style type="text/css">
     *
     label.error
@@ -60,7 +62,7 @@
         </div>
     </section>
     <!-- 模态框（Model） -->
-    <div class="modal fade" id="repairModel" tabindex="-1" role="dialog"
+    <div class="modal fade" id="repairModel" role="dialog"
          aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -72,14 +74,23 @@
                 <div class="modal-body">
                     <div class="row">
                         <form class="form-horizontal" id="repairForm">
+                            <%--<div class="form-group col-md-6">--%>
+                                <%--<label for="projectNumber" class="col-lg-6 control-label">项目编号：<span--%>
+                                        <%--class="required">*</span></label>--%>
+
+                                <%--<div class="col-lg-6">--%>
+                                    <%--<input type="text" class="form-control" id="projectNumber" name="projectNumber"--%>
+                                           <%--placeholder="项目编号"--%>
+                                           <%--required="required">--%>
+                                <%--</div>--%>
+                            <%--</div>--%>
                             <div class="form-group col-md-6">
-                                <label for="projectNumber" class="col-lg-6 control-label">项目编号：<span
+                                <label for="projectNumber" class="col-md-4 control-label">项目名称：<span
                                         class="required">*</span></label>
 
-                                <div class="col-lg-6">
-                                    <input type="text" class="form-control" id="projectNumber" name="projectNumber"
-                                           placeholder="项目编号"
-                                           required="required">
+                                <div class="col-md-8">
+                                    <select class="form-control select2" id="projectNumber" data-placeholder="项目名称" style="width: 100%;"  required="required">
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group col-md-6">
@@ -135,6 +146,8 @@
 <script src="<c:url value='/bower_components/AdminLTE/plugins/datepicker/locales/bootstrap-datepicker.zh-CN.js'/>"></script>
 <script src="<c:url value='/bower_components/tableExport.jquery.plugin/tableExport.min.js'/>"></script>
 <script src="<c:url value='/bower_components/jquery.base64.js/jquery.base64.js'/>"></script>
+<script src="<c:url value='/bower_components/select2/dist/js/i18n/zh-CN.js'/>"></script>
+<script src="<c:url value='/bower_components/select2/dist/js/select2.full.min.js'/>"></script>
 <script src="<c:url value='/js/taskManagement/repairForm.js'/>"></script>
 
 
