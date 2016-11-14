@@ -1,5 +1,6 @@
 package org.craftsmen.ffmp.webclient.controllers;
 
+import com.jrtech.ffmp.data.entities.Customer;
 import com.jrtech.ffmp.data.entities.Equipment;
 import com.jrtech.ffmp.data.entities.MaintenanceProject;
 import com.jrtech.ffmp.data.entities.MrrStandard;
@@ -10,10 +11,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by jiangliang on 2016/7/27.设备操作控制器,elus
@@ -27,6 +30,9 @@ public class EquipmentController {
     private MaintenanceProjectService maintenanceProjectService;
     @Autowired
     private MrrStandardService mrrStandardService;
+    @Autowired
+    private CustomerService customerService;
+
     private Logger logger = LogManager.getLogger(EquipmentController.class.getName());
 
     @RequestMapping(value = "/findProject", method = RequestMethod.POST)
@@ -114,18 +120,36 @@ public class EquipmentController {
 
     //创建设备
     @RequestMapping(method = RequestMethod.POST)
-    public Equipment create(@RequestBody Equipment equipment) {
-        MaintenanceProject maintenanceProject = maintenanceProjectService.findOne(equipment.getOwner().getId());
+    public Equipment create(@RequestBody EquipmentSaveVo equipmentSaveVo) {
+
+        Equipment equipment = new Equipment();
+        MaintenanceProject maintenanceProject = maintenanceProjectService.findOne(equipmentSaveVo.getMaintenanceProjectId());
+        Customer customer = customerService.findOne(equipmentSaveVo.getCustomerId());
+
         final int[] i = {0};
-        i[0] = service.findByOwner(equipment.getOwner()).size();
+        i[0] = service.findByOwner(maintenanceProject).size();
         i[0] = i[0] + 1;
         int t = i[0] - 1;
         String code = getLastSixNum("" + t, 3);
-        String equipmentcode = getCodeNum(equipment.getOwner().getCode(), 4) +
-                mrrStandardService.findOneByName(equipment.getTypemax()).getCode() +
-                mrrStandardService.findOneByName(equipment.getTypemin()).getCode() + code;
+        String equipmentcode = getCodeNum(maintenanceProject.getCode(), 4) +
+                mrrStandardService.findOneByName(equipmentSaveVo.getTypemax()).getCode() +
+                mrrStandardService.findOneByName(equipmentSaveVo.getTypemin()).getCode() + code;
         equipment.setCode(equipmentcode);
         equipment.setOwner(maintenanceProject);
+
+        equipment.setCustomer(customer);
+        equipment.setName(equipmentSaveVo.getName());
+        equipment.setDescription(equipmentSaveVo.getDescription());
+        equipment.setInputDate(equipmentSaveVo.getInputDate());
+        equipment.setProductionDate(equipmentSaveVo.getProductionDate());
+        equipment.setManufacturer(equipmentSaveVo.getManufacturer());
+        equipment.setModel(equipmentSaveVo.getModel());
+        equipment.setLocation(equipmentSaveVo.getLocation());
+        equipment.setNowstate(equipmentSaveVo.getNowstate());
+        equipment.setQuantity(equipmentSaveVo.getQuantity());
+        equipment.setTypemax(equipmentSaveVo.getTypemax());
+        equipment.setTypemin(equipmentSaveVo.getTypemin());
+
         return service.save(equipment);
     }
 

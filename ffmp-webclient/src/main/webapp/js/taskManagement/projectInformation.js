@@ -64,6 +64,7 @@ $(document).ready(function () {
                 , {title: "投入使用日期", field: "inputDate", align: 'center', sortable: true}
                 , {title: "位置", field: "location", align: 'center', sortable: true}
                 , {title: "状态", field: "nowstate", align: 'center', sortable: true}
+                , {title: "备注", field: "description", align: 'center', sortable: true}
             ]
         });
     }
@@ -91,7 +92,9 @@ $("#printAllCode").click(function () {
                 });
                 var el = printWindow.document.getElementById('imgbarcode');
                 el.innerHTML = html + '</table></div>';
-                timeout(printWindow);
+                //timeout(printWindow);
+                printWindow.print();
+                printWindow.close();
             } else {
                 printWindow.close();
             }
